@@ -121,7 +121,7 @@ public class MinibotTeleOp extends OpMode {
         float throttle = -gamepad1.left_stick_y;
         float Power = throttle;
 
-        // clip the right/Power values so that the values never exceed +/- 1
+        // clip the power values so that the values never exceed +/- 1
         Power = Range.clip(Power, -1, 1);
 
         // scale the joystick value to make it easier to control
