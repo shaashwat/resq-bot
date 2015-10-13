@@ -132,14 +132,14 @@ public class MinibotTeleOp extends OpMode {
         motorPower.setPower(Power);
 
         // update the position of the turn.
-        if (gamepad1.a) {
-            // if the A button is pushed on gamepad1, increment the position of
+        if (gamepad1.a || gamepad1.right_stick_x > 0) {
+            // if the A button or joystick right is pushed on gamepad1, increment the position of
             // the turn servo.
             turnPosition += turnDelta;
         }
 
-        if (gamepad1.y) {
-            // if the Y button is pushed on gamepad1, decrease the position of
+        if (gamepad1.y || gamepad1.right_stick_x < 0) {
+            // if the Y button or joystick right is pushed on gamepad1, decrease the position of
             // the turn servo.
             turnPosition -= turnDelta;
         }
