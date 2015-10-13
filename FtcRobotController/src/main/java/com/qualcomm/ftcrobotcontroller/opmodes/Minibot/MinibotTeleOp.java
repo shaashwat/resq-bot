@@ -173,7 +173,7 @@ public class MinibotTeleOp extends OpMode {
      */
     @Override
     public void stop() {
-
+        telemetry.addData("Text", "Minibot Stopped");
     }
 
 
