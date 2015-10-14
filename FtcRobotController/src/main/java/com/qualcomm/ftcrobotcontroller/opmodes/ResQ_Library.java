@@ -88,7 +88,7 @@ public abstract class ResQ_Library extends OpMode {
     //Bools and other important stuff
     boolean areTracksExtended = false; //when the servo folds open these tracks, declare true
     boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
-
+    boolean isConveyorMoving = false; //false if conveyor is not moving. changes if it is
 
     //****************TELEOP METHODS****************//
 

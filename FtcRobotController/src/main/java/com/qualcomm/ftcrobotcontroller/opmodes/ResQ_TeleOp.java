@@ -23,7 +23,7 @@ public class ResQ_TeleOp extends ResQ_Library {
 		 *   "motor_3" connects to the foldable tread motor on the right side
 		 *   "motor_4" connects to the foldable tread motor on the left side (motor is reversed)
 		 *   "motor_5" is the first conveyor motor to draw the balls in
-		 *   "motor_6" is the second conveyor motor to draw the balls in. It may be reversed, we don't know.
+		 *   "motor_6" is the second conveyor motor to draw the balls in. (motor is reversed)
 		 *   "motor_7" is the motor responsible for lifting up the robot
 		 *
 		 * There are 7 servos
@@ -48,7 +48,8 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         //Block Manipulation Mapping
         motorConveyor_1 = hardwareMap.dcMotor.get("motor_5");
-        motorConveyor_2 = hardwareMap.dcMotor.get("motor_6"); // this motor may have to be reversed, we don't know yet.
+        motorConveyor_2 = hardwareMap.dcMotor.get("motor_6");
+        motorConveyor_2.setDirection(DcMotor.Direction.REVERSE);
         srvoSwitch = hardwareMap.servo.get("servo_3");
         srvoScoreRight = hardwareMap.servo.get("servo_4");
         srvoScoreLeft = hardwareMap.servo.get("servo_5");
@@ -102,7 +103,15 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         //****************BLOCK MANIPULATION****************//
 
+        //So over here, first have the control for the conveyer belts. I guess its an on off system so button
 
+        if (gamepad2.x) {
+            if(isConveyorMoving){ //plow is down, move back up
+                motorRightTread.setPower(right);
+            } else { //plow is up, but for some reason, we want it back down
+                srvoPlow.setPosition(0.0);
+            }
+        }
 
         //****************OTHER****************//
 
