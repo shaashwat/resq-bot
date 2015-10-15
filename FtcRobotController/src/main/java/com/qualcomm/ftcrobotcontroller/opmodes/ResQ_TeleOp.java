@@ -84,7 +84,7 @@ public class ResQ_TeleOp extends ResQ_Library {
         }
     }
 
-    public void conveyerCheck(){
+    public void conveyerCheck(float right){
         //So over here, first have the control for the conveyer belts. I guess its an on off system so button
 
         if (gamepad2.x) {
@@ -96,9 +96,7 @@ public class ResQ_TeleOp extends ResQ_Library {
         }
     }
 
-    public void drive(){
-        float right = ProcessMotorInput(-gamepad1.right_stick_y);
-        float left = ProcessMotorInput(-gamepad1.left_stick_y);
+    public void drive(float left, float right){
 
         // Drives
         motorRightTread.setPower(right);
@@ -112,6 +110,8 @@ public class ResQ_TeleOp extends ResQ_Library {
     @Override
     public void loop() {
 
+        float right = ProcessMotorInput(-gamepad1.right_stick_y);
+        float left = ProcessMotorInput(-gamepad1.left_stick_y);
 		/*
 		 * Gamepad 1:
 		 * Left joystick moves the left track, and the right joystick moves the right track
@@ -121,11 +121,11 @@ public class ResQ_TeleOp extends ResQ_Library {
         //****************DRIVING****************//
 
         // note that if y equal -1 then joystick is pushed all of the way forward.
-        drive();
+        drive(left, right);
 
         //****************BLOCK MANIPULATION****************//
 
-        conveyerCheck();
+        conveyerCheck(right);
 
         //****************OTHER****************//
 
