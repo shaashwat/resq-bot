@@ -89,7 +89,7 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         if (gamepad2.x) {
             if(isConveyorMoving){ //plow is down, move back up
-                motorRightTread.setPower(right);
+               // motorRightTread.setPower(right);
             } else { //plow is up, but for some reason, we want it back down
                 srvoPlow.setPosition(0.0);
             }
