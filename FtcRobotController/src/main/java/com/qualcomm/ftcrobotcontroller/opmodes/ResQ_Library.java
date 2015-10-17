@@ -92,7 +92,15 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************TELEOP METHODS****************//
 
-
+    public void drive(float left, float right){
+        // Drives
+        motorRightTread.setPower(right);
+        motorLeftTread.setPower(left);
+        if(areTracksExtended){
+            motorRightFoldableTread.setPower(right);
+            motorLeftFoldableTread.setPower(left);
+        }
+    }
 
     //****************AUTONOMOUS METHODS****************//
 
