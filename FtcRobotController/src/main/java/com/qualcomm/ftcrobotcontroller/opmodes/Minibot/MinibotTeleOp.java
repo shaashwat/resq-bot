@@ -132,13 +132,13 @@ public class MinibotTeleOp extends OpMode {
         motorPower.setPower(Power);
 
         // update the position of the turn.
-        if (gamepad1.a || gamepad1.right_stick_x > 0) {
+        if (gamepad1.a || gamepad1.right_stick_x > 0.0f) {
             // if the A button or joystick right is pushed on gamepad1, increment the position of
             // the turn servo.
             turnPosition += turnDelta;
         }
 
-        if (gamepad1.y || gamepad1.right_stick_x < 0) {
+        if (gamepad1.y || gamepad1.right_stick_x < 0.0f) {
             // if the Y button or joystick right is pushed on gamepad1, decrease the position of
             // the turn servo.
             turnPosition -= turnDelta;
@@ -168,12 +168,10 @@ public class MinibotTeleOp extends OpMode {
 
     /*
      * Code to run when the op mode is first disabled goes here
-     *
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#stop()
      */
     @Override
     public void stop() {
-        telemetry.addData("Text", "Minibot Stopped");
+
     }
 
 

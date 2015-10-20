@@ -60,6 +60,10 @@ public class ResQ_TeleOp extends ResQ_Library {
         motorHangingMech = hardwareMap.dcMotor.get("motor_7");
 
         // assign the starting position of all the servos
+        reset();
+    }
+
+    public void reset(){
         foldingTracksPosition = 0.2;
         plowPosition = 0.2;
         switchPosition = 0.2;
@@ -69,9 +73,35 @@ public class ResQ_TeleOp extends ResQ_Library {
         foldLeftPosition = 0.2;
     }
 
+    public void plowCheck(){
+        //Deals with the plow
+        if (gamepad1.y) {
+            if(isPlowDown){ //plow is down, move back up
+                srvoPlow.setPosition(1.0);
+            } else { //plow is up, but for some reason, we want it back down
+                srvoPlow.setPosition(0.0);
+            }
+        }
+    }
+
+    public void conveyerCheck(float right){
+        //So over here, first have the control for the conveyer belts. I guess its an on off system so button
+
+        if (gamepad2.x) {
+            if(isConveyorMoving){ //plow is down, move back up
+               // motorRightTread.setPower(right);
+            } else { //plow is up, but for some reason, we want it back down
+                srvoPlow.setPosition(0.0);
+            }
+        }
+    }
+
+
     @Override
     public void loop() {
 
+        float right = ProcessMotorInput(-gamepad1.right_stick_y);
+        float left = ProcessMotorInput(-gamepad1.left_stick_y);
 		/*
 		 * Gamepad 1:
 		 * Left joystick moves the left track, and the right joystick moves the right track
@@ -81,40 +111,15 @@ public class ResQ_TeleOp extends ResQ_Library {
         //****************DRIVING****************//
 
         // note that if y equal -1 then joystick is pushed all of the way forward.
-        float right = ProcessMotorInput(-gamepad1.right_stick_y);
-        float left = ProcessMotorInput(-gamepad1.left_stick_y);
-
-        // Drives
-        motorRightTread.setPower(right);
-        motorLeftTread.setPower(left);
-        if(areTracksExtended){
-            motorRightFoldableTread.setPower(right);
-            motorLeftFoldableTread.setPower(left);
-        }
-
-        //Deals with the plow
-        if (gamepad1.y) {
-            if(isPlowDown){ //plow is down, move back up
-                srvoPlow.setPosition(1.0);
-            } else { //plow is up, but for some reason, we want it back down
-                srvoPlow.setPosition(0.0);
-            }
-        }
+        drive(left, right);
 
         //****************BLOCK MANIPULATION****************//
 
-        //So over here, first have the control for the conveyer belts. I guess its an on off system so button
-
-        if (gamepad2.x) {
-            if(isConveyorMoving){ //plow is down, move back up
-                motorRightTread.setPower(right);
-            } else { //plow is up, but for some reason, we want it back down
-                srvoPlow.setPosition(0.0);
-            }
-        }
+        conveyerCheck(right);
 
         //****************OTHER****************//
 
+        plowCheck();
 
         //****************TELEMETRY****************//
 
