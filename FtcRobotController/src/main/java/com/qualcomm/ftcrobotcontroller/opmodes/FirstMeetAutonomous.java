@@ -77,6 +77,10 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		moveTillLine();
 	}
 
+	public void ColorCheck(){
+
+	}
+
 	@Override
 	public void loop() {
 
@@ -97,10 +101,12 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 			//Determine what color it is to see what team we're on
 			if(2==2) { //color is red
-
+				WhatTeamAreWeOn = false;
+				TurnToBeacon();
 			}
 			else if (2==2) { //color is blue
-				//In the case that the color is blue
+				WhatTeamAreWeOn = true;
+				TurnToBeacon();
 			}
 			else { //color is none of the above, go back a couple of steps and try again
 				currentTimeCatch = this.time; //collect current time
@@ -120,6 +126,29 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			leftPower = 1.0f;
 			rightPower = 1.0f;
 			drive(leftPower, rightPower);
+		}
+	}
+
+	public void TurnToBeacon() { //(turn to bacon)
+		//If we're red, turn left 70 degrees
+		//Do some compass thing in order to stop our turning
+		if(!WhatTeamAreWeOn){ //false so we're on red team
+			if (1!=1){ //If compass detects that we're finished turning
+				//Drive straight
+				drive(1.0f, 1.0f);
+			} else { //we're not finished turning fam
+				drive(-0.5f, 0.5f);
+			}
+		}
+
+		else if(WhatTeamAreWeOn){ //true, so we're on blue team
+			//If we're blue, turn right 70 degrees
+			if (1!=1){ //If compass detects that we're finished turning
+				//Drive straight
+				drive(1.0f, 1.0f);
+			} else { //we're not finished turning fam
+				drive(0.5f, -0.5f);
+			}
 		}
 
 
