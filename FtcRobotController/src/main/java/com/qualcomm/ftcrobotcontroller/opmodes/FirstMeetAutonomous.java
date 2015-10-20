@@ -100,7 +100,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 			}
 			else if (2==2) { //color is blue
-
+				//In the case that the color is blue
 			}
 			else { //color is none of the above, go back a couple of steps and try again
 				currentTimeCatch = this.time; //collect current time
