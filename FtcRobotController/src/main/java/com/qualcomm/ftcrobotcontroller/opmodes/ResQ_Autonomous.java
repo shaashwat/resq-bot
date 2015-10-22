@@ -17,16 +17,12 @@ public class ResQ_Autonomous extends ResQ_Library {
     DcMotor motorRightTread;
     DcMotor motorLeftTread;
 
-
-
-
     @Override
     public void init() {
-        public void ColorSensor(){
+       // public void ColorSensor(){
 
 
     }
-
 
     @Override
     public void loop() {

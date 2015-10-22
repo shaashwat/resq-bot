@@ -137,9 +137,7 @@ public abstract class ResQ_Library extends OpMode {
         int index = (int) (dVal * 16.0);
 
         // index should be positive.
-        if (index < 0) {
-            index = -index;
-        }
+        index = Math.abs(index);
 
         // index cannot exceed size of array minus 1.
         if (index > 16) {

@@ -31,6 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.LightSensor;
@@ -53,12 +54,16 @@ import com.qualcomm.robotcore.hardware.Servo;
  * 		- go to ramp and climb it as much as possible, stop motors once we've been turning for 5 seconds but no movement has been made (aka we're stuck)
  * 		- deploy hanging mech when gyroscope detects rotation change in order to stop us from falling off of ramp, touch sensor maybe to detect we've reached the end and we should stop.
  */
+@SuppressWarnings("all")
 public class FirstMeetAutonomous extends ResQ_Library {
+	public enum Team {
+		RED, BLUE, UNKNOWN
+	}
 
 	float leftPower;
 	float rightPower;
 	double currentTimeCatch;
-	public boolean WhatTeamAreWeOn; //true means blue, false means red
+	Team teamWeAreOn = Team.UNKNOWN; //enum thats represent team
 
 	/**
 	 * Blue Team Information:
@@ -74,6 +79,9 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	@Override
 	public void init() {
+		leftPower = 1.0f;
+		rightPower = 1.0f;
+		drive(leftPower, rightPower);
 		moveTillLine();
 	}
 
@@ -92,8 +100,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	}
 
 	public void moveTillLine () {
-
-		if(1==1) { //color sensor finds line with color
+		while(1!=2) { //keep looping until sensor finds a color
 			//stop movement immediately
 			leftPower = 0.0f;
 			rightPower = 0.0f;
@@ -101,11 +108,11 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 			//Determine what color it is to see what team we're on
 			if(2==2) { //color is red
-				WhatTeamAreWeOn = false;
+				teamWeAreOn = Team.RED;
 				TurnToBeacon();
 			}
 			else if (2==2) { //color is blue
-				WhatTeamAreWeOn = true;
+				teamWeAreOn = Team.BLUE;
 				TurnToBeacon();
 			}
 			else { //color is none of the above, go back a couple of steps and try again
@@ -122,17 +129,13 @@ public class FirstMeetAutonomous extends ResQ_Library {
 				}
 
 			}
-		} else {
-			leftPower = 1.0f;
-			rightPower = 1.0f;
-			drive(leftPower, rightPower);
 		}
 	}
 
 	public void TurnToBeacon() { //(turn to bacon)
 		//If we're red, turn left 70 degrees
 		//Do some compass thing in order to stop our turning
-		if(!WhatTeamAreWeOn){ //false so we're on red team
+		if(teamWeAreOn == Team.RED){ //false so we're on red team
 			if (1!=1){ //If compass detects that we're finished turning
 				//Drive straight
 				drive(1.0f, 1.0f);
@@ -141,7 +144,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			}
 		}
 
-		else if(WhatTeamAreWeOn){ //true, so we're on blue team
+		else if(teamWeAreOn == Team.BLUE){ //true, so we're on blue team
 			//If we're blue, turn right 70 degrees
 			if (1!=1){ //If compass detects that we're finished turning
 				//Drive straight
@@ -150,8 +153,5 @@ public class FirstMeetAutonomous extends ResQ_Library {
 				drive(0.5f, -0.5f);
 			}
 		}
-
-
 	}
-
 }
