@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * Created by Aman on 10/11/2015.
@@ -17,16 +18,19 @@ public class ResQ_Autonomous extends ResQ_Library {
     DcMotor motorRightTread;
     DcMotor motorLeftTread;
 
+    ColorSensor sensorRGB;
+
     @Override
     public void init() {
-       // public void ColorSensor(){
-
+        sensorRGB = hardwareMap.colorSensor.get("lady");
 
     }
 
     @Override
     public void loop() {
-
+        telemetry.addData("Red  ", sensorRGB.red());
+        telemetry.addData("Green", sensorRGB.green());
+        telemetry.addData("Blue ", sensorRGB.blue());
     }
 
     @Override
