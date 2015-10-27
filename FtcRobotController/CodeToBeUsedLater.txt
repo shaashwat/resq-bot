@@ -1,0 +1,93 @@
+*********Library*********
+//Servo srvoFoldingTracks; //We use the initial tracks, but then fold additional ones with this
+//Servo srvoPlow;
+/*
+    //For Block Manipulation Only
+    DcMotor motorConveyor_1; //The system we use requires two
+    DcMotor motorConveyor_2; //motors to bring blocks from the field
+    Servo srvoSwitch; //this servo switches which side the blocks fall into
+    Servo srvoScoreLeft; //opens and scores blocks on left
+    Servo srvoScoreRight; //opens and scores blocks on right
+    Servo srvoFoldLeft; //folds out scoring mechanism on the left
+    Servo srvoFoldRight; //folds out scoring mechanism on the right
+    */
+	
+	//The servo positions
+    //double foldingTracksPosition;
+    //double plowPosition;
+    /*double switchPosition;
+    double scoreRightPosition;
+    double scoreLeftPosition;
+    double foldRightPosition;
+    double foldLeftPosition;*/
+	
+	//final static double PLOW_MIN_RANGE  = 0.20;
+    //final static double PLOW_MAX_RANGE  = 0.90;
+	
+	/* This may not be needed, because a method can individually change a servo between set values.
+    //Servo Delta changes (higher the value, the quicker it changes and the driver has to press less, but also lowers precision)
+    double foldTrackDelta = 0.1;
+    double plowDelta = 0.1;
+    double switchDelta = 0.1;
+    double scoreRightDelta = 0.1;
+    double scoreLeftDelta = 0.1;
+    double foldRightDelta = 0.1;
+    double foldLeftDelta = 0.1;
+    */
+	
+	//boolean areTracksExtended = false; //when the servo folds open these tracks, declare true
+    //boolean isConveyorMoving = false; //false if conveyor is not moving. changes if it is
+
+	
+*********Teleop*********
+
+/*
+        //Block Manipulation Mapping
+        motorConveyor_1 = hardwareMap.dcMotor.get("motor_5");
+        motorConveyor_2 = hardwareMap.dcMotor.get("motor_6");
+        motorConveyor_2.setDirection(DcMotor.Direction.REVERSE);
+        srvoSwitch = hardwareMap.servo.get("servo_3");
+        srvoScoreRight = hardwareMap.servo.get("servo_4");
+        srvoScoreLeft = hardwareMap.servo.get("servo_5");
+        srvoFoldRight = hardwareMap.servo.get("servo_6");
+        srvoFoldLeft = hardwareMap.servo.get("servo_7");
+        */
+
+		// assign the starting position of all the servos
+        //reset();
+		
+		/*public void reset(){
+        foldingTracksPosition = 0.2;
+        plowPosition = 0.2;
+        switchPosition = 0.2;
+        scoreRightPosition = 0.2;
+        scoreLeftPosition = 0.2;
+        foldRightPosition = 0.2;
+        foldLeftPosition = 0.2;
+    }*/
+
+    /*public void plowCheck(){
+        //Deals with the plow
+        if (gamepad1.y) {
+            if(isPlowDown){ //plow is down, move back up
+                srvoPlow.setPosition(1.0);
+            } else { //plow is up, but for some reason, we want it back down
+                srvoPlow.setPosition(0.0);
+            }
+        }
+    }
+
+    public void conveyerCheck(float right){
+        //So over here, first have the control for the conveyer belts. I guess its an on off system so button
+
+        if (gamepad2.x) {
+            if(isConveyorMoving){ //plow is down, move back up
+               // motorRightTread.setPower(right);
+            } else { //plow is up, but for some reason, we want it back down
+                srvoPlow.setPosition(0.0);
+            }
+        }
+    }*/
+	
+	//conveyerCheck(right);
+	//plowCheck();

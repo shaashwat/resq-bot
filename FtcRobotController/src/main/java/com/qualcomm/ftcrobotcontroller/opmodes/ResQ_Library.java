@@ -22,84 +22,52 @@ public abstract class ResQ_Library extends OpMode {
     //****************HARDWARE MAPPING DEFINITIONS****************//
 
     //For Driving Only
-    DcMotor motorRightTread;
-    DcMotor motorLeftTread;
-    DcMotor motorRightFoldableTread;
-    DcMotor motorLeftFoldableTread;
+    DcMotor motorLeftFront;
+    DcMotor motorLeftMid;
+    DcMotor motorLeftBack;
+    DcMotor motorRightFront;
+    DcMotor motorRightMid;
+    DcMotor motorRightBack;
 
-    Servo srvoFoldingTracks; //We use the initial tracks, but then fold additional ones with this
-    Servo srvoPlow;
-
-
-    //For Block Manipulation Only
-    DcMotor motorConveyor_1; //The system we use requires two
-    DcMotor motorConveyor_2; //motors to bring blocks from the field
-
-    Servo srvoSwitch; //this servo switches which side the blocks fall into
-    Servo srvoScoreLeft; //opens and scores blocks on left
-    Servo srvoScoreRight; //opens and scores blocks on right
-    Servo srvoFoldLeft; //folds out scoring mechanism on the left
-    Servo srvoFoldRight; //folds out scoring mechanism on the right
-
+    //Autonomous
+    Servo srvoScoreClimbers;
+    Servo srvoPushButton;
 
     //For Multiple Use or Other
     DcMotor motorHangingMech; //responsible for lifting the entire robot
+    Servo srvoHang_1;
+    Servo srvoHang_2;
+    Servo srvoDong_1;
+    Servo srvoDong_2;
+
 
     //****************OTHER DEFINITIONS****************//
 
-    //The servo positions
-    double foldingTracksPosition;
-    double plowPosition;
-    double switchPosition;
-    double scoreRightPosition;
-    double scoreLeftPosition;
-    double foldRightPosition;
-    double foldLeftPosition;
-
 
     //Servo Min's and Max's (to prevent the servo from extending too far in any direction
-    final static double FOLDTRACK_MIN_RANGE  = 0.20;
-    final static double FOLDTRACK_MAX_RANGE  = 0.90;
-    final static double PLOW_MIN_RANGE  = 0.20;
-    final static double PLOW_MAX_RANGE  = 0.90;
-    final static double SWITCH_MIN_RANGE  = 0.20;
-    final static double SWITCH_MAX_RANGE  = 0.90;
-    final static double SCORERIGHT_MIN_RANGE  = 0.20;
-    final static double SCORERIGHT_MAX_RANGE  = 0.90;
-    final static double SCORELEFT_MIN_RANGE  = 0.20;
-    final static double SCORELEFT_MAX_RANGE  = 0.90;
-    final static double FOLDRIGHT_MIN_RANGE  = 0.20;
-    final static double FOLDRIGHT_MAX_RANGE  = 0.90;
-    final static double FOLDLEFT_MIN_RANGE  = 0.20;
-    final static double FOLDLEFT_MAX_RANGE  = 0.90;
+    final static double HANG1_MIN_RANGE  = 0.20;
+    final static double HANG1_MAX_RANGE  = 0.90;
+    final static double HANG2_MIN_RANGE  = 0.20;
+    final static double HANG2_MAX_RANGE  = 0.90;
+    final static double DONG1_MIN_RANGE  = 0.20;
+    final static double DONG1_MAX_RANGE  = 0.90;
+    final static double DONG2_MIN_RANGE  = 0.20;
+    final static double DONG2_MAX_RANGE  = 0.90;
 
-
-    /* This may not be needed, because a method can individually change a servo between set values.
-    //Servo Delta changes (higher the value, the quicker it changes and the driver has to press less, but also lowers precision)
-    double foldTrackDelta = 0.1;
-    double plowDelta = 0.1;
-    double switchDelta = 0.1;
-    double scoreRightDelta = 0.1;
-    double scoreLeftDelta = 0.1;
-    double foldRightDelta = 0.1;
-    double foldLeftDelta = 0.1;
-    */
 
     //Bools and other important stuff
-    boolean areTracksExtended = false; //when the servo folds open these tracks, declare true
     boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
-    boolean isConveyorMoving = false; //false if conveyor is not moving. changes if it is
 
     //****************TELEOP METHODS****************//
 
     public void drive(float left, float right){
         // Drives
-        motorRightTread.setPower(right);
-        motorLeftTread.setPower(left);
-        if(areTracksExtended){
-            motorRightFoldableTread.setPower(right);
-            motorLeftFoldableTread.setPower(left);
-        }
+        motorLeftFront.setPower(left);
+        motorLeftMid.setPower(left);
+        motorLeftBack.setPower(left);
+        motorRightFront.setPower(right);
+        motorRightMid.setPower(right);
+        motorRightBack.setPower(right);
     }
 
     //****************AUTONOMOUS METHODS****************//
