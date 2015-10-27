@@ -1,6 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 /**
@@ -30,6 +31,12 @@ public class ResQ_TeleOp extends ResQ_Library {
         srvoHang_2 = hardwareMap.servo.get("servo_3");
         srvoDong_1 = hardwareMap.servo.get("servo_4");
         srvoDong_2 = hardwareMap.servo.get("servo_5");
+
+        //set the direction of the servos
+        srvoDong_1.setDirection(Servo.Direction.FORWARD);
+        srvoDong_2.setDirection(Servo.Direction.FORWARD);
+        srvoHang_1.setDirection(Servo.Direction.FORWARD);
+        srvoHang_1.setDirection(Servo.Direction.FORWARD);
     }
 
 
@@ -51,11 +58,10 @@ public class ResQ_TeleOp extends ResQ_Library {
 
 
         //****************OTHER****************//
-
+        
+        srvoDong_1.setPosition(0.5);
 
         //****************TELEMETRY****************//
-
-        telemetry.addData("turn up", "lol");
     }
 
     @Override
