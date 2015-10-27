@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 
 /**
  * The Library responsible for every definition and method. All opmodes will inherit methods from here.
@@ -32,6 +33,9 @@ public abstract class ResQ_Library extends OpMode {
     //Autonomous
     Servo srvoScoreClimbers;
     Servo srvoPushButton;
+
+    //Sensors
+    UltrasonicSensor sanic;
 
     //For Multiple Use or Other
     DcMotor motorHangingMech; //responsible for lifting the entire robot
@@ -74,6 +78,11 @@ public abstract class ResQ_Library extends OpMode {
 
     public void GoForward (int time, int direction) {
 
+    }
+
+    //****************SENSOR METHODS****************//
+    public double getUltraSonicValues() {
+        return sanic.getUltrasonicLevel();
     }
 
     //****************NUMBER MANIPULATION METHODS****************//
