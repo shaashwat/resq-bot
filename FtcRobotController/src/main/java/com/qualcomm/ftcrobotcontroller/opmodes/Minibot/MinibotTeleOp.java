@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * TeleOp Mode
@@ -60,6 +61,8 @@ public class MinibotTeleOp extends OpMode {
     
     DcMotor motorPower;
     Servo turn;
+
+    ColorSensor sensorRGB;
 
     /**
      * Constructor
@@ -97,6 +100,8 @@ public class MinibotTeleOp extends OpMode {
 
         // assign the starting position of the wrist and claw
         turnPosition = 0.5;
+
+        sensorRGB = hardwareMap.colorSensor.get("lady");
     }
 
     /*
@@ -151,8 +156,9 @@ public class MinibotTeleOp extends OpMode {
         // write position values to the wrist and claw servo
         turn.setPosition(turnPosition);
 
-
-
+        telemetry.addData("Red  ", sensorRGB.red());
+        telemetry.addData("Green", sensorRGB.green());
+        telemetry.addData("Blue ", sensorRGB.blue());
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
@@ -160,9 +166,9 @@ public class MinibotTeleOp extends OpMode {
 		 * will return a null value. The legacy NXT-compatible motor controllers
 		 * are currently write only.
 		 */
-        telemetry.addData("Text", "*** Robot Data***");
+        /*telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("turn", "turn:  " + String.format("%.2f", turnPosition));
-        telemetry.addData("Power tgt pwr",  "Power  pwr: " + String.format("%.2f", Power));
+        telemetry.addData("Power tgt pwr",  "Power  pwr: " + String.format("%.2f", Power));*/
 
     }
 

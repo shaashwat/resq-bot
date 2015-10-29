@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * Autonomous program - for first meet use only
@@ -79,6 +80,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	@Override
 	public void init() {
+		sensorRGB = hardwareMap.colorSensor.get("lady");
 		leftPower = 1.0f;
 		rightPower = 1.0f;
 		drive(leftPower, rightPower);
