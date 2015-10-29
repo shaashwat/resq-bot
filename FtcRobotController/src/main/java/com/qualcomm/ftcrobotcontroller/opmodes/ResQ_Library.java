@@ -91,14 +91,6 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     //****************SENSOR METHODS****************//
-    /*
-     * Maps Ultrasonic sensor
-     * It's needed due to include issues with the UltrasonicTest class (just trust me it needs to exist)
-     */
-    public void mapSensor() {
-        sanic = hardwareMap.ultrasonicSensor.get("ultrasonic_1");
-    }
-
     public double getDistance() {
         return sanic.getUltrasonicLevel();
     }
