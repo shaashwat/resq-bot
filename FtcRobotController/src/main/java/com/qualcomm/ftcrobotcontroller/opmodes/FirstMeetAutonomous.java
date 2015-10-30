@@ -80,7 +80,6 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	@Override
 	public void init() {
-		sensorRGB = hardwareMap.colorSensor.get("lady");
 		leftPower = 1.0f;
 		rightPower = 1.0f;
 		drive(leftPower, rightPower);

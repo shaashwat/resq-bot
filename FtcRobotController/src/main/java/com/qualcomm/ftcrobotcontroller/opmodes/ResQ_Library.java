@@ -60,7 +60,7 @@ public abstract class ResQ_Library extends OpMode {
 
 
     //Bools and other important stuff
-    boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
+    //boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
 
     //****************TELEOP METHODS****************//
 
