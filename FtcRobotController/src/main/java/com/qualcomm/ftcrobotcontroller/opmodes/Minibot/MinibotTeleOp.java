@@ -36,6 +36,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 
 /**
  * TeleOp Mode
@@ -63,6 +64,8 @@ public class MinibotTeleOp extends OpMode {
     Servo turn;
 
     ColorSensor sensorRGB;
+
+    UltrasonicSensor sensorUltra;
 
     /**
      * Constructor
@@ -102,6 +105,8 @@ public class MinibotTeleOp extends OpMode {
         turnPosition = 0.5;
 
         sensorRGB = hardwareMap.colorSensor.get("lady");
+
+        sensorUltra = hardwareMap.ultrasonicSensor.get("sonic_1");
     }
 
     /*
@@ -159,6 +164,8 @@ public class MinibotTeleOp extends OpMode {
         telemetry.addData("Red  ", sensorRGB.red());
         telemetry.addData("Green", sensorRGB.green());
         telemetry.addData("Blue ", sensorRGB.blue());
+
+        telemetry.addData("Distance", sensorUltra.getUltrasonicLevel());
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using

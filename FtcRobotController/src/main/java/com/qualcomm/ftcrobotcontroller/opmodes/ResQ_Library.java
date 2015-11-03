@@ -46,6 +46,16 @@ public abstract class ResQ_Library extends OpMode {
 
 
     //****************OTHER DEFINITIONS****************//
+    //Ultrasonic algorithm Constants
+    final static double RIGHT_TARGET_DISTANCE = 27.0;
+    final static double LEFT_TARGET_DISTANCE = 27.0;
+    final static double STOP_CONST = 6.0;
+
+    //Constants that determine how strong the robot's speed and turning should be
+    final static float SPEED_CONST = 1.55f;
+    final static double LEFT_STEERING_CONST = 0.85;
+    final static double RIGHT_STEERING_CONST = 0.8;
+
 
 
     //Servo Min's and Max's (to prevent the servo from extending too far in any direction
@@ -60,7 +70,7 @@ public abstract class ResQ_Library extends OpMode {
 
 
     //Bools and other important stuff
-    boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
+    //boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
 
     //****************TELEOP METHODS****************//
 
@@ -81,8 +91,32 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     //****************SENSOR METHODS****************//
-    public double getUltraSonicValues() {
+    public double getDistance() {
         return sanic.getUltrasonicLevel();
+    }
+
+    public void moveToClosestObject() {
+        double ultraRight;
+        double ultraLeft;
+
+        double rightSpeed;
+        double leftSpeed;
+
+        while(true) {
+            ultraRight = 0; //set these values to sensor readout
+            ultraLeft = 0;
+
+            rightSpeed = SPEED_CONST * (ultraRight - RIGHT_TARGET_DISTANCE) + -RIGHT_STEERING_CONST * (ultraLeft - ultraRight); //speedl = kpd * (dl - tl) + kps * (dl - dr)
+            leftSpeed = SPEED_CONST * (ultraLeft - LEFT_TARGET_DISTANCE) + -LEFT_STEERING_CONST * (ultraRight - ultraLeft);
+
+            drive((float)rightSpeed, (float)leftSpeed);
+
+            if(Math.abs(ultraRight - RIGHT_TARGET_DISTANCE) + Math.abs(ultraLeft - LEFT_TARGET_DISTANCE) < STOP_CONST) {
+                break;
+            }
+
+            //wait(100);
+        }
     }
 
     //****************NUMBER MANIPULATION METHODS****************//

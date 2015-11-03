@@ -59,7 +59,7 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         //****************OTHER****************//
         
-        srvoDong_1.setPosition(0.5);
+        //srvoDong_1.setPosition(0.5);
 
         //****************TELEMETRY****************//
     }

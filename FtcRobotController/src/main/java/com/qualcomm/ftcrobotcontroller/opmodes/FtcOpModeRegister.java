@@ -29,9 +29,13 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
-package com.qualcomm.ftcrobotcontroller.opmodes.ftcdefault;
+package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.opmodes.Minibot.MinibotTeleOp;
+import com.qualcomm.ftcrobotcontroller.opmodes.ftcdefault.K9TeleOp;
+import com.qualcomm.ftcrobotcontroller.opmodes.ftcdefault.NullOp;
+import com.qualcomm.ftcrobotcontroller.opmodes.ftcdefault.PushBotAuto;
+import com.qualcomm.ftcrobotcontroller.opmodes.ftcdefault.PushBotManual;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
@@ -57,11 +61,13 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
 
     manager.register("NullOp", NullOp.class);
-
-    manager.register("K9TeleOp", K9TeleOp.class);
-    manager.register ("PushBotAuto", PushBotAuto.class);
-    manager.register ("PushBotManual", PushBotManual.class);
     manager.register ("Minibot", MinibotTeleOp.class);
+    manager.register ("Teleop", ResQ_TeleOp.class);
+    manager.register ("Autonomous", ResQ_Autonomous.class);
+    /*manager.register("K9TeleOp", K9TeleOp.class);
+    manager.register ("PushBotAuto", PushBotAuto.class);
+    manager.register ("PushBotManual", PushBotManual.class);*/
+
 
     /*
      * Uncomment any of the following lines if you want to register an op mode.
