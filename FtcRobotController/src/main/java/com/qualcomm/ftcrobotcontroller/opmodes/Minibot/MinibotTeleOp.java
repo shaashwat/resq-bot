@@ -107,7 +107,7 @@ public class MinibotTeleOp extends OpMode {
 
         sensorRGB = hardwareMap.colorSensor.get("lady");
 
-        sensorUltra = hardwareMap.ultrasonicSensor.get("sonic_1");
+        //sensorUltra = hardwareMap.ultrasonicSensor.get("sonic_1");
     }
 
     /*
@@ -166,7 +166,7 @@ public class MinibotTeleOp extends OpMode {
         telemetry.addData("Green", sensorRGB.green());
         telemetry.addData("Blue ", sensorRGB.blue());
 
-        telemetry.addData("Distance", sensorUltra.getUltrasonicLevel());
+        //telemetry.addData("Distance", sensorUltra.getUltrasonicLevel());
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
