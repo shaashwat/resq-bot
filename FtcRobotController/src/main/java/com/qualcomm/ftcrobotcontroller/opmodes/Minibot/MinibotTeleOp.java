@@ -97,12 +97,13 @@ public class MinibotTeleOp extends OpMode {
 		 * We also assume that there are two servos "servo_1" and "servo_6"
 		 *    "servo_1" controls the turn joint of the manipulator.
 		 */
-        motorPower = hardwareMap.dcMotor.get("motor_1");
+        /*motorPower = hardwareMap.dcMotor.get("motor_1");
 
         turn = hardwareMap.servo.get("servo_1");
 
         // assign the starting position of the wrist and claw
         turnPosition = 0.5;
+        */
 
         sensorRGB = hardwareMap.colorSensor.get("lady");
 
