@@ -134,7 +134,7 @@ public class MinibotTeleOp extends OpMode {
         Power =  (float)scaleInput(Power);
 
         // write the values to the motors
-        motorPower.setPower(Power);
+       // motorPower.setPower(Power);
 
         // update the position of the turn.
         if (gamepad1.a || gamepad1.right_stick_x > 0.0f) {
@@ -151,10 +151,10 @@ public class MinibotTeleOp extends OpMode {
         
 
         // clip the position values so that they never exceed their allowed range.
-        turnPosition = Range.clip(turnPosition, TURN_MIN_RANGE, TURN_MAX_RANGE);
+        //turnPosition = Range.clip(turnPosition, TURN_MIN_RANGE, TURN_MAX_RANGE);
 
         // write position values to the wrist and claw servo
-        turn.setPosition(turnPosition);
+        //turn.setPosition(turnPosition);
 
         telemetry.addData("Red  ", sensorRGB.red());
         telemetry.addData("Green", sensorRGB.green());
