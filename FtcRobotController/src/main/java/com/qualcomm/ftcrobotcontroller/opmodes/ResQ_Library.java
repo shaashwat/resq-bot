@@ -35,7 +35,7 @@ public abstract class ResQ_Library extends OpMode {
     Servo srvoPushButton;
 
     //Sensors
-    UltrasonicSensor sanic;
+    UltrasonicSensor sanicSensor;
 
     //For Multiple Use or Other
     DcMotor motorHangingMech; //responsible for lifting the entire robot
@@ -92,7 +92,7 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************SENSOR METHODS****************//
     public double getDistance() {
-        return sanic.getUltrasonicLevel();
+        return sanicSensor.getUltrasonicLevel();
     }
 
     public void moveToClosestObject() {

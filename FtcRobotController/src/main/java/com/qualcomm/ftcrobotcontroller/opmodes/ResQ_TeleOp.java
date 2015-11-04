@@ -26,12 +26,19 @@ public class ResQ_TeleOp extends ResQ_Library {
         motorRightBack = hardwareMap.dcMotor.get("motor_6");
 
         //Other Mapping
-        motorHangingMech = hardwareMap.dcMotor.get("motor_7");
-        srvoHang_1 = hardwareMap.servo.get("servo_2");
-        srvoHang_2 = hardwareMap.servo.get("servo_3");
-        srvoDong_1 = hardwareMap.servo.get("servo_4");
-        srvoDong_2 = hardwareMap.servo.get("servo_5");
+        //motorHangingMech = hardwareMap.dcMotor.get("motor_7");
+        srvoHang_1 = hardwareMap.servo.get("servo_1");
+        srvoHang_2 = hardwareMap.servo.get("servo_2");
+        srvoDong_1 = hardwareMap.servo.get("servo_3"); //The left servo
+        srvoDong_2 = hardwareMap.servo.get("servo_4"); //The right servo
+        srvoPushButton = hardwareMap.servo.get("servo_5");
+        srvoScoreClimbers = hardwareMap.servo.get("servo_6");;
 
+
+        //set the direciton of the motors
+        motorLeftFront.setDirection(DcMotor.Direction.REVERSE);
+        motorLeftMid.setDirection(DcMotor.Direction.REVERSE);
+        motorLeftBack.setDirection(DcMotor.Direction.REVERSE);
         //set the direction of the servos
         srvoDong_1.setDirection(Servo.Direction.FORWARD);
         srvoDong_2.setDirection(Servo.Direction.FORWARD);
@@ -52,7 +59,13 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         //****************DRIVING****************//
 
-        drive(left, right);
+        //drive(left, right);
+        motorLeftFront.setPower(left);
+        motorLeftMid.setPower(left);
+        motorLeftBack.setPower(left);
+        motorRightFront.setPower(right);
+        motorRightMid.setPower(right);
+        motorRightBack.setPower(right);
 
         //****************BLOCK MANIPULATION****************//
 
@@ -62,6 +75,13 @@ public class ResQ_TeleOp extends ResQ_Library {
         //srvoDong_1.setPosition(0.5);
 
         //****************TELEMETRY****************//
+
+        telemetry.addData("", "******************");
+        telemetry.addData("Right Power", "" + String.format("%.2f", right));
+        telemetry.addData("Left Power", "" + String.format("%.2f", left));
+        telemetry.addData("Left Front Power:", "" + String.format("%.2f", right));
+        telemetry.addData("Right Back Power", "" + String.format("%.2f", left));
+
     }
 
     @Override
