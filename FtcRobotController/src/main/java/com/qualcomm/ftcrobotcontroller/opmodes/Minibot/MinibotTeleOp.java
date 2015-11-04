@@ -65,8 +65,6 @@ public class MinibotTeleOp extends OpMode {
 
     ColorSensor sensorRGB;
 
-    UltrasonicSensor sensorUltra;
-
     /**
      * Constructor
      */
@@ -106,8 +104,6 @@ public class MinibotTeleOp extends OpMode {
         */
 
         sensorRGB = hardwareMap.colorSensor.get("lady");
-
-        //sensorUltra = hardwareMap.ultrasonicSensor.get("sonic_1");
     }
 
     /*
@@ -129,7 +125,7 @@ public class MinibotTeleOp extends OpMode {
         // 1 is full down
         // direction: Power_stick_x ranges from -1 to 1, where -1 is full Power
         // and 1 is full right
-        float throttle = -gamepad1.left_stick_y;
+        /*float throttle = -gamepad1.left_stick_y;
         float Power = throttle;
 
         // clip the power values so that the values never exceed +/- 1
@@ -153,7 +149,7 @@ public class MinibotTeleOp extends OpMode {
             // if the Y button or joystick right is pushed on gamepad1, decrease the position of
             // the turn servo.
             turnPosition -= turnDelta;
-        }
+        }*/
         
 
         // clip the position values so that they never exceed their allowed range.
@@ -162,11 +158,9 @@ public class MinibotTeleOp extends OpMode {
         // write position values to the wrist and claw servo
         //turn.setPosition(turnPosition);
 
-        telemetry.addData("Red  ", sensorRGB.red());
+        /*telemetry.addData("Red  ", sensorRGB.red());
         telemetry.addData("Green", sensorRGB.green());
-        telemetry.addData("Blue ", sensorRGB.blue());
-
-        //telemetry.addData("Distance", sensorUltra.getUltrasonicLevel());
+        telemetry.addData("Blue ", sensorRGB.blue());*/
 
 		/*
 		 * Send telemetry data back to driver station. Note that if we are using
@@ -174,9 +168,9 @@ public class MinibotTeleOp extends OpMode {
 		 * will return a null value. The legacy NXT-compatible motor controllers
 		 * are currently write only.
 		 */
-        /*telemetry.addData("Text", "*** Robot Data***");
+        telemetry.addData("Text", "*** Robot Data***");
         telemetry.addData("turn", "turn:  " + String.format("%.2f", turnPosition));
-        telemetry.addData("Power tgt pwr",  "Power  pwr: " + String.format("%.2f", Power));*/
+        telemetry.addData("Power tgt pwr",  "Power  pwr: " + String.format("%.2f", Power));
 
     }
 
