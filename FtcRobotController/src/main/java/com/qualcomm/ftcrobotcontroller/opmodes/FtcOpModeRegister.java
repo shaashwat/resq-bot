@@ -36,6 +36,7 @@ import com.qualcomm.ftcrobotcontroller.opmodes.ftcdefault.K9TeleOp;
 import com.qualcomm.ftcrobotcontroller.opmodes.ftcdefault.NullOp;
 import com.qualcomm.ftcrobotcontroller.opmodes.ftcdefault.PushBotAuto;
 import com.qualcomm.ftcrobotcontroller.opmodes.ftcdefault.PushBotManual;
+import com.qualcomm.ftcrobotcontroller.opmodes.test.UltraTest;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
 
@@ -64,6 +65,7 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register ("Minibot", MinibotTeleOp.class);
     manager.register ("Teleop", ResQ_TeleOp.class);
     manager.register ("Autonomous", ResQ_Autonomous.class);
+    manager.register("Ultrasonic", UltraTest.class);
     /*manager.register("K9TeleOp", K9TeleOp.class);
     manager.register ("PushBotAuto", PushBotAuto.class);
     manager.register ("PushBotManual", PushBotManual.class);*/

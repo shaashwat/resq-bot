@@ -168,9 +168,9 @@ public class MinibotTeleOp extends OpMode {
 		 * will return a null value. The legacy NXT-compatible motor controllers
 		 * are currently write only.
 		 */
-        telemetry.addData("Text", "*** Robot Data***");
-        telemetry.addData("turn", "turn:  " + String.format("%.2f", turnPosition));
-        telemetry.addData("Power tgt pwr",  "Power  pwr: " + String.format("%.2f", Power));
+        //telemetry.addData("Text", "*** Robot Data***");
+        //telemetry.addData("turn", "turn:  " + String.format("%.2f", turnPosition));
+        //telemetry.addData("Power tgt pwr",  "Power  pwr: " + String.format("%.2f", Power));
 
     }
 
