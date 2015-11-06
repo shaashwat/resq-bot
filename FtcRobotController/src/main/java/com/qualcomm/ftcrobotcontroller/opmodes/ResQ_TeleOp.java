@@ -77,10 +77,6 @@ public class ResQ_TeleOp extends ResQ_Library {
         //****************TELEMETRY****************//
 
         telemetry.addData("", "******************");
-        telemetry.addData("Right Power", "" + String.format("%.2f", right));
-        telemetry.addData("Left Power", "" + String.format("%.2f", left));
-        telemetry.addData("Left Front Power:", "" + String.format("%.2f", right));
-        telemetry.addData("Right Back Power", "" + String.format("%.2f", left));
 
     }
 
