@@ -123,20 +123,19 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	}
 
 	public void moveTillLine () {
-		while(1!=2) { //keep looping until sensor finds a color
-            colorCheck();
+        boolean foundLine = false;
+		while(!foundLine) { //keep looping until sensor finds a color
 			//stop movement immediately
 			leftPower = 0.0f;
 			rightPower = 0.0f;
 			drive(leftPower, rightPower);
 
+            colorCheck();
 			//Determine what color it is to see what team we're on
-			if(2==2) { //color is red
-				teamWeAreOn = Team.RED;
+			if(teamWeAreOn == Team.RED) { //color is red
 				TurnToBeacon();
 			}
-			else if (2==2) { //color is blue
-				teamWeAreOn = Team.BLUE;
+			else if (teamWeAreOn == Team.BLUE) { //color is blue
 				TurnToBeacon();
 			}
 			else { //color is none of the above, go back a couple of steps and try again
