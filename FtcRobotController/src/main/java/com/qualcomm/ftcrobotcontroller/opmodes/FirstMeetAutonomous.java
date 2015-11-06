@@ -63,6 +63,8 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	ColorSensor sensorRGB;
 
+
+
 	float leftPower;
 	float rightPower;
 	double currentTimeCatch;
@@ -83,6 +85,15 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	@Override
 	public void init() {
 		sensorRGB = hardwareMap.colorSensor.get("color");
+
+        //Driving Mapping
+        motorLeftFront = hardwareMap.dcMotor.get("motor_1");
+        motorLeftMid = hardwareMap.dcMotor.get("motor_2");
+        motorLeftBack = hardwareMap.dcMotor.get("motor_3");
+        motorRightFront = hardwareMap.dcMotor.get("motor_4");
+        motorRightMid = hardwareMap.dcMotor.get("motor_5");
+        motorRightBack = hardwareMap.dcMotor.get("motor_6");
+
 		leftPower = 1.0f;
 		rightPower = 1.0f;
 		drive(leftPower, rightPower);
