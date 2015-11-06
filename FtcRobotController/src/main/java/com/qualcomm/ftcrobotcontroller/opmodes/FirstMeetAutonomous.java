@@ -61,6 +61,8 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		RED, BLUE, UNKNOWN
 	}
 
+	ColorSensor sensorRGB;
+
 	float leftPower;
 	float rightPower;
 	double currentTimeCatch;
@@ -80,15 +82,23 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	@Override
 	public void init() {
-		//sensorRGB = hardwareMap.colorSensor.get("lady");
+		sensorRGB = hardwareMap.colorSensor.get("color");
 		leftPower = 1.0f;
 		rightPower = 1.0f;
 		drive(leftPower, rightPower);
 		moveTillLine();
 	}
 
-	public void ColorCheck(){
-
+	public void colorCheck(){
+		int red = sensorRGB.red();
+		int blue = sensorRGB.blue();
+        telemetry.addData("blue", blue);
+        telemetry.addData("red", red);
+        int threshold = 900;
+        if(red > threshold || threshold > 900){
+		    if(blue > red) teamWeAreOn = Team.BLUE;
+		    else if(red > blue) teamWeAreOn = Team.RED;
+        }
 	}
 
 	@Override
@@ -103,6 +113,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	public void moveTillLine () {
 		while(1!=2) { //keep looping until sensor finds a color
+            colorCheck();
 			//stop movement immediately
 			leftPower = 0.0f;
 			rightPower = 0.0f;
