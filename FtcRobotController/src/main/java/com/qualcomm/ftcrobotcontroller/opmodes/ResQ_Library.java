@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * The Library responsible for every definition and method. All opmodes will inherit methods from here.
@@ -36,6 +37,7 @@ public abstract class ResQ_Library extends OpMode {
 
     //Sensors
     UltrasonicSensor sanicSensor;
+    ColorSensor sensorRGB;
 
     //For Multiple Use or Other
     DcMotor motorHangingMech; //responsible for lifting the entire robot
@@ -50,6 +52,9 @@ public abstract class ResQ_Library extends OpMode {
     final static double RIGHT_TARGET_DISTANCE = 27.0;
     final static double LEFT_TARGET_DISTANCE = 27.0;
     final static double STOP_CONST = 6.0;
+
+    //Color Sensor Calibrations
+    final static int COLOR_THRESHOLD = 900;
 
     //Constants that determine how strong the robot's speed and turning should be
     final static float SPEED_CONST = 1.55f;
@@ -165,6 +170,24 @@ public abstract class ResQ_Library extends OpMode {
 
         // return scaled value.
         return dScale;
+    }
+
+    String getScaledColor(int r, int g, int b){
+        if(r > COLOR_THRESHOLD || g > COLOR_THRESHOLD || b > COLOR_THRESHOLD){
+            if(r > g + b){
+                return "RED";
+            }
+            else if(b > r + g){
+                return "BLUE";
+            }
+            else if(g > r + b){
+                return "GREEN";
+            }
+            else return "TOO STRONG";
+        }
+        else {
+            return "GREY";
+        }
     }
 
 }

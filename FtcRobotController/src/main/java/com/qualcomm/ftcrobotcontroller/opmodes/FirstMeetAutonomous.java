@@ -103,10 +103,11 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void colorCheck(){
 		int red = sensorRGB.red();
 		int blue = sensorRGB.blue();
+        int green = sensorRGB.green();
         telemetry.addData("blue", blue);
         telemetry.addData("red", red);
-        int threshold = 900;
-        if(red > threshold || threshold > 900){
+        telemetry.addData("assumed", getScaledColor(red, blue, green));
+        if(red > COLOR_THRESHOLD || blue > COLOR_THRESHOLD){
 		    if(blue > red) teamWeAreOn = Team.BLUE;
 		    else if(red > blue) teamWeAreOn = Team.RED;
         }
