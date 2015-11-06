@@ -61,6 +61,10 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		RED, BLUE, UNKNOWN
 	}
 
+	ColorSensor sensorRGB;
+
+
+
 	float leftPower;
 	float rightPower;
 	double currentTimeCatch;
@@ -80,15 +84,32 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	@Override
 	public void init() {
-		//sensorRGB = hardwareMap.colorSensor.get("lady");
+		sensorRGB = hardwareMap.colorSensor.get("color");
+
+        //Driving Mapping
+        motorLeftFront = hardwareMap.dcMotor.get("motor_1");
+        motorLeftMid = hardwareMap.dcMotor.get("motor_2");
+        motorLeftBack = hardwareMap.dcMotor.get("motor_3");
+        motorRightFront = hardwareMap.dcMotor.get("motor_4");
+        motorRightMid = hardwareMap.dcMotor.get("motor_5");
+        motorRightBack = hardwareMap.dcMotor.get("motor_6");
+
 		leftPower = 1.0f;
 		rightPower = 1.0f;
 		drive(leftPower, rightPower);
 		moveTillLine();
 	}
 
-	public void ColorCheck(){
-
+	public void colorCheck(){
+		int red = sensorRGB.red();
+		int blue = sensorRGB.blue();
+        telemetry.addData("blue", blue);
+        telemetry.addData("red", red);
+        int threshold = 900;
+        if(red > threshold || threshold > 900){
+		    if(blue > red) teamWeAreOn = Team.BLUE;
+		    else if(red > blue) teamWeAreOn = Team.RED;
+        }
 	}
 
 	@Override
@@ -102,19 +123,19 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	}
 
 	public void moveTillLine () {
-		while(1!=2) { //keep looping until sensor finds a color
+        boolean foundLine = false;
+		while(!foundLine) { //keep looping until sensor finds a color
 			//stop movement immediately
 			leftPower = 0.0f;
 			rightPower = 0.0f;
 			drive(leftPower, rightPower);
 
+            colorCheck();
 			//Determine what color it is to see what team we're on
-			if(2==2) { //color is red
-				teamWeAreOn = Team.RED;
+			if(teamWeAreOn == Team.RED) { //color is red
 				TurnToBeacon();
 			}
-			else if (2==2) { //color is blue
-				teamWeAreOn = Team.BLUE;
+			else if (teamWeAreOn == Team.BLUE) { //color is blue
 				TurnToBeacon();
 			}
 			else { //color is none of the above, go back a couple of steps and try again
