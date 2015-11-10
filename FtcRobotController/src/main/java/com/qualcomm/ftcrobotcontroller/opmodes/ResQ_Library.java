@@ -1,6 +1,7 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -34,6 +35,7 @@ public abstract class ResQ_Library extends OpMode {
 
     //Sensors
     UltrasonicSensor sanicSensor;
+    AnalogInput sensorUltra;
     ColorSensor sensorRGB;
 
     //For Multiple Use or Other
