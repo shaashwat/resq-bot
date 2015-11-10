@@ -1,8 +1,10 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -33,7 +35,8 @@ public abstract class ResQ_Library extends OpMode {
     Servo srvoPushButton;
 
     //Sensors
-    UltrasonicSensor sanicSensor;
+    AnalogInput sanicSensor;
+    AnalogInput sanicSensor2;
     ColorSensor sensorRGB;
 
     //For Multiple Use or Other
@@ -54,7 +57,7 @@ public abstract class ResQ_Library extends OpMode {
     final static int COLOR_THRESHOLD = 900;
 
     //Constants that determine how strong the robot's speed and turning should be
-    final static float SPEED_CONST = 1.55f;
+    final static double SPEED_CONST = 0.005;
     final static double LEFT_STEERING_CONST = 0.85;
     final static double RIGHT_STEERING_CONST = 0.8;
 
@@ -67,7 +70,6 @@ public abstract class ResQ_Library extends OpMode {
     final static double DONG1_MAX_RANGE  = 0.90;
     final static double DONG2_MIN_RANGE  = 0.20;
     final static double DONG2_MAX_RANGE  = 0.90;
-
 
     //Bools and other important stuff
     boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
@@ -104,7 +106,7 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************SENSOR METHODS****************//
     public double getDistance() {
-        return sanicSensor.getUltrasonicLevel();
+        return sanicSensor.getValue();
     }
 
     public void moveToClosestObject() {
@@ -205,4 +207,13 @@ public abstract class ResQ_Library extends OpMode {
         }
     }
 
+    //****************MISC METHODS****************//
+    public void sleep(int millis) {
+        ElapsedTime timer = new ElapsedTime();
+        double startTime = timer.time();
+        double currentTime = 0.0;
+        while(currentTime - startTime < millis) {
+            currentTime = timer.time();
+        }
+    }
 }

@@ -32,13 +32,20 @@ public class GyroTest extends OpMode {
          * return value is not documented, therefore it has
          * to be tested.
          */
+        gyro.calibrate();
+        while(gyro.isCalibrating()) {
+            telemetry.addData("Calibrating: ", "gyro is calibrating...");
+        }
+        telemetry.clearData();
+
         double startDir = gyro.getRotation();
-        double time = 0.0;
+        double startTime = System.currentTimeMillis();
+        double currentTime = 0.0;
 
         double rSpeed = 1.0f;
         double lSpeed = 1.0f;
 
-        while(time%millis == 0) {
+        while(currentTime - startTime < millis) {
             rSpeed = (180 + gyro.getRotation()) * RIGHT_ROTATION_CONST + ROTATION_OFFSET;
             lSpeed = (180 - gyro.getRotation()) * LEFT_ROTATION_CONST + ROTATION_OFFSET;
 
@@ -47,6 +54,8 @@ public class GyroTest extends OpMode {
             lSpeed = Math.max(0, Math.min(1.0, lSpeed));
 
             drive((float) lSpeed, (float) rSpeed);
+            currentTime = System.currentTimeMillis();
+            //we need a wait function
         }
     }
 
