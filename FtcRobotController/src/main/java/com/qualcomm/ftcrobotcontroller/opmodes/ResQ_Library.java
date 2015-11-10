@@ -35,8 +35,9 @@ public abstract class ResQ_Library extends OpMode {
     Servo srvoPushButton;
 
     //Sensors
-    AnalogInput sanicSensor;
-    AnalogInput sanicSensor2;
+    UltrasonicSensor sanicSensor;
+    AnalogInput sensorUltra_1;
+    AnalogInput sanicSensor_2;
     ColorSensor sensorRGB;
 
     //For Multiple Use or Other
@@ -106,7 +107,7 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************SENSOR METHODS****************//
     public double getDistance() {
-        return sanicSensor.getValue();
+        return sensorUltra_1.getValue();
     }
 
     public void moveToClosestObject() {
