@@ -22,7 +22,7 @@ public class ResQ_Autonomous extends ResQ_Library {
 
     @Override
     public void init() {
-        sensorRGB = hardwareMap.colorSensor.get("lady");
+        sensorRGB = hardwareMap.colorSensor.get("color");
 
     }
 

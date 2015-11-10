@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 /**
  * The Library responsible for every definition and method. All opmodes will inherit methods from here.
@@ -13,9 +14,6 @@ import com.qualcomm.robotcore.hardware.UltrasonicSensor;
  */
 public abstract class ResQ_Library extends OpMode {
 
-    /**
-     * Constructor
-     */
     public ResQ_Library() {
 
     }
@@ -35,14 +33,15 @@ public abstract class ResQ_Library extends OpMode {
     Servo srvoPushButton;
 
     //Sensors
-    UltrasonicSensor sanic;
+    UltrasonicSensor sanicSensor;
+    ColorSensor sensorRGB;
 
     //For Multiple Use or Other
     DcMotor motorHangingMech; //responsible for lifting the entire robot
     Servo srvoHang_1;
     Servo srvoHang_2;
-    Servo srvoDong_1;
-    Servo srvoDong_2;
+    Servo srvoDong_Left;
+    Servo srvoDong_Right;
 
 
     //****************OTHER DEFINITIONS****************//
@@ -51,12 +50,13 @@ public abstract class ResQ_Library extends OpMode {
     final static double LEFT_TARGET_DISTANCE = 27.0;
     final static double STOP_CONST = 6.0;
 
+    //Color Sensor Calibrations
+    final static int COLOR_THRESHOLD = 900;
+
     //Constants that determine how strong the robot's speed and turning should be
     final static float SPEED_CONST = 1.55f;
     final static double LEFT_STEERING_CONST = 0.85;
     final static double RIGHT_STEERING_CONST = 0.8;
-
-
 
     //Servo Min's and Max's (to prevent the servo from extending too far in any direction
     final static double HANG1_MIN_RANGE  = 0.20;
@@ -70,7 +70,11 @@ public abstract class ResQ_Library extends OpMode {
 
 
     //Bools and other important stuff
-    //boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
+    boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
+    boolean driveReverse = false; //this reverses the drive so when the robot goes on the ramp, everything works out fine.
+    boolean driveSlow = false; //slows drive to make easy turns. if false, full motion, otherwise slow
+    boolean leftDongDown = false; //when dong is all the way down, release and press again to go back up automatically
+    boolean rightDongDown = false; //same as above but with the right dongler
 
     //****************TELEOP METHODS****************//
 
@@ -84,6 +88,14 @@ public abstract class ResQ_Library extends OpMode {
         motorRightBack.setPower(right);
     }
 
+    public void singleStickDrive(float x, float y) {
+        drive(y + x, y - x);
+    }
+
+    public void hangMotor (float direction){
+        motorHangingMech.setPower(direction);
+    }
+
     //****************AUTONOMOUS METHODS****************//
 
     public void GoForward (int time, int direction) {
@@ -92,7 +104,7 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************SENSOR METHODS****************//
     public double getDistance() {
-        return sanic.getUltrasonicLevel();
+        return sanicSensor.getUltrasonicLevel();
     }
 
     public void moveToClosestObject() {
@@ -121,7 +133,16 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************NUMBER MANIPULATION METHODS****************//
 
-    float ProcessMotorInput(float input){
+    float ProcessDriveInput(float input){ //This calls ProcessToMotorFromJoy but also has drive modification checks
+        float output = ProcessToMotorFromJoy(input);
+        //At this point, the float should be between a 1 and -1 value that accurately sends to motors
+        //Boolean check to ensure full drive control
+        output = (driveReverse == true)?-output:output; //if we're supposed to reverse the drive
+        output = (driveReverse == true)?0.5f*output:output; //if we're supposed to make the drive slow
+        return output;
+    }
+
+    float ProcessToMotorFromJoy(float input){ //This is used in any case where joystick input is to be converted to a motor
         float output = 0.0f;
 
         // clip the power values so that the values never exceed +/- 1
@@ -134,13 +155,12 @@ public abstract class ResQ_Library extends OpMode {
         return output;
     }
 
-
-    /*
-	 * This method scales the joystick input so for low joystick values, the
-	 * scaled value is less than linear.  This is to make it easier to drive
-	 * the robot more precisely at slower speeds.
-	 */
     double scaleInput(double dVal)  {
+        /*
+	     * This method scales the joystick input so for low joystick values, the
+	     * scaled value is less than linear.  This is to make it easier to drive
+	     * the robot more precisely at slower speeds.
+	     */
         double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
                 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
 
@@ -165,6 +185,24 @@ public abstract class ResQ_Library extends OpMode {
 
         // return scaled value.
         return dScale;
+    }
+
+    String getScaledColor(int r, int g, int b){
+        if(r > COLOR_THRESHOLD || g > COLOR_THRESHOLD || b > COLOR_THRESHOLD){
+            if(r > g + b){
+                return "RED";
+            }
+            else if(b > r + g){
+                return "BLUE";
+            }
+            else if(g > r + b){
+                return "GREEN";
+            }
+            else return "TOO STRONG";
+        }
+        else {
+            return "GREY";
+        }
     }
 
 }
