@@ -59,6 +59,7 @@ public class FtcOpModeRegister implements OpModeRegister {
       manager.register("NullOp", NullOp.class);
       manager.register("SanicOp", UltraTest.class);
       manager.register("FirstMeetAutonomous", FirstMeetAutonomous.class);
+      manager.register("TeleOp", ResQ_TeleOp.class);
 
   }
 }
