@@ -31,8 +31,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. */
 
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.qualcomm.ftcrobotcontroller.opmodes.test.UltraTest;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegister;
+
 
 /**
  * Register Op Modes
@@ -54,9 +56,9 @@ public class FtcOpModeRegister implements OpModeRegister {
      *
      * If two or more op modes are registered with the same name, the app will display an error.
      */
+      manager.register("NullOp", NullOp.class);
+      manager.register("SanicOp", UltraTest.class);
+      manager.register("FirstMeetAutonomous", FirstMeetAutonomous.class);
 
-    manager.register("NullOp", NullOp.class);
-    manager.register ("Autonomous", FirstMeetAutonomous.class);
-    manager.register("Teleop", ResQ_TeleOp.class);
   }
 }
