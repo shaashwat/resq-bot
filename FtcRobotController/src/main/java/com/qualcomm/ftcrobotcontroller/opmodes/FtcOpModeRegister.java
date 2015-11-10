@@ -62,10 +62,9 @@ public class FtcOpModeRegister implements OpModeRegister {
      *
      * If two or more op modes are registered with the same name, the app will display an error.
      */
-    manager.register("NullOp", NullOp.class);
-    manager.register("SanicOp", UltraTest.class);
     manager.register("FirstMeetAutonomous", FirstMeetAutonomous.class);
-
+    manager.register("SanicOp", UltraTest.class);
+    manager.register("TeleOp", ResQ_TeleOp.class);
     manager.register("NullOp", NullOp.class);
     manager.register ("Minibot", MinibotTeleOp.class);
     manager.register ("Teleop", ResQ_TeleOp.class);
@@ -108,8 +107,5 @@ public class FtcOpModeRegister implements OpModeRegister {
     //manager.register("PushBotDriveTouch", PushBotDriveTouch.class);
     //manager.register("PushBotIrSeek", PushBotIrSeek.class);
     //manager.register("PushBotSquare", PushBotSquare.class);
-	
-    manager.register ("Autonomous", FirstMeetAutonomous.class);
-    manager.register("Teleop", ResQ_TeleOp.class);
   }
 }
