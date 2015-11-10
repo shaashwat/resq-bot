@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import android.database.CrossProcessCursor;
 
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
@@ -18,6 +19,9 @@ public class ResQ_TeleOp extends ResQ_Library {
 		 * that the names of the devices must match the names used when you
 		 * configured your robot and created the configuration file.
 		 */
+
+        //Sensors
+        sensorUltra_1 = hardwareMap.analogInput.get("sonic_1");
 
         //Driving Mapping
         motorLeftFront = hardwareMap.dcMotor.get("motor_1");
@@ -52,10 +56,10 @@ public class ResQ_TeleOp extends ResQ_Library {
     @Override
     public void loop() {
 
-        //float right = ProcessDriveInput(-gamepad1.right_stick_y); //Used with tracks
-        //float left = ProcessDriveInput(-gamepad1.left_stick_y);
-        float x = ProcessDriveInput(-gamepad1.left_stick_x); //Used with wheels
-        float y = ProcessDriveInput(-gamepad1.left_stick_y);
+        float right = ProcessDriveInput(-gamepad1.right_stick_y); //Used with tracks
+        float left = ProcessDriveInput(-gamepad1.left_stick_y);
+        //float x = ProcessDriveInput(-gamepad1.left_stick_x); //Used with wheels
+        //float y = ProcessDriveInput(-gamepad1.left_stick_y);
 		/*
 		 * Gamepad 1:
 		 * Left joystick moves the left track, and the right joystick moves the right track
@@ -64,8 +68,8 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         //****************DRIVING****************//
 
-        //drive(left, right); //Used with tracks
-        singleStickDrive(x, y); //Used with wheels
+        drive(left, right); //Used with tracks
+        //singleStickDrive(x, y); //Used with wheels
 
         //****************BLOCK MANIPULATION****************//
 
@@ -109,6 +113,7 @@ public class ResQ_TeleOp extends ResQ_Library {
         String tel_Bool_LeftDong = (leftDongDown)?" is down, now moving up":"is up, now moving down";
         String tel_Bool_RightDong = (rightDongDown)?" is down, now moving up":"is up, now moving down";
 
+        telemetry.addData("Distance", sensorUltra_1.getValue());
         telemetry.addData("*****", "Important Booleans");
         telemetry.addData("", "Driving is " + tel_Bool_Reverse + " and " + tel_Bool_Slow);
         telemetry.addData("Left Dongler", "Driving is " + tel_Bool_LeftDong);
