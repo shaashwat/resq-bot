@@ -78,7 +78,10 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         //Donglers
         //Left Dongler System
-        if (gamepad2.right_trigger >= 0.5f) { //lower right trigger means Left Dongler
+        //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+        //README: I am using gamepad2.right_trigger/bumper for the hanging code please re-map the dongler controls!
+        //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        /*if (gamepad2.right_trigger >= 0.5f) { //lower right trigger means Left Dongler
             if (leftDongDown) { //its already down, so lets move it back up
                 srvoDong_Left.setPosition(0.0);
                 leftDongDown = false;
@@ -96,13 +99,25 @@ public class ResQ_TeleOp extends ResQ_Library {
                 srvoDong_Right.setPosition(0.5);
                 rightDongDown = true;
             }
+        }*/
+
+        if(gamepad2.right_trigger >= 0.1f) {
+            srvoHang_1.setPosition(0.5f * (srvoHang_1.getPosition() + gamepad2.right_trigger));
+        } else if(srvoHang_1.getPosition() >= 0.1) {
+            srvoHang_1.setPosition(0);
+        }
+
+        if(gamepad2.left_trigger >= 0.1f) {
+            srvoHang_2.setPosition(0.5f * (srvoHang_2.getPosition() + gamepad2.right_trigger));
+        } else if(gamepad2.left_bumper) {
+            srvoHang_2.setPosition(0);
         }
 
 
         //Hanging
-        if (gamepad2.left_bumper) { //The top button is pressed, release tension
+        if (gamepad2.dpad_down) { //The top button is pressed, release tension
             hangMotor(-1.0f); //turn backward, release tension
-        } else if (gamepad2.left_trigger >= 0.5f) { //The lower button is pressed, tighten winch
+        } else if (gamepad2.dpad_up) { //The lower button is pressed, tighten winch
             hangMotor(1.0f);//turn forward, tighten winch
         }
 
