@@ -95,10 +95,10 @@ public class ExperimentalAutonomous extends ResQ_Library {
             colorCheck();
             //Determine what color it is to see what team we're on
             if(teamWeAreOn == Team.RED) { //color is red
-                FollowLine();
+                followLine();
             }
             else if (teamWeAreOn == Team.BLUE) { //color is blue
-                FollowLine();
+                followLine();
             }
             else { //color is none of the above, go back a couple of steps and try again
                 currentTimeCatch = this.time; //collect current time
