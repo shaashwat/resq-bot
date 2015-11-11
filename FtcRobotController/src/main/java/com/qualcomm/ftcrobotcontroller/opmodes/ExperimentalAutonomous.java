@@ -16,7 +16,6 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  * It is now aligned to press a button.
  **/
 
-}
 @SuppressWarnings("all")
 public class ExperimentalAutonomous extends ResQ_Library {
     public enum Team {
@@ -118,7 +117,13 @@ public class ExperimentalAutonomous extends ResQ_Library {
         }
     }
 
-        public void FollowLine() {
+        public void followLine() {
+            float alpha = sensorRGB.alpha();
+            float r = sensorRGB.red();
+            float g = sensorRGB.green();
+            float b = sensorRGB.blue();
+
+        }
 
         public void TurnToBeacon() { //(turn to bacon)
         //If we're red, turn left 70 degrees
