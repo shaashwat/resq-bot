@@ -87,9 +87,6 @@ public class ResQ_TeleOp extends ResQ_Library {
         //Donglers
         //Left Dongler System
         if (gamepad2.left_bumper) { //left bumper means left dongler
-            //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-            //README: I am using gamepad2.right_trigger/bumper for the hanging code please re-map the dongler controls!
-            //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
             if (gamepad2.left_bumper) { //left bumper means left dongler
                 if (leftDongDown) { //its already down, so lets move it back up
                     srvoDong_Left.setPosition(0.0);
@@ -110,16 +107,16 @@ public class ResQ_TeleOp extends ResQ_Library {
                 }
             }
 
-            if (gamepad2.right_trigger >= 0.1f) {
-                srvoHang_1.setPosition(0.5f * (srvoHang_1.getPosition() + gamepad2.right_trigger));
+            if (gamepad2.right_trigger >= 0.5f) {
+                srvoHang_1.setPosition(1.0);
             } else if (srvoHang_1.getPosition() >= 0.1) {
-                srvoHang_1.setPosition(0);
+                srvoHang_1.setPosition(0.0);
             }
 
-            if (gamepad2.left_trigger >= 0.1f) {
-                srvoHang_2.setPosition(0.5f * (srvoHang_2.getPosition() + gamepad2.right_trigger));
+            if (gamepad2.left_trigger >= 0.5f) {
+                srvoHang_2.setPosition(1.0);
             } else if (gamepad2.left_bumper) {
-                srvoHang_2.setPosition(0);
+                srvoHang_2.setPosition(0.0);
             }
 
             //servo hanging
@@ -130,7 +127,6 @@ public class ResQ_TeleOp extends ResQ_Library {
                 //Hanging automation procedure
                 HangingAutomation();
             }
-
 
             //****************TELEMETRY****************//
 
@@ -149,8 +145,6 @@ public class ResQ_TeleOp extends ResQ_Library {
             telemetry.addData("", "Driving is " + tel_Bool_Reverse + " and " + tel_Bool_Speed);
             telemetry.addData("Left Dongler", "" + tel_Bool_LeftDong);
             telemetry.addData("Right Dongler", "" + tel_Bool_RightDong);
-
-
         }
     }
 }

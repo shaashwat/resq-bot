@@ -48,12 +48,12 @@ public class ExperimentalAutonomous extends ResQ_Library {
         sensorRGB = hardwareMap.colorSensor.get("color");
 
         //Driving Mapping
-        motorLeftFront = hardwareMap.dcMotor.get("motor_1");
+        /*motorLeftFront = hardwareMap.dcMotor.get("motor_1");
         motorLeftMid = hardwareMap.dcMotor.get("motor_2");
         motorLeftBack = hardwareMap.dcMotor.get("motor_3");
         motorRightFront = hardwareMap.dcMotor.get("motor_4");
         motorRightMid = hardwareMap.dcMotor.get("motor_5");
-        motorRightBack = hardwareMap.dcMotor.get("motor_6");
+        motorRightBack = hardwareMap.dcMotor.get("motor_6");*/
 
         leftPower = 1.0f;
         rightPower = 1.0f;

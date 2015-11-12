@@ -22,7 +22,7 @@ public class GyroTest extends OpMode {
 
     @Override
     public void loop() {
-        telemetry.addData("Rotation ", gyro.getRotation());
+        telemetry.addData("Rotation: ", gyro.getRotation());
     }
 
     public void driveStraight(double millis) {

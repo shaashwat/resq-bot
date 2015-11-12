@@ -139,10 +139,10 @@ public abstract class ResQ_Library extends OpMode {
 
         motorRightTread.setPower(right);
         motorLeftTread.setPower(left);
-        if(areTracksExtended){
+        //if(areTracksExtended){
             motorRightFoldableTread.setPower(right);
             motorLeftFoldableTread.setPower(left);
-        }
+        //}
     }
 
     /*public void singleStickDrive(float x, float y) {
