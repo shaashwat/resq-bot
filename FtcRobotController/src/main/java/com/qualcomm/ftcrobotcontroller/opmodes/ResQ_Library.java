@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -33,7 +34,8 @@ public abstract class ResQ_Library extends OpMode {
 
     //Sensors
     UltrasonicSensor sanicSensor;
-    AnalogInput sensorUltra;
+    AnalogInput sensorUltra_1;
+    AnalogInput sanicSensor_2;
     ColorSensor sensorRGB;
 
     //For Multiple Use or Other
@@ -54,7 +56,7 @@ public abstract class ResQ_Library extends OpMode {
     final static int COLOR_THRESHOLD = 900;
 
     //Constants that determine how strong the robot's speed and turning should be
-    final static float SPEED_CONST = 1.55f;
+    final static double SPEED_CONST = 0.005;
     final static double LEFT_STEERING_CONST = 0.85;
     final static double RIGHT_STEERING_CONST = 0.8;
 
@@ -68,8 +70,12 @@ public abstract class ResQ_Library extends OpMode {
     final static double DONG2_MIN_RANGE  = 0.20;
     final static double DONG2_MAX_RANGE  = 0.90;
 
+<<<<<<< HEAD
     //Booleans
     boolean areTracksExtended = false; //are the foldable tracks extended or not (they not at the beginning)
+=======
+    //Bools and other important stuff
+>>>>>>> origin/master
     boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
     boolean driveReverse = false; //this reverses the drive so when the robot goes on the ramp, everything works out fine.
     boolean leftDongDown = false; //when dong is all the way down, release and press again to go back up automatically
@@ -165,7 +171,7 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************SENSOR METHODS****************//
     public double getDistance() {
-        return sanicSensor.getUltrasonicLevel();
+        return sensorUltra_1.getValue();
     }
 
     public void colorCheck(){
@@ -252,7 +258,7 @@ public abstract class ResQ_Library extends OpMode {
         return dScale;
     }
 
-    String getScaledColor(int r, int g, int b){
+    public String getScaledColor(int r, int g, int b){
         if(r > COLOR_THRESHOLD || g > COLOR_THRESHOLD || b > COLOR_THRESHOLD){
             if(r > g + b){
                 return "RED";
@@ -270,10 +276,22 @@ public abstract class ResQ_Library extends OpMode {
         }
     }
 
+<<<<<<< HEAD
     int normalizeForGear(int gear) {
         if (gear > 3) gear = 3;
         if (gear < 1) gear = 1;
         return gear;
     }
 
+=======
+    //****************MISC METHODS****************//
+    public void sleep(int millis) {
+        ElapsedTime timer = new ElapsedTime();
+        double startTime = timer.time();
+        double currentTime = 0.0;
+        while(currentTime - startTime < millis) {
+            currentTime = timer.time();
+        }
+    }
+>>>>>>> origin/master
 }

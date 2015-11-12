@@ -20,8 +20,41 @@ public class ResQ_TeleOp extends ResQ_Library {
 		 * configured your robot and created the configuration file.
 		 */
 
+<<<<<<< HEAD
         //Do the map thing
         initializeMapping();
+=======
+        //Sensors
+        sensorUltra_1 = hardwareMap.analogInput.get("sonic_1");
+
+        //Driving Mapping
+        motorLeftFront = hardwareMap.dcMotor.get("motor_1");
+        motorLeftMid = hardwareMap.dcMotor.get("motor_2");
+        motorLeftBack = hardwareMap.dcMotor.get("motor_3");
+        motorRightFront = hardwareMap.dcMotor.get("motor_4");
+        motorRightMid = hardwareMap.dcMotor.get("motor_5");
+        motorRightBack = hardwareMap.dcMotor.get("motor_6");
+
+        //Other Mapping
+        //motorHangingMech = hardwareMap.dcMotor.get("motor_7");
+        srvoHang_1 = hardwareMap.servo.get("servo_1");
+        srvoHang_2 = hardwareMap.servo.get("servo_2");
+        srvoDong_Left = hardwareMap.servo.get("servo_3"); //The left servo
+        srvoDong_Right = hardwareMap.servo.get("servo_4"); //The right servo
+        srvoPushButton = hardwareMap.servo.get("servo_5");
+        srvoScoreClimbers = hardwareMap.servo.get("servo_6");
+
+
+        //set the direction of the motors
+        motorLeftFront.setDirection(DcMotor.Direction.REVERSE);
+        motorLeftMid.setDirection(DcMotor.Direction.REVERSE);
+        motorLeftBack.setDirection(DcMotor.Direction.REVERSE);
+        //set the direction of the servos
+        srvoDong_Left.setDirection(Servo.Direction.FORWARD);
+        srvoDong_Right.setDirection(Servo.Direction.FORWARD);
+        srvoHang_1.setDirection(Servo.Direction.FORWARD);
+        srvoHang_1.setDirection(Servo.Direction.FORWARD);
+>>>>>>> origin/master
     }
 
 
@@ -86,7 +119,14 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         //Donglers
         //Left Dongler System
+<<<<<<< HEAD
         if (gamepad2.left_bumper) { //left bumper means left dongler
+=======
+        //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+        //README: I am using gamepad2.right_trigger/bumper for the hanging code please re-map the dongler controls!
+        //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        /*if (gamepad2.right_trigger >= 0.5f) { //lower right trigger means Left Dongler
+>>>>>>> origin/master
             if (leftDongDown) { //its already down, so lets move it back up
                 srvoDong_Left.setPosition(0.0);
                 leftDongDown = false;
@@ -104,12 +144,28 @@ public class ResQ_TeleOp extends ResQ_Library {
                 srvoDong_Right.setPosition(0.5);
                 rightDongDown = true;
             }
+        }*/
+
+        if(gamepad2.right_trigger >= 0.1f) {
+            srvoHang_1.setPosition(0.5f * (srvoHang_1.getPosition() + gamepad2.right_trigger));
+        } else if(srvoHang_1.getPosition() >= 0.1) {
+            srvoHang_1.setPosition(0);
+        }
+
+        if(gamepad2.left_trigger >= 0.1f) {
+            srvoHang_2.setPosition(0.5f * (srvoHang_2.getPosition() + gamepad2.right_trigger));
+        } else if(gamepad2.left_bumper) {
+            srvoHang_2.setPosition(0);
         }
 
         //Hanging
+<<<<<<< HEAD
         if (gamepad2.right_trigger >= 0.5f) { //The top button is pressed, release tension
+=======
+        if (gamepad2.dpad_down) { //The top button is pressed, release tension
+>>>>>>> origin/master
             hangMotor(-1.0f); //turn backward, release tension
-        } else if (gamepad2.left_trigger >= 0.5f) { //The lower button is pressed, tighten winch
+        } else if (gamepad2.dpad_up) { //The lower button is pressed, tighten winch
             hangMotor(1.0f);//turn forward, tighten winch
         }
 
@@ -137,6 +193,10 @@ public class ResQ_TeleOp extends ResQ_Library {
         String tel_Bool_LeftDong = (leftDongDown)?" is down, now moving up":"is up, now moving down";
         String tel_Bool_RightDong = (rightDongDown)?" is down, now moving up":"is up, now moving down";
 
+<<<<<<< HEAD
+=======
+        telemetry.addData("Distance", sensorUltra_1.getValue());
+>>>>>>> origin/master
         telemetry.addData("*****", "Important Booleans");
         telemetry.addData("", "Driving is " + tel_Bool_Reverse + " and " + tel_Bool_Speed);
         telemetry.addData("Left Dongler", "Driving is " + tel_Bool_LeftDong);
