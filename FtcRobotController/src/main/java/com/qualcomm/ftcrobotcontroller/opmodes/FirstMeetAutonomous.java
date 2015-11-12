@@ -57,18 +57,13 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  */
 @SuppressWarnings("all")
 public class FirstMeetAutonomous extends ResQ_Library {
-	public enum Team {
-		RED, BLUE, UNKNOWN
-	}
 
 	ColorSensor sensorRGB;
-
-
 
 	float leftPower;
 	float rightPower;
 	double currentTimeCatch;
-	Team teamWeAreOn = Team.UNKNOWN; //enum thats represent team
+
 
 	/**
 	 * Blue Team Information:
@@ -86,31 +81,9 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void init() {
 		sensorRGB = hardwareMap.colorSensor.get("color");
 
-        //Driving Mapping
-        motorLeftFront = hardwareMap.dcMotor.get("motor_1");
-        motorLeftMid = hardwareMap.dcMotor.get("motor_2");
-        motorLeftBack = hardwareMap.dcMotor.get("motor_3");
-        motorRightFront = hardwareMap.dcMotor.get("motor_4");
-        motorRightMid = hardwareMap.dcMotor.get("motor_5");
-        motorRightBack = hardwareMap.dcMotor.get("motor_6");
-
-		leftPower = 1.0f;
-		rightPower = 1.0f;
-		drive(leftPower, rightPower);
+		//Do the map thing
+		initializeMapping();
 		moveTillLine();
-	}
-
-	public void colorCheck(){
-		int red = sensorRGB.red();
-		int blue = sensorRGB.blue();
-        int green = sensorRGB.green();
-        telemetry.addData("blue", blue);
-        telemetry.addData("red", red);
-        telemetry.addData("assumed", getScaledColor(red, blue, green));
-        if(red > COLOR_THRESHOLD || blue > COLOR_THRESHOLD){
-		    if(blue > red) teamWeAreOn = Team.BLUE;
-		    else if(red > blue) teamWeAreOn = Team.RED;
-        }
 	}
 
 	@Override
@@ -126,22 +99,29 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void moveTillLine () {
         boolean foundLine = false;
 		while(!foundLine) { //keep looping until sensor finds a color
-			//stop movement immediately
-			leftPower = 0.0f;
-			rightPower = 0.0f;
+			leftPower = 1.0f;
+			rightPower = 1.0f;
 			drive(leftPower, rightPower);
 
-            colorCheck();
-			//Determine what color it is to see what team we're on
+            colorCheck(); //Determine what color it is to see what team we're on
+
 			if(teamWeAreOn == Team.RED) { //color is red
+				//stop movement immediately
+				leftPower = 0.0f;
+				rightPower = 0.0f;
+				drive(leftPower, rightPower);
 				TurnToBeacon();
 			}
 			else if (teamWeAreOn == Team.BLUE) { //color is blue
+				//stop movement immediately
+				leftPower = 0.0f;
+				rightPower = 0.0f;
+				drive(leftPower, rightPower);
 				TurnToBeacon();
 			}
 			else { //color is none of the above, go back a couple of steps and try again
 				currentTimeCatch = this.time; //collect current time
-				double timeToStopGoingBack = currentTimeCatch + 4.0; //time of confusion plus 4 seconds
+				double timeToStopGoingBack = currentTimeCatch + 4.0; //time of confusion plus 4 seconds for going back
 				if (this.time <= timeToStopGoingBack) {
 					// go backwards until time to stop going back
 					leftPower = -0.5f;
