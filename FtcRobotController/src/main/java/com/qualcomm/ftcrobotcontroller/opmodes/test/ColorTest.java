@@ -9,6 +9,10 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  */
 public class ColorTest extends ResQ_Library {
     ColorSensor sensorRGB;
+    boolean calibrated = false;
+    int redOffset;
+    int blueOffset;
+    int greenOffset;
 
     @Override
     public void init() {
@@ -20,8 +24,27 @@ public class ColorTest extends ResQ_Library {
         int red = sensorRGB.red();
         int blue = sensorRGB.blue();
         int green = sensorRGB.green();
-        telemetry.addData("blue", blue);
-        telemetry.addData("red", red);
-        telemetry.addData("assumed", getScaledColor(red, blue, green));
+        int alpha = sensorRGB.alpha();
+        if(this.time >= 5){ //normal operation
+            int offsettedRed = red - redOffset;
+            int offsettedBlue = blue - blueOffset;
+            int offsettedGreen = green - greenOffset;
+            telemetry.addData("blue", blue);
+            telemetry.addData("red", red);
+            telemetry.addData("alpha", alpha);
+            telemetry.addData("green", green);
+            telemetry.addData("assumed", getScaledColor(red, blue, green));
+            telemetry.addData("Status", "Running");
+        }
+        else if(this.time == 4) {
+            telemetry.addData("Status", "Now Calibrating");
+            redOffset = red;
+            blueOffset = blue;
+            greenOffset = green;
+
+        }
+        else {
+            telemetry.addData("Status", "Please point sensor toward ground.");
+        }
     }
 }
