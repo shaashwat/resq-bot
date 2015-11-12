@@ -23,12 +23,10 @@ public abstract class ResQ_Library extends OpMode {
     //****************HARDWARE MAPPING DEFINITIONS****************//
 
     //For Driving Only
-    DcMotor motorLeftFront;
-    DcMotor motorLeftMid;
-    DcMotor motorLeftBack;
-    DcMotor motorRightFront;
-    DcMotor motorRightMid;
-    DcMotor motorRightBack;
+    DcMotor motorRightTread;
+    DcMotor motorLeftTread;
+    DcMotor motorRightFoldableTread;
+    DcMotor motorLeftFoldableTread;
 
     //Autonomous
     Servo srvoScoreClimbers;
@@ -72,31 +70,96 @@ public abstract class ResQ_Library extends OpMode {
     final static double DONG2_MIN_RANGE  = 0.20;
     final static double DONG2_MAX_RANGE  = 0.90;
 
+
+    //Booleans
+    boolean areTracksExtended = false; //are the foldable tracks extended or not (they not at the beginning)
+
     //Bools and other important stuff
     boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
     boolean driveReverse = false; //this reverses the drive so when the robot goes on the ramp, everything works out fine.
-    boolean driveSlow = false; //slows drive to make easy turns. if false, full motion, otherwise slow
     boolean leftDongDown = false; //when dong is all the way down, release and press again to go back up automatically
     boolean rightDongDown = false; //same as above but with the right dongler
+    boolean isConveyorMoving = false; //false if conveyor is not moving. changes if it is
+
+    //Other
+    int driveGear = 3; //3 is 100%, 2 is 50%, 1 is 25%
+
+    public enum Team {
+        RED, BLUE, UNKNOWN
+    }
+    Team teamWeAreOn = Team.UNKNOWN; //enum thats represent team
+
+    //****************INITIALIZE METHOD****************//
+    public void initializeMapping () {
+        //Driving Mapping
+        motorLeftTread = hardwareMap.dcMotor.get("m1");
+        motorRightTread = hardwareMap.dcMotor.get("m2");
+        motorLeftFoldableTread = hardwareMap.dcMotor.get("m3");
+        motorRightFoldableTread = hardwareMap.dcMotor.get("m4");
+
+        //Other Mapping
+        motorHangingMech = hardwareMap.dcMotor.get("m5");
+        srvoHang_1 = hardwareMap.servo.get("s1");
+        srvoHang_2 = hardwareMap.servo.get("s2");
+        srvoDong_Left = hardwareMap.servo.get("s3"); //The left servo
+        srvoDong_Right = hardwareMap.servo.get("s4"); //The right servo
+        //srvoPushButton = hardwareMap.servo.get("s5");
+        srvoScoreClimbers = hardwareMap.servo.get("s6");
+
+
+        //set the direction of the motors
+        motorLeftTread.setDirection(DcMotor.Direction.REVERSE);
+        motorLeftFoldableTread.setDirection(DcMotor.Direction.REVERSE);
+        //set the direction of the servos (99% sure this isn't neccesary but yolo)
+        srvoDong_Left.setDirection(Servo.Direction.FORWARD);
+        srvoDong_Right.setDirection(Servo.Direction.FORWARD);
+        srvoHang_1.setDirection(Servo.Direction.FORWARD);
+        srvoHang_1.setDirection(Servo.Direction.FORWARD);
+    }
 
     //****************TELEOP METHODS****************//
 
     public void drive(float left, float right){
         // Drives
-        motorLeftFront.setPower(left);
-        motorLeftMid.setPower(left);
-        motorLeftBack.setPower(left);
-        motorRightFront.setPower(right);
-        motorRightMid.setPower(right);
-        motorRightBack.setPower(right);
+        if(driveReverse) { //we've reversed the drive in order to climb the ramp
+            right = -right;
+            left = -left;
+        } //if we haven't just leave it be
+
+        if (driveGear == 3) { //highest 100% setting, essentially don't change it
+            left = 1f*left;
+            right = 1f*right;
+        } else if (driveGear == 2) { //medium 50% setting
+            left = 0.5f*left;
+            right = 0.5f*right;
+        } else if (driveGear == 1) { //lowest 25% setting
+            left = 0.25f*left;
+            right = 0.25f*right;
+        } //if there's a bug and it's not 1, 2 or 3, default to max drive
+
+        motorRightTread.setPower(right);
+        motorLeftTread.setPower(left);
+        //if(areTracksExtended){
+            motorRightFoldableTread.setPower(right);
+            motorLeftFoldableTread.setPower(left);
+        //}
     }
 
-    public void singleStickDrive(float x, float y) {
+    /*public void singleStickDrive(float x, float y) {
         drive(y + x, y - x);
+    }*/
+
+    public void setDriveGear (int gear) {
+        driveGear = normalizeForGear(gear);
     }
 
     public void hangMotor (float direction){
         motorHangingMech.setPower(direction);
+    }
+
+    public void HangingAutomation () {
+        //Once the first meet is over, create an algorithm that
+        //allows us to hang with the press of one button.
     }
 
     //****************AUTONOMOUS METHODS****************//
@@ -108,6 +171,19 @@ public abstract class ResQ_Library extends OpMode {
     //****************SENSOR METHODS****************//
     public double getDistance() {
         return sensorUltra_1.getValue();
+    }
+
+    public void colorCheck(){
+        int red = sensorRGB.red();
+        int blue = sensorRGB.blue();
+        int green = sensorRGB.green();
+        telemetry.addData("blue", blue);
+        telemetry.addData("red", red);
+        telemetry.addData("assumed", getScaledColor(red, blue, green));
+        if(red > COLOR_THRESHOLD || blue > COLOR_THRESHOLD){
+            if(blue > red) teamWeAreOn = Team.BLUE;
+            else if(red > blue) teamWeAreOn = Team.RED;
+        }
     }
 
     public void moveToClosestObject() {
@@ -135,15 +211,6 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     //****************NUMBER MANIPULATION METHODS****************//
-
-    float ProcessDriveInput(float input){ //This calls ProcessToMotorFromJoy but also has drive modification checks
-        float output = ProcessToMotorFromJoy(input);
-        //At this point, the float should be between a 1 and -1 value that accurately sends to motors
-        //Boolean check to ensure full drive control
-        output = (driveReverse == true)?-output:output; //if we're supposed to reverse the drive
-        output = (driveReverse == true)?0.5f*output:output; //if we're supposed to make the drive slow
-        return output;
-    }
 
     float ProcessToMotorFromJoy(float input){ //This is used in any case where joystick input is to be converted to a motor
         float output = 0.0f;
@@ -206,6 +273,12 @@ public abstract class ResQ_Library extends OpMode {
         else {
             return "GREY";
         }
+    }
+
+    int normalizeForGear(int gear) {
+        if (gear > 3) gear = 3;
+        if (gear < 1) gear = 1;
+        return gear;
     }
 
     //****************MISC METHODS****************//
