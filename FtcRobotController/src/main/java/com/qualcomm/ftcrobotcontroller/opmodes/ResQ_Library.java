@@ -70,12 +70,11 @@ public abstract class ResQ_Library extends OpMode {
     final static double DONG2_MIN_RANGE  = 0.20;
     final static double DONG2_MAX_RANGE  = 0.90;
 
-<<<<<<< HEAD
+
     //Booleans
     boolean areTracksExtended = false; //are the foldable tracks extended or not (they not at the beginning)
-=======
+
     //Bools and other important stuff
->>>>>>> origin/master
     boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
     boolean driveReverse = false; //this reverses the drive so when the robot goes on the ramp, everything works out fine.
     boolean leftDongDown = false; //when dong is all the way down, release and press again to go back up automatically
@@ -276,14 +275,12 @@ public abstract class ResQ_Library extends OpMode {
         }
     }
 
-<<<<<<< HEAD
     int normalizeForGear(int gear) {
         if (gear > 3) gear = 3;
         if (gear < 1) gear = 1;
         return gear;
     }
 
-=======
     //****************MISC METHODS****************//
     public void sleep(int millis) {
         ElapsedTime timer = new ElapsedTime();
@@ -293,5 +290,4 @@ public abstract class ResQ_Library extends OpMode {
             currentTime = timer.time();
         }
     }
->>>>>>> origin/master
 }
