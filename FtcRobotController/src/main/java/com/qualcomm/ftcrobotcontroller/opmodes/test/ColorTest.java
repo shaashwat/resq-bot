@@ -29,11 +29,11 @@ public class ColorTest extends ResQ_Library {
             int offsettedRed = red - redOffset;
             int offsettedBlue = blue - blueOffset;
             int offsettedGreen = green - greenOffset;
-            telemetry.addData("blue", blue);
-            telemetry.addData("red", red);
+            telemetry.addData("blue", offsettedBlue);
+            telemetry.addData("red", offsettedRed);
             telemetry.addData("alpha", alpha);
-            telemetry.addData("green", green);
-            telemetry.addData("assumed", getScaledColor(red, blue, green));
+            telemetry.addData("green", offsettedGreen);
+            telemetry.addData("assumed", getScaledColor(offsettedRed, offsettedBlue, offsettedGreen));
             telemetry.addData("Status", "Running");
         }
         else if(this.time == 4) {
