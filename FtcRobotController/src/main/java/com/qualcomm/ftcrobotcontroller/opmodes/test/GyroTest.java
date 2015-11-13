@@ -14,16 +14,26 @@ public class GyroTest extends OpMode {
     final static double LEFT_ROTATION_CONST = 0.0027;
     final static double ROTATION_OFFSET = 0.1;
 
+    byte[] cache;
+
     @Override
     public void init() {
         gyro = hardwareMap.i2cDevice.get(gyroName);
-        gyro.isI2cPortReady();
+        while(!gyro.isI2cPortReady()) {
 
+        }
+
+        cache = gyro.getCopyOfReadBuffer();
+
+        if(!gyro.isI2cPortInReadMode()) {
+            //I really have no idea what im doing. These memory addresses probably will cause errors.
+            gyro.enableI2cReadMode(cache[1], cache[2], cache[3]);
+        }
     }
 
     @Override
     public void loop() {
-        telemetry.addData("Rotation: ", gyro.getDeviceName());
+        telemetry.addData("Rotation: ", gyro.getI2cReadCache()[3]);
     }
 
     /*public void driveStraight(double millis) {
