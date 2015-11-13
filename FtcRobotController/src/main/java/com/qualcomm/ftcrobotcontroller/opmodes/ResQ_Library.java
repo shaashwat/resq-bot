@@ -173,7 +173,7 @@ public abstract class ResQ_Library extends OpMode {
         return sensorUltra_1.getValue();
     }
 
-    public void colorCheck(){
+    /*public void colorCheck(){
         int red = sensorRGB.red();
         int blue = sensorRGB.blue();
         int green = sensorRGB.green();
@@ -184,7 +184,7 @@ public abstract class ResQ_Library extends OpMode {
             if(blue > red) teamWeAreOn = Team.BLUE;
             else if(red > blue) teamWeAreOn = Team.RED;
         }
-    }
+    }*/
 
     public void moveToClosestObject() {
         double ultraRight;
@@ -258,11 +258,11 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     public String getScaledColor(int r, int g, int b){
-        if(r > COLOR_THRESHOLD || g > COLOR_THRESHOLD || b > COLOR_THRESHOLD){
+        if(r > COLOR_THRESHOLD || g > COLOR_THRESHOLD || b > 200){
             if(r > b){
                 return "RED";
             }
-            else if(b > r){
+            else if(b > 200){
                 return "BLUE";
             }
             else if(g > r){
