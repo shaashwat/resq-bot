@@ -97,7 +97,7 @@ public abstract class ResQ_Library extends OpMode {
         motorLeftFoldableTread = hardwareMap.dcMotor.get("m3");
         motorRightFoldableTread = hardwareMap.dcMotor.get("m4");
 
-        //Other Mapping
+        /*//Other Mapping
         motorHangingMech = hardwareMap.dcMotor.get("m5");
         srvoHang_1 = hardwareMap.servo.get("s1");
         srvoHang_2 = hardwareMap.servo.get("s2");
@@ -114,7 +114,7 @@ public abstract class ResQ_Library extends OpMode {
         srvoDong_Left.setDirection(Servo.Direction.FORWARD);
         srvoDong_Right.setDirection(Servo.Direction.FORWARD);
         srvoHang_1.setDirection(Servo.Direction.FORWARD);
-        srvoHang_1.setDirection(Servo.Direction.FORWARD);
+        srvoHang_1.setDirection(Servo.Direction.FORWARD);*/
     }
 
     //****************TELEOP METHODS****************//
