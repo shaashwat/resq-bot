@@ -1,14 +1,13 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.I2cDevice;
 
 /**
  * Created by Admin on 11/6/2015.
  */
 public class GyroTest extends OpMode {
-    GyroSensor gyro;
+    I2cDevice gyro;
     String gyroName = "gyro";
 
     final static double RIGHT_ROTATION_CONST = 0.0027;
@@ -17,21 +16,23 @@ public class GyroTest extends OpMode {
 
     @Override
     public void init() {
-        gyro = hardwareMap.gyroSensor.get(gyroName);
+        gyro = hardwareMap.i2cDevice.get(gyroName);
+        gyro.isI2cPortReady();
+
     }
 
     @Override
     public void loop() {
-        telemetry.addData("Rotation: ", gyro.getRotation());
+        telemetry.addData("Rotation: ", gyro.getDeviceName());
     }
 
-    public void driveStraight(double millis) {
+    /*public void driveStraight(double millis) {
         /*
          * This algorithm assumes gyro.getRotation() returns
          * values between 0—359 or -180—179. The actual
          * return value is not documented, therefore it has
          * to be tested.
-         */
+         *
         gyro.calibrate();
         while(gyro.isCalibrating()) {
             telemetry.addData("Calibrating: ", "gyro is calibrating...");
@@ -62,10 +63,10 @@ public class GyroTest extends OpMode {
     /*
      * empty function meant to simulate the drive function so
      * moving test functions over to the library will be easy
-     */
+     *
     public void drive(float left, float right){
 
-    }
+    }*/
 
 }
 
