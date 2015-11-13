@@ -258,7 +258,7 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     public String getScaledColor(int r, int g, int b){
-        if(r > COLOR_THRESHOLD || g > COLOR_THRESHOLD || b > COLOR_THRESHOLD){
+        if(r > COLOR_THRESHOLD || g > COLOR_THRESHOLD || b > 200){
             if(r > b){
                 return "RED";
             }
