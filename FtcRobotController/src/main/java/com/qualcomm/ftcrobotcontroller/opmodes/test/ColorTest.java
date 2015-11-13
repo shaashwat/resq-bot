@@ -25,8 +25,8 @@ public class ColorTest extends ResQ_Library {
         int blue = sensorRGB.blue();
         int green = sensorRGB.green();
         int alpha = sensorRGB.alpha();
-        if(this.time >= 5){ //normal operation
-            int offsettedRed = red - redOffset;
+        if(this.time >= 4){ //normal operation
+            int offsettedRed = red - (redOffset + 200);
             int offsettedBlue = blue - blueOffset;
             int offsettedGreen = green - greenOffset;
             telemetry.addData("blue", offsettedBlue);
@@ -36,7 +36,7 @@ public class ColorTest extends ResQ_Library {
             telemetry.addData("assumed", getScaledColor(offsettedRed, offsettedBlue, offsettedGreen));
             telemetry.addData("Status", "Running");
         }
-        else if(this.time == 4) {
+        else if(this.time == 3) {
             telemetry.addData("Status", "Now Calibrating");
             redOffset = red;
             blueOffset = blue;

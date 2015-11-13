@@ -53,7 +53,7 @@ public abstract class ResQ_Library extends OpMode {
     final static double STOP_CONST = 6.0;
 
     //Color Sensor Calibrations
-    final static int COLOR_THRESHOLD = 400;
+    final static int COLOR_THRESHOLD = 215;
 
     //Constants that determine how strong the robot's speed and turning should be
     final static double SPEED_CONST = 0.005;
@@ -258,17 +258,11 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     public String getScaledColor(int r, int g, int b){
-        if(r > COLOR_THRESHOLD || g > COLOR_THRESHOLD || b > 200){
-            if(r > b){
-                return "RED";
-            }
-            else if(b > 200){
-                return "BLUE";
-            }
-            else if(g > r){
-                return "GREEN";
-            }
-            else return "TOO STRONG";
+        if(b > r && b > COLOR_THRESHOLD) {
+            return "BLUE";
+        }
+        else if(r > b && r > COLOR_THRESHOLD){
+            return "RED";
         }
         else {
             return "GREY";
