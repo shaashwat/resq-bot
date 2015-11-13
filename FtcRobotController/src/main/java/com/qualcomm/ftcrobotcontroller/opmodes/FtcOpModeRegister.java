@@ -68,7 +68,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("TeleOp", ResQ_TeleOp.class);
     manager.register("NullOp", NullOp.class);
     manager.register ("Minibot", MinibotTeleOp.class);
-    manager.register ("Teleop", ResQ_TeleOp.class);
     manager.register ("Autonomous", ResQ_Autonomous.class);
     manager.register("SensorTest", GyroTest.class);
       manager.register("ColorTest", ColorTest.class);
