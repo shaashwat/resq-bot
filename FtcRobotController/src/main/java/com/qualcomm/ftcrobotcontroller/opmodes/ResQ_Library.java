@@ -98,23 +98,23 @@ public abstract class ResQ_Library extends OpMode {
         motorRightFoldableTread = hardwareMap.dcMotor.get("m4");
 
         /*//Other Mapping
-        motorHangingMech = hardwareMap.dcMotor.get("m5");
+        motorHangingMech = hardwareMap.dcMotor.get("m5");*/
         srvoHang_1 = hardwareMap.servo.get("s1");
         srvoHang_2 = hardwareMap.servo.get("s2");
-        srvoDong_Left = hardwareMap.servo.get("s3"); //The left servo
+        /*srvoDong_Left = hardwareMap.servo.get("s3"); //The left servo
         srvoDong_Right = hardwareMap.servo.get("s4"); //The right servo
         //srvoPushButton = hardwareMap.servo.get("s5");
-        srvoScoreClimbers = hardwareMap.servo.get("s6");
+        srvoScoreClimbers = hardwareMap.servo.get("s6");*/
 
 
         //set the direction of the motors
-        motorLeftTread.setDirection(DcMotor.Direction.REVERSE);
+        /*motorLeftTread.setDirection(DcMotor.Direction.REVERSE);
         motorLeftFoldableTread.setDirection(DcMotor.Direction.REVERSE);
         //set the direction of the servos (99% sure this isn't neccesary but yolo)
         srvoDong_Left.setDirection(Servo.Direction.FORWARD);
-        srvoDong_Right.setDirection(Servo.Direction.FORWARD);
+        srvoDong_Right.setDirection(Servo.Direction.FORWARD);*/
         srvoHang_1.setDirection(Servo.Direction.FORWARD);
-        srvoHang_1.setDirection(Servo.Direction.FORWARD);*/
+        srvoHang_1.setDirection(Servo.Direction.FORWARD);
     }
 
     //****************TELEOP METHODS****************//
