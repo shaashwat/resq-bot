@@ -71,7 +71,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			rightPower = 1.0f;
 			drive(leftPower, rightPower);
 
-			//colorCheck(); Determine what color it is to see what team we're on
+			colorCheck(); //Determine what color it is to see what team we're on
 
 			if(teamWeAreOn == Team.RED) { //color is red
 				//stop movement immediately
@@ -87,7 +87,8 @@ public class FirstMeetAutonomous extends ResQ_Library {
 				drive(leftPower, rightPower);
 				TurnToBeacon();
 			}
-			else { //color is none of the above, go back a couple of steps and try again
+			////////////This else statement would force the robot to jerk around, replace it with time based movement
+			/*else { //color is none of the above, go back a couple of steps and try again
 				currentTimeCatch = this.time; //collect current time
 				double timeToStopGoingBack = currentTimeCatch + 4.0; //time of confusion plus 4 seconds for going back
 				if (this.time <= timeToStopGoingBack) {
@@ -99,8 +100,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 					// move forward again until it finds the line
 					moveTillLine();
 				}
-
-			}
+			}*/
 		}
 	}
 

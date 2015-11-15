@@ -30,27 +30,23 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         float right = ProcessToMotorFromJoy(-gamepad1.right_stick_y); //Used with tracks
         float left = ProcessToMotorFromJoy(-gamepad1.left_stick_y);
-        //float x = ProcessDriveInput(-gamepad1.left_stick_x); //Used with wheels
-        //float y = ProcessDriveInput(-gamepad1.left_stick_y);
         /*
          * Gamepad 1:
 		 * Left joystick moves the left track, and the right joystick moves the right track
-		 * Alternatively, with wheels, one joystick moves both sets of wheels
 		 */
 
         //****************DRIVING****************//
 
         drive(left, right); //Used with tracks
-        //singleStickDrive(x, y); //Used with wheels
 
         //Drive modifications
         if (gamepad1.x) {
             //Track speed 100%
-            setDriveGear(1);
+            setDriveGear(3);
         }
         if (gamepad1.y) {
             //Track speed 50%
-            setDriveGear(1);
+            setDriveGear(2);
         }
         if (gamepad1.b) {
             //Track speed 25%
@@ -65,14 +61,15 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         if (gamepad2.x) {
             //toggle block intake
-            HangingAutomation();
+            what the fuck
         }
         if (gamepad2.a) {
             //Toggle conveyor movement
             if (isConveyorMoving) { //it's already moving, stop it
 
+                isConveyorMoving = !isConveyorMoving;
             } else { //its not, so start it up
-
+2
             }
         }
         if (gamepad2.b) {
@@ -81,6 +78,26 @@ public class ResQ_TeleOp extends ResQ_Library {
         }
 
         //****************OTHER****************//
+
+        //Hanging Winch
+        if (gamepad2.right_trigger >= 0.5f) {
+            //release tension by letting go of string
+            telemetry.addData("Right Trigger Moving", "release tension");
+            motorHangingMech.setPower(-1.0f);
+        } else if (gamepad2.left_trigger >= 0.5f) {
+            //pull string and add tension
+            telemetry.addData("Left Trigger Moving", "add tension");
+            motorHangingMech.setPower(1.0f);
+        }
+
+        //Hanging Servos
+        float srvoHang1JoyCheck = ProcessToMotorFromJoy(-gamepad2.left_stick_y);
+        float srvoHang2JoyCheck = ProcessToMotorFromJoy(-gamepad2.right_stick_y);
+
+        if (gamepad2.y) {
+            //Hanging automation procedure
+            HangingAutomation();
+        }
 
         //Donglers
         //Left Dongler System
@@ -105,30 +122,11 @@ public class ResQ_TeleOp extends ResQ_Library {
                 }
             }
 
-            if (gamepad2.right_trigger >= 0.5f) {
-                srvoHang_1.setPosition(1.0);
-            } else if (srvoHang_1.getPosition() >= 0.1) {
-                srvoHang_1.setPosition(0.0);
-            }
 
-            if (gamepad2.left_trigger >= 0.5f) {
-                srvoHang_2.setPosition(1.0);
-            } else if (gamepad2.left_bumper) {
-                srvoHang_2.setPosition(0.0);
-            }
-
-            //servo hanging
-            float srvoHang1JoyCheck = ProcessToMotorFromJoy(-gamepad2.left_stick_y);
-            float srvoHang2JoyCheck = ProcessToMotorFromJoy(-gamepad2.right_stick_y);
-
-            if (gamepad2.y) {
-                //Hanging automation procedure
-                HangingAutomation();
-            }
 
             //****************TELEMETRY****************//
 
-            String tel_Bool_Reverse = (driveReverse) ? "REVERSED" : "normal";
+            /*String tel_Bool_Reverse = (driveReverse) ? "REVERSED" : "normal";
             String tel_Bool_Speed = "error speed";
             if (driveGear == 3) { //highest 100% setting, essentially don't change it
                 tel_Bool_Speed = "at 100% speed";
@@ -142,7 +140,7 @@ public class ResQ_TeleOp extends ResQ_Library {
             telemetry.addData("*****", "Important Booleans");
             telemetry.addData("", "Driving is " + tel_Bool_Reverse + " and " + tel_Bool_Speed);
             telemetry.addData("Left Dongler", "" + tel_Bool_LeftDong);
-            telemetry.addData("Right Dongler", "" + tel_Bool_RightDong);
+            telemetry.addData("Right Dongler", "" + tel_Bool_RightDong);*/
         }
     }
 }

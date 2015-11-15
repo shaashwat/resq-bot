@@ -25,25 +25,25 @@ public abstract class ResQ_Library extends OpMode {
     //For Driving Only
     DcMotor motorRightTread;
     DcMotor motorLeftTread;
-    DcMotor motorRightFoldableTread;
-    DcMotor motorLeftFoldableTread;
+    DcMotor motorRightSecondTread;
+    DcMotor motorLeftSecondTread;
 
     //Autonomous
     Servo srvoScoreClimbers;
     Servo srvoPushButton;
 
     //Sensors
-    UltrasonicSensor sanicSensor;
     AnalogInput sensorUltra_1;
-    AnalogInput sanicSensor_2;
-    ColorSensor sensorRGB;
+    AnalogInput sensorUltra_2;
+    ColorSensor sensorRGB_1;
+    ColorSensor sensorRGB_2;
 
     //For Multiple Use or Other
     DcMotor motorHangingMech; //responsible for lifting the entire robot
-    Servo srvoHang_1;
-    Servo srvoHang_2;
-    Servo srvoDong_Left;
-    Servo srvoDong_Right;
+    Servo srvoHang_1; //the servo closer to the base (elbow)
+    Servo srvoHang_2; //the servo closer to the hook (wrist)
+    Servo srvoDong_Left; //frees the hanging climbers
+    Servo srvoDong_Right; //frees the hanging climbers
 
 
     //****************OTHER DEFINITIONS****************//
@@ -72,7 +72,7 @@ public abstract class ResQ_Library extends OpMode {
 
 
     //Booleans
-    boolean areTracksExtended = false; //are the foldable tracks extended or not (they not at the beginning)
+    boolean areTracksExtended = false; //are the Second tracks extended or not (they not at the beginning)
 
     //Bools and other important stuff
     boolean isPlowDown = false; //at the start of the match, declare true and lower plow. When teleop starts, driver will recall it back up and declare false.
@@ -94,8 +94,8 @@ public abstract class ResQ_Library extends OpMode {
         //Driving Mapping
         motorLeftTread = hardwareMap.dcMotor.get("m1");
         motorRightTread = hardwareMap.dcMotor.get("m2");
-        motorLeftFoldableTread = hardwareMap.dcMotor.get("m3");
-        motorRightFoldableTread = hardwareMap.dcMotor.get("m4");
+        motorLeftSecondTread = hardwareMap.dcMotor.get("m3");
+        motorRightSecondTread = hardwareMap.dcMotor.get("m4");
 
         /*//Other Mapping
         motorHangingMech = hardwareMap.dcMotor.get("m5");*/
@@ -109,7 +109,8 @@ public abstract class ResQ_Library extends OpMode {
 
         //set the direction of the motors
         /*motorLeftTread.setDirection(DcMotor.Direction.REVERSE);
-        motorLeftFoldableTread.setDirection(DcMotor.Direction.REVERSE);
+        motorLeftSecondTread.setDirection(DcMotor.Direction.REVERSE);
+
         //set the direction of the servos (99% sure this isn't neccesary but yolo)
         srvoDong_Left.setDirection(Servo.Direction.FORWARD);
         srvoDong_Right.setDirection(Servo.Direction.FORWARD);*/
@@ -139,15 +140,9 @@ public abstract class ResQ_Library extends OpMode {
 
         motorRightTread.setPower(right);
         motorLeftTread.setPower(left);
-        //if(areTracksExtended){
-        motorRightFoldableTread.setPower(right);
-        motorLeftFoldableTread.setPower(left);
-        //}
+        motorRightSecondTread.setPower(right);
+        motorLeftSecondTread.setPower(left);
     }
-
-    /*public void singleStickDrive(float x, float y) {
-        drive(y + x, y - x);
-    }*/
 
     public void setDriveGear (int gear) {
         driveGear = normalizeForGear(gear);
@@ -173,7 +168,7 @@ public abstract class ResQ_Library extends OpMode {
         return sensorUltra_1.getValue();
     }
 
-    /*public void colorCheck(){
+    public void colorCheck(){
         int red = sensorRGB.red();
         int blue = sensorRGB.blue();
         int green = sensorRGB.green();
@@ -184,7 +179,7 @@ public abstract class ResQ_Library extends OpMode {
             if(blue > red) teamWeAreOn = Team.BLUE;
             else if(red > blue) teamWeAreOn = Team.RED;
         }
-    }*/
+    }
 
     public void moveToClosestObject() {
         double ultraRight;
