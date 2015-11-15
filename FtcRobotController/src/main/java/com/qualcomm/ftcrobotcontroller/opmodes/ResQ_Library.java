@@ -53,7 +53,7 @@ public abstract class ResQ_Library extends OpMode {
     final static double STOP_CONST = 6.0;
 
     //Color Sensor Calibrations
-    final static int COLOR_THRESHOLD = 400;
+    final static int COLOR_THRESHOLD = 215;
 
     //Constants that determine how strong the robot's speed and turning should be
     final static double SPEED_CONST = 0.005;
@@ -102,24 +102,24 @@ public abstract class ResQ_Library extends OpMode {
         motorLeftFoldableTread = hardwareMap.dcMotor.get("m3");
         motorRightFoldableTread = hardwareMap.dcMotor.get("m4");
 
-        //Other Mapping
-        motorHangingMech = hardwareMap.dcMotor.get("m5");
-        /*srvoHang_1 = hardwareMap.servo.get("s1");
+        /*//Other Mapping
+        motorHangingMech = hardwareMap.dcMotor.get("m5");*/
+        srvoHang_1 = hardwareMap.servo.get("s1");
         srvoHang_2 = hardwareMap.servo.get("s2");
-        srvoDong_Left = hardwareMap.servo.get("s3"); //The left servo
+        /*srvoDong_Left = hardwareMap.servo.get("s3"); //The left servo
         srvoDong_Right = hardwareMap.servo.get("s4"); //The right servo
         //srvoPushButton = hardwareMap.servo.get("s5");
         srvoScoreClimbers = hardwareMap.servo.get("s6");*/
 
 
         //set the direction of the motors
-        motorLeftTread.setDirection(DcMotor.Direction.REVERSE);
+        /*motorLeftTread.setDirection(DcMotor.Direction.REVERSE);
         motorLeftFoldableTread.setDirection(DcMotor.Direction.REVERSE);
         //set the direction of the servos (99% sure this isn't neccesary but yolo)
         /*srvoDong_Left.setDirection(Servo.Direction.FORWARD);
-        srvoDong_Right.setDirection(Servo.Direction.FORWARD);
+        srvoDong_Right.setDirection(Servo.Direction.FORWARD);*/
         srvoHang_1.setDirection(Servo.Direction.FORWARD);
-        srvoHang_1.setDirection(Servo.Direction.FORWARD);*/
+        srvoHang_1.setDirection(Servo.Direction.FORWARD);
     }
 
     //****************TELEOP METHODS****************//
@@ -174,7 +174,7 @@ public abstract class ResQ_Library extends OpMode {
         return sensorUltra_1.getValue();
     }
 
-    public void colorCheck(){
+    /*public void colorCheck(){
         int red = sensorRGB.red();
         int blue = sensorRGB.blue();
         int green = sensorRGB.green();
@@ -185,7 +185,7 @@ public abstract class ResQ_Library extends OpMode {
             if(blue > red) teamWeAreOn = Team.BLUE;
             else if(red > blue) teamWeAreOn = Team.RED;
         }
-    }
+    }*/
 
     public void moveToClosestObject() {
         double ultraRight;
@@ -259,17 +259,11 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     public String getScaledColor(int r, int g, int b){
-        if(r > COLOR_THRESHOLD || g > COLOR_THRESHOLD || b > COLOR_THRESHOLD){
-            if(r > b){
-                return "RED";
-            }
-            else if(b > r){
-                return "BLUE";
-            }
-            else if(g > r){
-                return "GREEN";
-            }
-            else return "TOO STRONG";
+        if(b > r && b > COLOR_THRESHOLD) {
+            return "BLUE";
+        }
+        else if(r > b && r > COLOR_THRESHOLD){
+            return "RED";
         }
         else {
             return "GREY";

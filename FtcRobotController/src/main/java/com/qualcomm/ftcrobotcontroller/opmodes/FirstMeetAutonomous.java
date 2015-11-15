@@ -103,7 +103,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			rightPower = 1.0f;
 			drive(leftPower, rightPower);
 
-            colorCheck(); //Determine what color it is to see what team we're on
+            //colorCheck(); Determine what color it is to see what team we're on
 
 			if(teamWeAreOn == Team.RED) { //color is red
 				//stop movement immediately

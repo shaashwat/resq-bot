@@ -56,10 +56,8 @@ public class ResQ_TeleOp extends ResQ_Library {
         }
         if (gamepad1.a) {
             //reverse drive
-            if (driveReverse) driveReverse = false; //if true, make false
-            else driveReverse = true; //is false, make true
+            driveReverse = !driveReverse;
         }
-
 
         //****************BLOCK MANIPULATION****************//
 
