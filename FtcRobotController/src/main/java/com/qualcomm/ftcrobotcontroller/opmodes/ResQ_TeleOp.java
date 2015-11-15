@@ -88,6 +88,8 @@ public class ResQ_TeleOp extends ResQ_Library {
             //pull string and add tension
             telemetry.addData("Left Trigger Moving", "add tension");
             motorHangingMech.setPower(1.0f);
+        } else {
+            motorHangingMech.setPower(0);
         }
 
         //Hanging Servos
@@ -99,9 +101,34 @@ public class ResQ_TeleOp extends ResQ_Library {
             HangingAutomation();
         }
 
+        /*if(srvoHang1JoyCheck > 0.05) {
+            srvoHang_1.setPosition(1.0f);
+        } else if(srvoHang1JoyCheck < -0.05) {
+            srvoHang_1.setPosition(0.0f);
+        }
+
+        if(srvoHang2JoyCheck > 0.05) {
+            srvoHang_2.setPosition(1.0f);
+        } else if(srvoHang2JoyCheck < -0.05) {
+            srvoHang_2.setPosition(0.0f);
+        }*/
+
+        //experimental hanging
+        if(srvoHang1JoyCheck > 0.05) {
+            srvoHang_1.setPosition(Math.min(1.0f, srvoHang_1.getPosition() + 0.01f));
+        } else if(srvoHang1JoyCheck < -0.05) {
+            srvoHang_1.setPosition(Math.min(0.0f, srvoHang_1.getPosition() - 0.01f));
+        }
+
+        if(srvoHang2JoyCheck > 0.05) {
+            srvoHang_2.setPosition(Math.min(1.0f, srvoHang_2.getPosition() + 0.01f));
+        } else if(srvoHang2JoyCheck < -0.05) {
+            srvoHang_2.setPosition(Math.min(0.0f, srvoHang_2.getPosition() - 0.01f));
+        }
+
         //Donglers
         //Left Dongler System
-        if (gamepad2.left_bumper) { //left bumper means left dongler
+        /*if (gamepad2.left_bumper) { //left bumper means left dongler
             if (gamepad2.left_bumper) { //left bumper means left dongler
                 if (leftDongDown) { //its already down, so lets move it back up
                     srvoDong_Left.setPosition(0.0);
@@ -120,7 +147,7 @@ public class ResQ_TeleOp extends ResQ_Library {
                     srvoDong_Right.setPosition(0.5);
                     rightDongDown = true;
                 }
-            }
+            }*/
 
 
 
@@ -140,7 +167,7 @@ public class ResQ_TeleOp extends ResQ_Library {
             telemetry.addData("*****", "Important Booleans");
             telemetry.addData("", "Driving is " + tel_Bool_Reverse + " and " + tel_Bool_Speed);
             telemetry.addData("Left Dongler", "" + tel_Bool_LeftDong);
-            telemetry.addData("Right Dongler", "" + tel_Bool_RightDong);*/
-        }
+            telemetry.addData("Right Dongler", "" + tel_Bool_RightDong);
+        }*/
     }
 }

@@ -97,8 +97,8 @@ public abstract class ResQ_Library extends OpMode {
         motorLeftSecondTread = hardwareMap.dcMotor.get("m3");
         motorRightSecondTread = hardwareMap.dcMotor.get("m4");
 
-        /*//Other Mapping
-        motorHangingMech = hardwareMap.dcMotor.get("m5");*/
+        //Other Mapping
+        motorHangingMech = hardwareMap.dcMotor.get("m5");
         srvoHang_1 = hardwareMap.servo.get("s1");
         srvoHang_2 = hardwareMap.servo.get("s2");
         /*srvoDong_Left = hardwareMap.servo.get("s3"); //The left servo
@@ -108,11 +108,11 @@ public abstract class ResQ_Library extends OpMode {
 
 
         //set the direction of the motors
-        /*motorLeftTread.setDirection(DcMotor.Direction.REVERSE);
-        motorLeftSecondTread.setDirection(DcMotor.Direction.REVERSE);
+        motorRightTread.setDirection(DcMotor.Direction.REVERSE);
+        motorRightSecondTread.setDirection(DcMotor.Direction.REVERSE);
 
         //set the direction of the servos (99% sure this isn't neccesary but yolo)
-        srvoDong_Left.setDirection(Servo.Direction.FORWARD);
+        /*srvoDong_Left.setDirection(Servo.Direction.FORWARD);
         srvoDong_Right.setDirection(Servo.Direction.FORWARD);*/
         srvoHang_1.setDirection(Servo.Direction.FORWARD);
         srvoHang_1.setDirection(Servo.Direction.FORWARD);
