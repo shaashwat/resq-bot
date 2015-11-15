@@ -87,12 +87,7 @@ public abstract class ResQ_Library extends OpMode {
     public enum Team {
         RED, BLUE, UNKNOWN
     }
-    Team teamWeAreOn = Team.UNKNOWN; //enum that represents our team
-
-    public enum Speed {
-        FULL, HALF, QUARTER
-    }
-    Speed currentSpeed = Speed.FULL; //enum that represents our speed
+    Team teamWeAreOn = Team.UNKNOWN; //enum thats represent team
 
     //****************INITIALIZE METHOD****************//
     public void initializeMapping () {
@@ -116,7 +111,7 @@ public abstract class ResQ_Library extends OpMode {
         /*motorLeftTread.setDirection(DcMotor.Direction.REVERSE);
         motorLeftFoldableTread.setDirection(DcMotor.Direction.REVERSE);
         //set the direction of the servos (99% sure this isn't neccesary but yolo)
-        /*srvoDong_Left.setDirection(Servo.Direction.FORWARD);
+        srvoDong_Left.setDirection(Servo.Direction.FORWARD);
         srvoDong_Right.setDirection(Servo.Direction.FORWARD);*/
         srvoHang_1.setDirection(Servo.Direction.FORWARD);
         srvoHang_1.setDirection(Servo.Direction.FORWARD);
@@ -145,18 +140,22 @@ public abstract class ResQ_Library extends OpMode {
         motorRightTread.setPower(right);
         motorLeftTread.setPower(left);
         //if(areTracksExtended){
-            motorRightFoldableTread.setPower(right);
-            motorLeftFoldableTread.setPower(left);
+        motorRightFoldableTread.setPower(right);
+        motorLeftFoldableTread.setPower(left);
         //}
     }
+
+    /*public void singleStickDrive(float x, float y) {
+        drive(y + x, y - x);
+    }*/
 
     public void setDriveGear (int gear) {
         driveGear = normalizeForGear(gear);
     }
 
-    /*public void hangMotor (float direction){
+    public void hangMotor (float direction){
         motorHangingMech.setPower(direction);
-    }*/
+    }
 
     public void HangingAutomation () {
         //Once the first meet is over, create an algorithm that
