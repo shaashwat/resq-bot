@@ -87,7 +87,12 @@ public abstract class ResQ_Library extends OpMode {
     public enum Team {
         RED, BLUE, UNKNOWN
     }
-    Team teamWeAreOn = Team.UNKNOWN; //enum thats represent team
+    Team teamWeAreOn = Team.UNKNOWN; //enum that represents our team
+
+    public enum Speed {
+        FULL, HALF, QUARTER
+    }
+    Speed currentSpeed = Speed.FULL; //enum that represents our speed
 
     //****************INITIALIZE METHOD****************//
     public void initializeMapping () {
@@ -97,21 +102,21 @@ public abstract class ResQ_Library extends OpMode {
         motorLeftFoldableTread = hardwareMap.dcMotor.get("m3");
         motorRightFoldableTread = hardwareMap.dcMotor.get("m4");
 
-        /*//Other Mapping
+        //Other Mapping
         motorHangingMech = hardwareMap.dcMotor.get("m5");
-        srvoHang_1 = hardwareMap.servo.get("s1");
+        /*srvoHang_1 = hardwareMap.servo.get("s1");
         srvoHang_2 = hardwareMap.servo.get("s2");
         srvoDong_Left = hardwareMap.servo.get("s3"); //The left servo
         srvoDong_Right = hardwareMap.servo.get("s4"); //The right servo
         //srvoPushButton = hardwareMap.servo.get("s5");
-        srvoScoreClimbers = hardwareMap.servo.get("s6");
+        srvoScoreClimbers = hardwareMap.servo.get("s6");*/
 
 
         //set the direction of the motors
         motorLeftTread.setDirection(DcMotor.Direction.REVERSE);
         motorLeftFoldableTread.setDirection(DcMotor.Direction.REVERSE);
         //set the direction of the servos (99% sure this isn't neccesary but yolo)
-        srvoDong_Left.setDirection(Servo.Direction.FORWARD);
+        /*srvoDong_Left.setDirection(Servo.Direction.FORWARD);
         srvoDong_Right.setDirection(Servo.Direction.FORWARD);
         srvoHang_1.setDirection(Servo.Direction.FORWARD);
         srvoHang_1.setDirection(Servo.Direction.FORWARD);*/
@@ -145,17 +150,13 @@ public abstract class ResQ_Library extends OpMode {
         //}
     }
 
-    /*public void singleStickDrive(float x, float y) {
-        drive(y + x, y - x);
-    }*/
-
     public void setDriveGear (int gear) {
         driveGear = normalizeForGear(gear);
     }
 
-    public void hangMotor (float direction){
+    /*public void hangMotor (float direction){
         motorHangingMech.setPower(direction);
-    }
+    }*/
 
     public void HangingAutomation () {
         //Once the first meet is over, create an algorithm that

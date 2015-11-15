@@ -30,8 +30,6 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         float right = ProcessToMotorFromJoy(-gamepad1.right_stick_y); //Used with tracks
         float left = ProcessToMotorFromJoy(-gamepad1.left_stick_y);
-        //float x = ProcessDriveInput(-gamepad1.left_stick_x); //Used with wheels
-        //float y = ProcessDriveInput(-gamepad1.left_stick_y);
         /*
          * Gamepad 1:
 		 * Left joystick moves the left track, and the right joystick moves the right track
@@ -84,67 +82,74 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         //****************OTHER****************//
 
-        //Donglers
+        /*//Donglers
         //Left Dongler System
         if (gamepad2.left_bumper) { //left bumper means left dongler
-            if (gamepad2.left_bumper) { //left bumper means left dongler
-                if (leftDongDown) { //its already down, so lets move it back up
-                    srvoDong_Left.setPosition(0.0);
-                    leftDongDown = false;
-                } else { //leftDongDown is false, so make it true and move it down
-                    srvoDong_Left.setPosition(0.5);
-                    leftDongDown = true;
-                }
+            if (leftDongDown) { //its already down, so lets move it back up
+                srvoDong_Left.setPosition(0.0);
+                leftDongDown = false;
+            } else { //leftDongDown is false, so make it true and move it down
+                srvoDong_Left.setPosition(0.5);
+                leftDongDown = true;
             }
-            //Right Dongler System
-            if (gamepad2.right_bumper) { //right bumper means right dongler
-                if (rightDongDown) { //its already down, so lets move it back up
-                    srvoDong_Right.setPosition(0.0);
-                    rightDongDown = false;
-                } else { //rightDongDown is false, so make it true and move it down
-                    srvoDong_Right.setPosition(0.5);
-                    rightDongDown = true;
-                }
-            }
-
-            if (gamepad2.right_trigger >= 0.5f) {
-                srvoHang_1.setPosition(1.0);
-            } else if (srvoHang_1.getPosition() >= 0.1) {
-                srvoHang_1.setPosition(0.0);
-            }
-
-            if (gamepad2.left_trigger >= 0.5f) {
-                srvoHang_2.setPosition(1.0);
-            } else if (gamepad2.left_bumper) {
-                srvoHang_2.setPosition(0.0);
-            }
-
-            //servo hanging
-            float srvoHang1JoyCheck = ProcessToMotorFromJoy(-gamepad2.left_stick_y);
-            float srvoHang2JoyCheck = ProcessToMotorFromJoy(-gamepad2.right_stick_y);
-
-            if (gamepad2.y) {
-                //Hanging automation procedure
-                HangingAutomation();
-            }
-
-            //****************TELEMETRY****************//
-
-            String tel_Bool_Reverse = (driveReverse) ? "REVERSED" : "normal";
-            String tel_Bool_Speed = "error speed";
-            if (driveGear == 3) { //highest 100% setting, essentially don't change it
-                tel_Bool_Speed = "at 100% speed";
-            } else if (driveGear == 2) { //medium 50% setting
-                tel_Bool_Speed = "at 50% speed";
-            } else if (driveGear == 1) { //lowest 25% setting
-                tel_Bool_Speed = "at 25% speed";
-            }
-            String tel_Bool_LeftDong = (leftDongDown) ? " is down, now moving up" : "is up, now moving down";
-            String tel_Bool_RightDong = (rightDongDown) ? " is down, now moving up" : "is up, now moving down";
-            telemetry.addData("*****", "Important Booleans");
-            telemetry.addData("", "Driving is " + tel_Bool_Reverse + " and " + tel_Bool_Speed);
-            telemetry.addData("Left Dongler", "" + tel_Bool_LeftDong);
-            telemetry.addData("Right Dongler", "" + tel_Bool_RightDong);
         }
+        //Right Dongler System
+        if (gamepad2.right_bumper) { //right bumper means right dongler
+            if (rightDongDown) { //its already down, so lets move it back up
+                srvoDong_Right.setPosition(0.0);
+                rightDongDown = false;
+            } else { //rightDongDown is false, so make it true and move it down
+                srvoDong_Right.setPosition(0.5);
+                rightDongDown = true;
+            }
+        }*/
+        /*
+        //servo hanging
+        float srvoHang1JoyCheck = ProcessToMotorFromJoy(-gamepad2.left_stick_y);
+        float srvoHang2JoyCheck = ProcessToMotorFromJoy(-gamepad2.right_stick_y);
+        if (gamepad2.right_trigger >= 0.5f) {
+            srvoHang_1.setPosition(1.0);
+        } else if (srvoHang_1.getPosition() >= 0.1) {
+            srvoHang_1.setPosition(0.0);
+        }
+
+        if (gamepad2.left_trigger >= 0.5f) {
+            srvoHang_2.setPosition(1.0);
+        } else if (gamepad2.left_bumper) {
+            srvoHang_2.setPosition(0.0);
+        }*/
+
+        if (gamepad2.right_trigger >= 0.5f) {
+            //release tension by letting go of string
+            telemetry.addData("Right Trigger Moving", "release tension");
+            motorHangingMech.setPower(-1.0f);
+        } else if (gamepad2.left_trigger >= 0.5f) {
+            //pull string and add tension
+            telemetry.addData("Left Trigger Moving", "add tension");
+            motorHangingMech.setPower(1.0f);
+        }
+
+        if (gamepad2.y) {
+            //Hanging automation procedure
+            HangingAutomation();
+        }
+
+        //****************TELEMETRY****************//
+
+        /*String tel_Bool_Reverse = (driveReverse) ? "REVERSED" : "normal";
+        String tel_Bool_Speed = "error speed";
+        if (driveGear == 3) { //highest 100% setting, essentially don't change it
+            tel_Bool_Speed = "at 100% speed";
+        } else if (driveGear == 2) { //medium 50% setting
+            tel_Bool_Speed = "at 50% speed";
+        } else if (driveGear == 1) { //lowest 25% setting
+            tel_Bool_Speed = "at 25% speed";
+        }
+        String tel_Bool_LeftDong = (leftDongDown) ? " is down, now moving up" : "is up, now moving down";
+        String tel_Bool_RightDong = (rightDongDown) ? " is down, now moving up" : "is up, now moving down";
+        telemetry.addData("*****", "Important Booleans");
+        telemetry.addData("", "Driving is " + tel_Bool_Reverse + " and " + tel_Bool_Speed);
+        telemetry.addData("Left Dongler", "" + tel_Bool_LeftDong);
+        telemetry.addData("Right Dongler", "" + tel_Bool_RightDong);*/
     }
 }
