@@ -61,7 +61,7 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         if (gamepad2.x) {
             //toggle block intake
-            what the fuck
+            //what the fuck
         }
         if (gamepad2.a) {
             //Toggle conveyor movement
@@ -69,7 +69,7 @@ public class ResQ_TeleOp extends ResQ_Library {
 
                 isConveyorMoving = !isConveyorMoving;
             } else { //its not, so start it up
-2
+
             }
         }
         if (gamepad2.b) {

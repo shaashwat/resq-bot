@@ -169,9 +169,9 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     public void colorCheck(){
-        int red = sensorRGB.red();
-        int blue = sensorRGB.blue();
-        int green = sensorRGB.green();
+        int red = sensorRGB_1.red();
+        int blue = sensorRGB_1.blue();
+        int green = sensorRGB_1.green();
         telemetry.addData("blue", blue);
         telemetry.addData("red", red);
         telemetry.addData("assumed", getScaledColor(red, blue, green));
