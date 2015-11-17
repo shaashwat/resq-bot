@@ -274,11 +274,18 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************MISC METHODS****************//
     public void sleep(int millis) {
-        ElapsedTime timer = new ElapsedTime();
+        /*ElapsedTime timer = new ElapsedTime();
         double startTime = timer.time();
         double currentTime = 0.0;
         while(currentTime - startTime < millis) {
             currentTime = timer.time();
+        }
+    }*/
+        try {
+            Thread.sleep(millis);
+        }
+        catch(Exception err) {
+            telemetry.addData("ERROR", "UR THREADS SUCK");
         }
     }
 }
