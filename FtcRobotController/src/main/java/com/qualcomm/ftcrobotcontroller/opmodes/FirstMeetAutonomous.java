@@ -63,7 +63,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	}
 
-	public void moveTillLine () {
+	public void moveTillLine() {
         calibrateColors();
 		boolean foundLine = false;
 		while(!foundLine) { //keep looping until sensor finds a color
