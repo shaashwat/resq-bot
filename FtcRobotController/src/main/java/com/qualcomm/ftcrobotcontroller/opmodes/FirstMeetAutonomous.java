@@ -32,6 +32,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	float rightPower;
 	double currentTimeCatch;
 
+    boolean foundLine = false;
 
 
 	/**
@@ -50,12 +51,22 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void init() {
 		//Do the map thing
 		initializeMapping();
-		moveTillLine();
+        calibrateColors();
 	}
 
 	@Override
 	public void loop() {
-		telemetry.addData("Time", "elapsed time: " + Double.toString(this.time));
+        if(!foundLine) {
+            teamWeAreOn = getTeam();
+            if(teamWeAreOn == Team.UNKNOWN) {
+                goForward();
+            }
+            else {
+                stopMoving();
+                if(teamWeAreOn == Team.RED) telemetry.addData("On team:", "RED");
+                if(teamWeAreOn == Team.BLUE) telemetry.addData("On team:", "BLUE");
+            }
+        }
 	}
 
 	@Override
@@ -63,7 +74,19 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	}
 
-	public void moveTillLine() {
+    public void goForward(){
+        leftPower = 1.0f;
+        rightPower = 1.0f;
+        drive(leftPower, rightPower);
+    }
+    public void stopMoving(){
+        leftPower = 0.0f;
+        rightPower = 0.0f;
+        drive(leftPower, rightPower);
+    }
+
+
+    public void moveTillLine() {
         calibrateColors();
 		boolean foundLine = false;
 		while(!foundLine) { //keep looping until sensor finds a color
@@ -79,7 +102,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 				rightPower = 0.0f;
 				drive(leftPower, rightPower);
 				TurnToBeacon();
-			}
+			}.. mong (บ่าย...โมง, [bàːj mōːŋ]) for the latter half of daytime (13:00 to 18:59)
 			else if (teamWeAreOn == Team.BLUE) { //color is blue
 				//stop movement immediately
 				leftPower = 0.0f;
