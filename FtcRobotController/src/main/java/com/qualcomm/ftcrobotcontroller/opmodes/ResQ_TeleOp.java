@@ -89,7 +89,7 @@ public class ResQ_TeleOp extends ResQ_Library {
             telemetry.addData("Left Trigger Moving", "add tension");
             motorHangingMech.setPower(1.0f);
         } else {
-            motorHangingMech.setPower(0);
+            //motorHangingMech.setPower(0);
         }
 
         //Hanging Servos
@@ -98,7 +98,7 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         if (gamepad2.y) {
             //Hanging automation procedure
-            HangingAutomation();
+            //HangingAutomation();
         }
 
         /*if(srvoHang1JoyCheck > 0.05) {

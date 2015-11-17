@@ -33,7 +33,7 @@ public class ColorTest extends ResQ_Library {
             telemetry.addData("red", offsettedRed);
             telemetry.addData("alpha", alpha);
             telemetry.addData("green", offsettedGreen);
-            telemetry.addData("assumed", getScaledColor(offsettedRed, offsettedBlue, offsettedGreen));
+            telemetry.addData("assumed", getScaledColor(offsettedRed, offsettedGreen, offsettedBlue));
             telemetry.addData("Status", "Running");
         }
         else if(this.time == 3) {
