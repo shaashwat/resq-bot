@@ -67,7 +67,7 @@ public class ExperimentalAutonomous extends ResQ_Library {
         int green = sensorRGB.green();
         telemetry.addData("blue", blue);
         telemetry.addData("red", red);
-        telemetry.addData("assumed", getScaledColor(red, blue, green));
+        //telemetry.addData("assumed", getScaledColor(red, blue, green));
         if(red > COLOR_THRESHOLD || blue > COLOR_THRESHOLD){
             if(blue > red) teamWeAreOn = Team.BLUE;
             else if(red > blue) teamWeAreOn = Team.RED;

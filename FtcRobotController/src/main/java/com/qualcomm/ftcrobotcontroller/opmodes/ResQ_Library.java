@@ -38,6 +38,10 @@ public abstract class ResQ_Library extends OpMode {
     ColorSensor sensorRGB_1;
     ColorSensor sensorRGB_2;
 
+    int offsetRed;
+    int offsetGreen;
+    int offsetBlue;
+
     //For Multiple Use or Other
     DcMotor motorHangingMech; //responsible for lifting the entire robot
     Servo srvoHang_1; //the servo closer to the base (elbow)
@@ -53,7 +57,7 @@ public abstract class ResQ_Library extends OpMode {
     final static double STOP_CONST = 6.0;
 
     //Color Sensor Calibrations
-    final static int COLOR_THRESHOLD = 215;
+    final static int COLOR_THRESHOLD = 220;
 
     //Constants that determine how strong the robot's speed and turning should be
     final static double SPEED_CONST = 0.005;
@@ -96,6 +100,9 @@ public abstract class ResQ_Library extends OpMode {
         motorRightTread = hardwareMap.dcMotor.get("m2");
         motorLeftSecondTread = hardwareMap.dcMotor.get("m3");
         motorRightSecondTread = hardwareMap.dcMotor.get("m4");
+
+        //Sensors
+        sensorRGB_1 = hardwareMap.colorSensor.get("color");
 
         //Other Mapping
         motorHangingMech = hardwareMap.dcMotor.get("m5");
@@ -166,19 +173,6 @@ public abstract class ResQ_Library extends OpMode {
     //****************SENSOR METHODS****************//
     public double getDistance() {
         return sensorUltra_1.getValue();
-    }
-
-    public void colorCheck(){
-        int red = sensorRGB_1.red();
-        int blue = sensorRGB_1.blue();
-        int green = sensorRGB_1.green();
-        telemetry.addData("blue", blue);
-        telemetry.addData("red", red);
-        telemetry.addData("assumed", getScaledColor(red, blue, green));
-        if(red > COLOR_THRESHOLD || blue > COLOR_THRESHOLD){
-            if(blue > red) teamWeAreOn = Team.BLUE;
-            else if(red > blue) teamWeAreOn = Team.RED;
-        }
     }
 
     public void moveToClosestObject() {
@@ -252,15 +246,23 @@ public abstract class ResQ_Library extends OpMode {
         return dScale;
     }
 
-    public String getScaledColor(int r, int g, int b){
+    public void calibrateColors(){
+        offsetRed = sensorRGB_1.red() + 200;
+        offsetGreen = sensorRGB_1.green();
+        offsetBlue = sensorRGB_1.blue();
+    }
+
+    public Team getTeam(){
+        int r = sensorRGB_1.red() - offsetRed;
+        int b = sensorRGB_1.blue() - offsetBlue;
         if(b > r && b > COLOR_THRESHOLD) {
-            return "BLUE";
+            return Team.BLUE;
         }
         else if(r > b && r > COLOR_THRESHOLD){
-            return "RED";
+            return Team.RED;
         }
         else {
-            return "GREY";
+            return Team.UNKNOWN;
         }
     }
 

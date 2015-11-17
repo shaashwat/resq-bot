@@ -33,6 +33,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	double currentTimeCatch;
 
 
+
 	/**
 	 * Blue Team Information:
 	 * 		- team is on the right side of the map, line is on robot's left and ramp on robot's right
@@ -47,8 +48,6 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	@Override
 	public void init() {
-		sensorRGB = hardwareMap.colorSensor.get("color");
-
 		//Do the map thing
 		initializeMapping();
 		moveTillLine();
@@ -65,13 +64,14 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	}
 
 	public void moveTillLine () {
+        calibrateColors();
 		boolean foundLine = false;
 		while(!foundLine) { //keep looping until sensor finds a color
 			leftPower = 1.0f;
-			rightPower = 1.0f;
-			drive(leftPower, rightPower);
+            rightPower = 1.0f;
+            drive(leftPower, rightPower);
 
-			colorCheck(); //Determine what color it is to see what team we're on
+			teamWeAreOn = getTeam();
 
 			if(teamWeAreOn == Team.RED) { //color is red
 				//stop movement immediately
