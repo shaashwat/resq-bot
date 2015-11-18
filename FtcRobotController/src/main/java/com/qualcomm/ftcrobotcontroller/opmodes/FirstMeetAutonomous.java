@@ -73,7 +73,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 			teamWeAreOn = getTeam();
 
-			if(teamWeAreOn == Team.RED) { //color is red
+			/*if(teamWeAreOn == Team.RED) { //color is red
 				//stop movement immediately
 				leftPower = 0.0f;
 				rightPower = 0.0f;
@@ -86,7 +86,14 @@ public class FirstMeetAutonomous extends ResQ_Library {
 				rightPower = 0.0f;
 				drive(leftPower, rightPower);
 				TurnToBeacon();
+			}*/
+			if (teamWeAreOn != Team.UNKNOWN) {
+				leftPower = 0;
+				rightPower = 0;
+				drive(0f, 0f);
+				TurnToBeacon();
 			}
+
 			////////////This else statement would force the robot to jerk around, replace it with time based movement
 			/*else { //color is none of the above, go back a couple of steps and try again
 				currentTimeCatch = this.time; //collect current time
@@ -107,7 +114,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void TurnToBeacon() { //(turn to bacon)
 		//If we're red, turn left 70 degrees
 		//Do some compass thing in order to stop our turning
-		if(teamWeAreOn == Team.RED){ //false so we're on red team
+		/*if(teamWeAreOn == Team.RED){ //false so we're on red team
 			if (1!=1){ //If compass detects that we're finished turning
 				//Drive straight
 				drive(1.0f, 1.0f);
@@ -124,6 +131,13 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			} else { //we're not finished turning fam
 				drive(0.5f, -0.5f);
 			}
+		}*/
+		//Simplified
+		if (1!=1) {
+			drive(1, 1);
+		} else {
+			int m = teamWeAreOn == Team.RED ? 1 : -1;
+			drive(-.5f * m, .5f * m);
 		}
 	}
 }
