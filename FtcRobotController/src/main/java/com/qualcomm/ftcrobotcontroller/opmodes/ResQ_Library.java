@@ -15,11 +15,6 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
  *
  */
 public abstract class ResQ_Library extends OpMode {
-
-    public ResQ_Library() {
-
-    }
-
     //****************HARDWARE MAPPING DEFINITIONS****************//
 
     //For Driving Only
@@ -88,6 +83,10 @@ public abstract class ResQ_Library extends OpMode {
         RED, BLUE, UNKNOWN
     }
     Team teamWeAreOn = Team.UNKNOWN; //enum thats represent team
+
+    public ResQ_Library() {
+
+    }
 
     //****************INITIALIZE METHOD****************//
     public void initializeMapping () {
