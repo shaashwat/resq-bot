@@ -22,56 +22,42 @@ public abstract class ResQ_Library extends OpMode {
     //****************HARDWARE MAPPING DEFINITIONS****************//
 
     //For Driving Only
-    DcMotor motorRightTread;
-    DcMotor motorLeftTread;
-    DcMotor motorRightSecondTread;
-    DcMotor motorLeftSecondTread;
+    DcMotor motorRightTread, motorLeftTread, motorRightSecondTread, motorLeftSecondTread;
 
     //Autonomous
-    Servo srvoScoreClimbers;
-    Servo srvoPushButton;
+    Servo srvoScoreClimbers, srvoPushButton;
 
     //Sensors
-    AnalogInput sensorUltra_1;
-    AnalogInput sensorUltra_2;
-    ColorSensor sensorRGB_1;
-    ColorSensor sensorRGB_2;
+    AnalogInput sensorUltra_1, sensorUltra_2;
+    ColorSensor sensorRGB_1, sensorRGB_2;
 
-    int offsetRed;
-    int offsetGreen;
-    int offsetBlue;
+    int offsetRed, offsetGreen, offsetBlue;
 
-    //For Multiple Use or Other
-    DcMotor motorHangingMech; //responsible for lifting the entire robot
-    Servo srvoHang_1; //the servo closer to the base (elbow)
-    Servo srvoHang_2; //the servo closer to the hook (wrist)
-    Servo srvoDong_Left; //frees the hanging climbers
-    Servo srvoDong_Right; //frees the hanging climbers
+    /*
+        motorHangingMech: responsible for lifting entire robot
+        srvoHang_1: servo closer to base(elbow)
+        srvoHang_2: servo closer to the hook(wrist)
+        srvoDong_Left: frees hanging climbers
+        srvoDong_Right: ^
+     */
+    DcMotor motorHangingMech;
+    Servo srvoHang_1, srvoHang_2, srvoDong_Left, srvoDong_Right;
 
 
     //****************OTHER DEFINITIONS****************//
     //Ultrasonic algorithm Constants
-    final static double RIGHT_TARGET_DISTANCE = 27.0;
-    final static double LEFT_TARGET_DISTANCE = 27.0;
-    final static double STOP_CONST = 6.0;
+    final static double RIGHT_TARGET_DISTANCE = 27.0, LEFT_TARGET_DISTANCE = 27.0, STOP_CONST = 6.0;
 
     //Color Sensor Calibrations
     final static int COLOR_THRESHOLD = 220;
 
     //Constants that determine how strong the robot's speed and turning should be
-    final static double SPEED_CONST = 0.005;
-    final static double LEFT_STEERING_CONST = 0.85;
-    final static double RIGHT_STEERING_CONST = 0.8;
+    final static double SPEED_CONST = 0.005, LEFT_STEERING_CONST = 0.85, RIGHT_STEERING_CONST = 0.8;
 
     //Servo Min's and Max's (to prevent the servo from extending too far in any direction
-    final static double HANG1_MIN_RANGE = 0.20;
-    final static double HANG1_MAX_RANGE = 0.90;
-    final static double HANG2_MIN_RANGE = 0.20;
-    final static double HANG2_MAX_RANGE = 0.90;
-    final static double DONG1_MIN_RANGE = 0.20;
-    final static double DONG1_MAX_RANGE = 0.90;
-    final static double DONG2_MIN_RANGE = 0.20;
-    final static double DONG2_MAX_RANGE = 0.90;
+    final static double HANG1_MIN_RANGE = 0.20, HANG1_MAX_RANGE = 0.90, HANG2_MIN_RANGE = 0.20,
+            HANG2_MAX_RANGE = 0.90, DONG1_MIN_RANGE = 0.20, DONG1_MAX_RANGE = 0.90, DONG2_MIN_RANGE = 0.20,
+            DONG2_MAX_RANGE = 0.90;
 
 
     //Booleans
@@ -281,8 +267,7 @@ public abstract class ResQ_Library extends OpMode {
     }*/
         try {
             Thread.sleep(millis);
-        }
-        catch(Exception err) {
+        } catch (Exception err) {
             telemetry.addData("ERROR", "UR THREADS SUCK");
         }
     }
