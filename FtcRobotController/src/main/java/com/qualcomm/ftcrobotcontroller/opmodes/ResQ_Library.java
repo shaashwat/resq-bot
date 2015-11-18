@@ -162,11 +162,9 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     public void moveToClosestObject() {
-        double ultraRight;
-        double ultraLeft;
+        double ultraRight, ultraLeft;
 
-        double rightSpeed;
-        double leftSpeed;
+        double rightSpeed, leftSpeed;
 
         while (true) {
             ultraRight = 0; //set these values to sensor readout
@@ -239,8 +237,7 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     public Team getTeam() {
-        int r = sensorRGB_1.red() - offsetRed;
-        int b = sensorRGB_1.blue() - offsetBlue;
+        int r = sensorRGB_1.red() - offsetRed, b = sensorRGB_1.blue() - offsetBlue;
         if (b > r && b > COLOR_THRESHOLD) {
             return Team.BLUE;
         } else if (r > b && r > COLOR_THRESHOLD) {
