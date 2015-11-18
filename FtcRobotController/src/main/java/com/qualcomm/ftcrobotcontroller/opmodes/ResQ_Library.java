@@ -61,10 +61,10 @@ public abstract class ResQ_Library extends OpMode {
     final static double RIGHT_STEERING_CONST = 0.8;
 
     //Servo Min's and Max's (to prevent the servo from extending too far in any direction
-    final static double HANG1_MIN_RANGE  = 0.20;
-    final static double HANG1_MAX_RANGE  = 0.90;
-    final static double HANG2_MIN_RANGE  = 0.20;
-    final static double HANG2_MAX_RANGE  = 0.90;
+    final static double HANG1_MIN_RANGE  = 0.00;
+    final static double HANG1_MAX_RANGE  = 1.00;
+    final static double HANG2_MIN_RANGE  = 0.00;
+    final static double HANG2_MAX_RANGE  = 1.00;
     final static double DONG1_MIN_RANGE  = 0.20;
     final static double DONG1_MAX_RANGE  = 0.90;
     final static double DONG2_MIN_RANGE  = 0.20;
@@ -83,6 +83,7 @@ public abstract class ResQ_Library extends OpMode {
 
     //Other
     int driveGear = 3; //3 is 100%, 2 is 50%, 1 is 25%
+    double HangServoDelta = 0.1;
 
     public enum Team {
         RED, BLUE, UNKNOWN
