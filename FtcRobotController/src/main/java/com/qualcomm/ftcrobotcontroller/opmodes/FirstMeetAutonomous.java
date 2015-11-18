@@ -76,8 +76,8 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	}
 
     public void goForward(){
-        leftPower = 1.0f;
-        rightPower = 1.0f;
+        leftPower = -1.0f;
+        rightPower = -1.0f;
         drive(leftPower, rightPower);
     }
     public void stopMoving(){
