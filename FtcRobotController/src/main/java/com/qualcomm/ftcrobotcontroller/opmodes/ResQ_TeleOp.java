@@ -89,7 +89,7 @@ public class ResQ_TeleOp extends ResQ_Library {
             telemetry.addData("Left Trigger Moving", "add tension");
             motorHangingMech.setPower(1.0f);
         } else {
-            //motorHangingMech.setPower(0);
+            motorHangingMech.setPower(0);
         }
 
         //Hanging Servos
@@ -101,7 +101,7 @@ public class ResQ_TeleOp extends ResQ_Library {
             //HangingAutomation();
         }
 
-        /*if(srvoHang1JoyCheck > 0.05) {
+        if(srvoHang1JoyCheck > 0.05) {
             srvoHang_1.setPosition(1.0f);
         } else if(srvoHang1JoyCheck < -0.05) {
             srvoHang_1.setPosition(0.0f);
@@ -111,10 +111,10 @@ public class ResQ_TeleOp extends ResQ_Library {
             srvoHang_2.setPosition(1.0f);
         } else if(srvoHang2JoyCheck < -0.05) {
             srvoHang_2.setPosition(0.0f);
-        }*/
+        }
 
         //experimental hanging
-        if(srvoHang1JoyCheck > 0.05) {
+        /*if(srvoHang1JoyCheck > 0.05) {
             srvoHang_1.setPosition(Math.min(1.0f, srvoHang_1.getPosition() + 0.01f));
         } else if(srvoHang1JoyCheck < -0.05) {
             srvoHang_1.setPosition(Math.min(0.0f, srvoHang_1.getPosition() - 0.01f));
@@ -124,7 +124,7 @@ public class ResQ_TeleOp extends ResQ_Library {
             srvoHang_2.setPosition(Math.min(1.0f, srvoHang_2.getPosition() + 0.01f));
         } else if(srvoHang2JoyCheck < -0.05) {
             srvoHang_2.setPosition(Math.min(0.0f, srvoHang_2.getPosition() - 0.01f));
-        }
+        }*/
 
         //Donglers
         //Left Dongler System
