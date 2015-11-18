@@ -12,58 +12,47 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 /**
  * The Library responsible for every definition and method. All opmodes will inherit methods from here.
  * To learn inheritance: https://www.youtube.com/watch?v=9JpNY-XAseg
- *
  */
 public abstract class ResQ_Library extends OpMode {
     //****************HARDWARE MAPPING DEFINITIONS****************//
 
     //For Driving Only
-    DcMotor motorRightTread;
-    DcMotor motorLeftTread;
-    DcMotor motorRightSecondTread;
-    DcMotor motorLeftSecondTread;
+    DcMotor motorRightTread, motorLeftTread, motorRightSecondTread, motorLeftSecondTread;
 
     //Autonomous
-    Servo srvoScoreClimbers;
-    Servo srvoPushButton;
+    Servo srvoScoreClimbers, srvoPushButton;
 
     //Sensors
-    AnalogInput sensorUltra_1;
-    AnalogInput sensorUltra_2;
-    ColorSensor sensorRGB_1;
-    ColorSensor sensorRGB_2;
+    AnalogInput sensorUltra_1, sensorUltra_2;
+    ColorSensor sensorRGB_1, sensorRGB_2;
 
-    //For Multiple Use or Other
-    DcMotor motorHangingMech; //responsible for lifting the entire robot
-    Servo srvoHang_1; //the servo closer to the base (elbow)
-    Servo srvoHang_2; //the servo closer to the hook (wrist)
-    Servo srvoDong_Left; //frees the hanging climbers
-    Servo srvoDong_Right; //frees the hanging climbers
+    int offsetRed, offsetGreen, offsetBlue;
+
+    /*
+        motorHangingMech: responsible for lifting entire robot
+        srvoHang_1: servo closer to base(elbow)
+        srvoHang_2: servo closer to the hook(wrist)
+        srvoDong_Left: frees hanging climbers
+        srvoDong_Right: ^
+     */
+    DcMotor motorHangingMech;
+    Servo srvoHang_1, srvoHang_2, srvoDong_Left, srvoDong_Right;
 
 
     //****************OTHER DEFINITIONS****************//
     //Ultrasonic algorithm Constants
-    final static double RIGHT_TARGET_DISTANCE = 27.0;
-    final static double LEFT_TARGET_DISTANCE = 27.0;
-    final static double STOP_CONST = 6.0;
+    final static double RIGHT_TARGET_DISTANCE = 27.0, LEFT_TARGET_DISTANCE = 27.0, STOP_CONST = 6.0;
 
     //Color Sensor Calibrations
-    final static int COLOR_THRESHOLD = 215;
+    final static int COLOR_THRESHOLD = 220;
 
     //Constants that determine how strong the robot's speed and turning should be
-    final static double SPEED_CONST = 0.005;
-    final static double LEFT_STEERING_CONST = 0.85;
-    final static double RIGHT_STEERING_CONST = 0.8;
+    final static double SPEED_CONST = 0.005, LEFT_STEERING_CONST = 0.85, RIGHT_STEERING_CONST = 0.8;
 
     //Servo Min's and Max's (to prevent the servo from extending too far in any direction
-    final static double HANG1_MIN_RANGE  = 0.20;
-    final static double HANG1_MAX_RANGE  = 0.90;
-    final static double HANG2_MIN_RANGE  = 0.20;
-    final static double HANG2_MAX_RANGE  = 0.90;
-    final static double DONG1_MIN_RANGE  = 0.20;
-    final static double DONG1_MAX_RANGE  = 0.90;
-    final static double DONG2_MIN_RANGE  = 0.20;
-    final static double DONG2_MAX_RANGE  = 0.90;
+    final static double HANG1_MIN_RANGE = 0.20, HANG1_MAX_RANGE = 0.90, HANG2_MIN_RANGE = 0.20,
+            HANG2_MAX_RANGE = 0.90, DONG1_MIN_RANGE = 0.20, DONG1_MAX_RANGE = 0.90, DONG2_MIN_RANGE = 0.20,
+            DONG2_MAX_RANGE = 0.90;
 
 
     //Booleans
@@ -82,6 +71,7 @@ public abstract class ResQ_Library extends OpMode {
     public enum Team {
         RED, BLUE, UNKNOWN
     }
+
     Team teamWeAreOn = Team.UNKNOWN; //enum thats represent team
 
     public ResQ_Library() {
@@ -89,12 +79,15 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     //****************INITIALIZE METHOD****************//
-    public void initializeMapping () {
+    public void initializeMapping() {
         //Driving Mapping
         motorLeftTread = hardwareMap.dcMotor.get("m1");
         motorRightTread = hardwareMap.dcMotor.get("m2");
         motorLeftSecondTread = hardwareMap.dcMotor.get("m3");
         motorRightSecondTread = hardwareMap.dcMotor.get("m4");
+
+        //Sensors
+        sensorRGB_1 = hardwareMap.colorSensor.get("color");
 
         //Other Mapping
         motorHangingMech = hardwareMap.dcMotor.get("m5");
@@ -119,22 +112,22 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************TELEOP METHODS****************//
 
-    public void drive(float left, float right){
+    public void drive(float left, float right) {
         // Drives
-        if(driveReverse) { //we've reversed the drive in order to climb the ramp
+        if (driveReverse) { //we've reversed the drive in order to climb the ramp
             right = -right;
             left = -left;
         } //if we haven't just leave it be
 
         if (driveGear == 3) { //highest 100% setting, essentially don't change it
-            left = 1f*left;
-            right = 1f*right;
+            left = 1f * left;
+            right = 1f * right;
         } else if (driveGear == 2) { //medium 50% setting
-            left = 0.5f*left;
-            right = 0.5f*right;
+            left = 0.5f * left;
+            right = 0.5f * right;
         } else if (driveGear == 1) { //lowest 25% setting
-            left = 0.25f*left;
-            right = 0.25f*right;
+            left = 0.25f * left;
+            right = 0.25f * right;
         } //if there's a bug and it's not 1, 2 or 3, default to max drive
 
         motorRightTread.setPower(right);
@@ -143,22 +136,22 @@ public abstract class ResQ_Library extends OpMode {
         motorLeftSecondTread.setPower(left);
     }
 
-    public void setDriveGear (int gear) {
+    public void setDriveGear(int gear) {
         driveGear = normalizeForGear(gear);
     }
 
-    public void hangMotor (float direction){
+    public void hangMotor(float direction) {
         motorHangingMech.setPower(direction);
     }
 
-    public void HangingAutomation () {
+    public void HangingAutomation() {
         //Once the first meet is over, create an algorithm that
         //allows us to hang with the press of one button.
     }
 
     //****************AUTONOMOUS METHODS****************//
 
-    public void GoForward (int time, int direction) {
+    public void GoForward(int time, int direction) {
 
     }
 
@@ -167,36 +160,21 @@ public abstract class ResQ_Library extends OpMode {
         return sensorUltra_1.getValue();
     }
 
-    public void colorCheck(){
-        int red = sensorRGB_1.red();
-        int blue = sensorRGB_1.blue();
-        int green = sensorRGB_1.green();
-        telemetry.addData("blue", blue);
-        telemetry.addData("red", red);
-        telemetry.addData("assumed", getScaledColor(red, blue, green));
-        if(red > COLOR_THRESHOLD || blue > COLOR_THRESHOLD){
-            if(blue > red) teamWeAreOn = Team.BLUE;
-            else if(red > blue) teamWeAreOn = Team.RED;
-        }
-    }
-
     public void moveToClosestObject() {
-        double ultraRight;
-        double ultraLeft;
+        double ultraRight, ultraLeft;
 
-        double rightSpeed;
-        double leftSpeed;
+        double rightSpeed, leftSpeed;
 
-        while(true) {
+        while (true) {
             ultraRight = 0; //set these values to sensor readout
             ultraLeft = 0;
 
             rightSpeed = SPEED_CONST * (ultraRight - RIGHT_TARGET_DISTANCE) + -RIGHT_STEERING_CONST * (ultraLeft - ultraRight); //speedl = kpd * (dl - tl) + kps * (dl - dr)
             leftSpeed = SPEED_CONST * (ultraLeft - LEFT_TARGET_DISTANCE) + -LEFT_STEERING_CONST * (ultraRight - ultraLeft);
 
-            drive((float)rightSpeed, (float)leftSpeed);
+            drive((float) rightSpeed, (float) leftSpeed);
 
-            if(Math.abs(ultraRight - RIGHT_TARGET_DISTANCE) + Math.abs(ultraLeft - LEFT_TARGET_DISTANCE) < STOP_CONST) {
+            if (Math.abs(ultraRight - RIGHT_TARGET_DISTANCE) + Math.abs(ultraLeft - LEFT_TARGET_DISTANCE) < STOP_CONST) {
                 break;
             }
 
@@ -206,7 +184,7 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************NUMBER MANIPULATION METHODS****************//
 
-    float ProcessToMotorFromJoy(float input){ //This is used in any case where joystick input is to be converted to a motor
+    float ProcessToMotorFromJoy(float input) { //This is used in any case where joystick input is to be converted to a motor
         float output = 0.0f;
 
         // clip the power values so that the values never exceed +/- 1
@@ -214,19 +192,19 @@ public abstract class ResQ_Library extends OpMode {
 
         // scale the joystick value to make it easier to control
         // the robot more precisely at slower speeds.
-        output = (float)scaleInput(output);
+        output = (float) scaleInput(output);
 
         return output;
     }
 
-    double scaleInput(double dVal)  {
+    double scaleInput(double dVal) {
         /*
-	     * This method scales the joystick input so for low joystick values, the
+         * This method scales the joystick input so for low joystick values, the
 	     * scaled value is less than linear.  This is to make it easier to drive
 	     * the robot more precisely at slower speeds.
 	     */
-        double[] scaleArray = { 0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
-                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00 };
+        double[] scaleArray = {0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
+                0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00};
 
         // get the corresponding index for the scaleInput array.
         int index = (int) (dVal * 16.0);
@@ -251,15 +229,20 @@ public abstract class ResQ_Library extends OpMode {
         return dScale;
     }
 
-    public String getScaledColor(int r, int g, int b){
-        if(b > r && b > COLOR_THRESHOLD) {
-            return "BLUE";
-        }
-        else if(r > b && r > COLOR_THRESHOLD){
-            return "RED";
-        }
-        else {
-            return "GREY";
+    public void calibrateColors() {
+        offsetRed = sensorRGB_1.red() + 200;
+        offsetGreen = sensorRGB_1.green();
+        offsetBlue = sensorRGB_1.blue();
+    }
+
+    public Team getTeam() {
+        int r = sensorRGB_1.red() - offsetRed, b = sensorRGB_1.blue() - offsetBlue;
+        if (b > r && b > COLOR_THRESHOLD) {
+            return Team.BLUE;
+        } else if (r > b && r > COLOR_THRESHOLD) {
+            return Team.RED;
+        } else {
+            return Team.UNKNOWN;
         }
     }
 
@@ -271,11 +254,17 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************MISC METHODS****************//
     public void sleep(int millis) {
-        ElapsedTime timer = new ElapsedTime();
+        /*ElapsedTime timer = new ElapsedTime();
         double startTime = timer.time();
         double currentTime = 0.0;
-        while(currentTime - startTime < millis) {
+        while (currentTime - startTime < millis) {
             currentTime = timer.time();
+        }
+    }*/
+        try {
+            Thread.sleep(millis);
+        } catch (Exception err) {
+            telemetry.addData("ERROR", "UR THREADS SUCK");
         }
     }
 }

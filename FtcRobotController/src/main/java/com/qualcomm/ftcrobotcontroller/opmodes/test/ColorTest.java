@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 public class ColorTest extends ResQ_Library {
     ColorSensor sensorRGB;
     boolean calibrated = false;
+    boolean teamed = false;
+    Team currentTeam;
     int redOffset;
     int blueOffset;
     int greenOffset;
@@ -21,26 +23,26 @@ public class ColorTest extends ResQ_Library {
 
     @Override
     public void loop() {
-        int red = sensorRGB.red();
-        int blue = sensorRGB.blue();
-        int green = sensorRGB.green();
-        int alpha = sensorRGB.alpha();
         if(this.time >= 4){ //normal operation
-            int offsettedRed = red - (redOffset + 200);
-            int offsettedBlue = blue - blueOffset;
-            int offsettedGreen = green - greenOffset;
-            telemetry.addData("blue", offsettedBlue);
-            telemetry.addData("red", offsettedRed);
-            telemetry.addData("alpha", alpha);
-            telemetry.addData("green", offsettedGreen);
-            telemetry.addData("assumed", getScaledColor(offsettedRed, offsettedGreen, offsettedBlue));
+            Team scaledColor = getTeam();
+            if(scaledColor != Team.UNKNOWN && !teamed) {
+                teamed = true;
+                currentTeam = scaledColor;
+            }
+            if(teamed){
+                telemetry.addData("Current Team", currentTeam);
+            }
+            else if(!teamed) {
+                telemetry.addData("Current Team", "none");
+            }
+            //telemetry.addData("green", offsettedGreen);
+            telemetry.addData("assumed", scaledColor);
+
             telemetry.addData("Status", "Running");
         }
         else if(this.time == 3) {
             telemetry.addData("Status", "Now Calibrating");
-            redOffset = red;
-            blueOffset = blue;
-            greenOffset = green;
+            calibrateColors();
 
         }
         else {
