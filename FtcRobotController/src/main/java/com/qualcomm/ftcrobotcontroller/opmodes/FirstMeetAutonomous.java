@@ -63,6 +63,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
             }
             else {
                 stopMoving();
+                foundLine = true;
                 if(teamWeAreOn == Team.RED) telemetry.addData("On team:", "RED");
                 if(teamWeAreOn == Team.BLUE) telemetry.addData("On team:", "BLUE");
             }
