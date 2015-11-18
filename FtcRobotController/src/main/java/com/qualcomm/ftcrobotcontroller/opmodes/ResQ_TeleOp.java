@@ -28,6 +28,7 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         srvoHang1Position = srvoHang_1.getPosition();
         srvoHang2Position = srvoHang_2.getPosition();
+        srvoHang_1.setPosition(1.0);
     }
 
 
@@ -100,13 +101,12 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         if (gamepad2.y) {
             //Hanging automation procedure
-            HangingAutomation();
+            //HangingAutomation();
         }
 
         //Hanging Servos
         float srvoHang1JoyCheck = ProcessToMotorFromJoy(-gamepad2.left_stick_y);
         float srvoHang2JoyCheck = ProcessToMotorFromJoy(-gamepad2.right_stick_y);
-
         if(srvoHang1JoyCheck > 0.05) {
             srvoHang_1.setPosition(1.0f);
         } else if(srvoHang1JoyCheck < -0.05) {
@@ -118,6 +118,8 @@ public class ResQ_TeleOp extends ResQ_Library {
         } else if(srvoHang2JoyCheck < -0.05) {
             srvoHang_2.setPosition(0.0f);
         }
+
+        //experimental hanging
         /*if(srvoHang1JoyCheck > 0.05) {
             srvoHang_1.setPosition(Math.min(1.0f, srvoHang_1.getPosition() + 0.01f));
             telemetry.addData("Shoulder Servo", "Extend");
@@ -133,7 +135,6 @@ public class ResQ_TeleOp extends ResQ_Library {
             srvoHang_2.setPosition(Math.min(0.0f, srvoHang_2.getPosition() - 0.01f));
             telemetry.addData("Elbow Servo", "Retract");
         }
-
         if(srvoHang1JoyCheck > 0.10) {
             srvoHang1Position += HangServoDelta;
         } else if (srvoHang1JoyCheck > -0.10) {

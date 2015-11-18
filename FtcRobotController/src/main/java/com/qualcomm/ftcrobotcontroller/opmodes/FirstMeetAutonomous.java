@@ -32,6 +32,8 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	float rightPower;
 	double currentTimeCatch;
 
+    boolean foundLine = false;
+
 
 	/**
 	 * Blue Team Information:
@@ -47,16 +49,25 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	@Override
 	public void init() {
-		sensorRGB = hardwareMap.colorSensor.get("color");
-
 		//Do the map thing
 		initializeMapping();
-		moveTillLine();
+        calibrateColors();
 	}
 
 	@Override
 	public void loop() {
-		telemetry.addData("Time", "elapsed time: " + Double.toString(this.time));
+        if(!foundLine) {
+            teamWeAreOn = getTeam();
+            if(teamWeAreOn == Team.UNKNOWN) {
+                goForward();
+            }
+            else {
+                stopMoving();
+                foundLine = true;
+                if(teamWeAreOn == Team.RED) telemetry.addData("On team:", "RED");
+                if(teamWeAreOn == Team.BLUE) telemetry.addData("On team:", "BLUE");
+            }
+        }
 	}
 
 	@Override
@@ -64,29 +75,49 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	}
 
-	public void moveTillLine () {
+    public void goForward(){
+        leftPower = 1.0f;
+        rightPower = 1.0f;
+        drive(leftPower, rightPower);
+    }
+    public void stopMoving(){
+        leftPower = 0.0f;
+        rightPower = 0.0f;
+        drive(leftPower, rightPower);
+    }
+
+
+    public void moveTillLine() {
+        calibrateColors();
 		boolean foundLine = false;
 		while(!foundLine) { //keep looping until sensor finds a color
 			leftPower = 1.0f;
-			rightPower = 1.0f;
-			drive(leftPower, rightPower);
+            rightPower = 1.0f;
+            drive(leftPower, rightPower);
 
-			colorCheck(); //Determine what color it is to see what team we're on
+			teamWeAreOn = getTeam();
 
-			if(teamWeAreOn == Team.RED) { //color is red
+			/*if(teamWeAreOn == Team.RED) { //color is red
 				//stop movement immediately
 				leftPower = 0.0f;
 				rightPower = 0.0f;
 				drive(leftPower, rightPower);
 				TurnToBeacon();
-			}
+			}.. mong (บ่าย...โมง, [bàːj mōːŋ]) for the latter half of daytime (13:00 to 18:59)
 			else if (teamWeAreOn == Team.BLUE) { //color is blue
 				//stop movement immediately
 				leftPower = 0.0f;
 				rightPower = 0.0f;
 				drive(leftPower, rightPower);
 				TurnToBeacon();
+			}*/
+			if (teamWeAreOn != Team.UNKNOWN) {
+				leftPower = 0;
+				rightPower = 0;
+				drive(0f, 0f);
+				TurnToBeacon();
 			}
+
 			////////////This else statement would force the robot to jerk around, replace it with time based movement
 			/*else { //color is none of the above, go back a couple of steps and try again
 				currentTimeCatch = this.time; //collect current time
@@ -107,7 +138,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void TurnToBeacon() { //(turn to bacon)
 		//If we're red, turn left 70 degrees
 		//Do some compass thing in order to stop our turning
-		if(teamWeAreOn == Team.RED){ //false so we're on red team
+		/*if(teamWeAreOn == Team.RED){ //false so we're on red team
 			if (1!=1){ //If compass detects that we're finished turning
 				//Drive straight
 				drive(1.0f, 1.0f);
@@ -124,6 +155,13 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			} else { //we're not finished turning fam
 				drive(0.5f, -0.5f);
 			}
+		}*/
+		//Simplified
+		if (1!=1) {
+			drive(1, 1);
+		} else {
+			int m = teamWeAreOn == Team.RED ? 1 : -1;
+			drive(-.5f * m, .5f * m);
 		}
 	}
 }

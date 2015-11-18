@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.I2cDevice;
+import java.util.concurrent.locks.Lock;
 
 /**
  * Created by Admin on 11/6/2015.
@@ -15,14 +16,13 @@ public class GyroTest extends OpMode {
     final static double ROTATION_OFFSET = 0.1;
 
     byte[] cache;
+    Lock lock;
 
     @Override
     public void init() {
         gyro = hardwareMap.i2cDevice.get(gyroName);
-        while(!gyro.isI2cPortReady()) {
 
-        }
-
+        lock = gyro.getI2cReadCacheLock();
         cache = gyro.getCopyOfReadBuffer();
 
         if(!gyro.isI2cPortInReadMode()) {
@@ -33,7 +33,7 @@ public class GyroTest extends OpMode {
 
     @Override
     public void loop() {
-        telemetry.addData("Rotation: ", gyro.getI2cReadCache()[3]);
+        telemetry.addData("Rotation: ", gyro.getI2cReadCache()[0]);
     }
 
     /*public void driveStraight(double millis) {
