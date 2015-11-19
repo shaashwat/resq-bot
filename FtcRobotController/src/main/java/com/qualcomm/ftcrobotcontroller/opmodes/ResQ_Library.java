@@ -155,12 +155,6 @@ public abstract class ResQ_Library extends OpMode {
         //allows us to hang with the press of one button.
     }
 
-    //****************AUTONOMOUS METHODS****************//
-
-    public void GoForward(int time, int direction) {
-
-    }
-
     //****************SENSOR METHODS****************//
     public double getDistance() {
         return sensorUltra_1.getValue();
@@ -241,7 +235,7 @@ public abstract class ResQ_Library extends OpMode {
         offsetBlue = sensorRGB_1.blue();
     }
 
-    public Team getTeam() {
+    public Team getColor() {
         int r = sensorRGB_1.red() - offsetRed, b = sensorRGB_1.blue() - offsetBlue;
         if (b > r && b > COLOR_THRESHOLD) {
             return Team.BLUE;
@@ -270,7 +264,7 @@ public abstract class ResQ_Library extends OpMode {
         try {
             Thread.sleep(millis);
         } catch (Exception err) {
-            telemetry.addData("ERROR", "UR THREADS SUCK");
+            telemetry.addData("ERROR", "UR THREADS SUCK HEE HEE");
         }
     }
 }

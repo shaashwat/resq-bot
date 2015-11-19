@@ -32,7 +32,8 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	float rightPower;
 	double currentTimeCatch;
 
-    boolean foundLine = false;
+	boolean foundLine = false;
+	boolean robotFirstTurn = false; //when we get to the line, turn in the general direction of the beacon
 
 
 	/**
@@ -51,23 +52,20 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void init() {
 		//Do the map thing
 		initializeMapping();
-        calibrateColors();
+		driveGear = 3;
+		calibrateColors();
 	}
 
 	@Override
 	public void loop() {
-        if(!foundLine) {
-            teamWeAreOn = getTeam();
-            if(teamWeAreOn == Team.UNKNOWN) {
-                goForward();
-            }
-            else {
-                stopMoving();
-                foundLine = true;
-                if(teamWeAreOn == Team.RED) telemetry.addData("On team:", "RED");
-                if(teamWeAreOn == Team.BLUE) telemetry.addData("On team:", "BLUE");
-            }
-        }
+		if(!foundLine) {
+			moveTillLine();
+		}
+		else if (!robotFirstTurn){
+			//Turn();
+			if(teamWeAreOn == Team.RED) telemetry.addData("On team:", "RED");
+			if(teamWeAreOn == Team.BLUE) telemetry.addData("On team:", "BLUE");
+		}
 	}
 
 	@Override
@@ -75,67 +73,31 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	}
 
-    public void goForward(){
-        leftPower = -1.0f;
-        rightPower = -1.0f;
-        drive(leftPower, rightPower);
-    }
-    public void stopMoving(){
-        leftPower = 0.0f;
-        rightPower = 0.0f;
-        drive(leftPower, rightPower);
-    }
 
 
-    public void moveTillLine() {
-        calibrateColors();
-		boolean foundLine = false;
-		while(!foundLine) { //keep looping until sensor finds a color
-			leftPower = 1.0f;
-            rightPower = 1.0f;
-            drive(leftPower, rightPower);
 
-			teamWeAreOn = getTeam();
-
-			/*if(teamWeAreOn == Team.RED) { //color is red
-				//stop movement immediately
-				leftPower = 0.0f;
-				rightPower = 0.0f;
-				drive(leftPower, rightPower);
-				TurnToBeacon();
-			}.. mong (บ่าย...โมง, [bàːj mōːŋ]) for the latter half of daytime (13:00 to 18:59)
-			else if (teamWeAreOn == Team.BLUE) { //color is blue
-				//stop movement immediately
-				leftPower = 0.0f;
-				rightPower = 0.0f;
-				drive(leftPower, rightPower);
-				TurnToBeacon();
-			}*/
-			if (teamWeAreOn != Team.UNKNOWN) {
-				leftPower = 0;
-				rightPower = 0;
-				drive(0f, 0f);
-				TurnToBeacon();
-			}
-
-			////////////This else statement would force the robot to jerk around, replace it with time based movement
-			/*else { //color is none of the above, go back a couple of steps and try again
-				currentTimeCatch = this.time; //collect current time
-				double timeToStopGoingBack = currentTimeCatch + 4.0; //time of confusion plus 4 seconds for going back
-				if (this.time <= timeToStopGoingBack) {
-					// go backwards until time to stop going back
-					leftPower = -0.5f;
-					rightPower = -0.5f;
-					drive(leftPower, rightPower);
-				} else if (this.time > timeToStopGoingBack) {
-					// move forward again until it finds the line
-					moveTillLine();
-				}
-			}*/
+	public void moveTillLine() {
+		teamWeAreOn = getColor();
+		if(teamWeAreOn == Team.UNKNOWN) {
+			goForward();
+		}
+		else {
+			stopMoving();
+			foundLine = true;
 		}
 	}
 
-	public void TurnToBeacon() { //(turn to bacon)
+	public void TurnToBeacon() { //(turn to beacon)
+		//Simplified (DAMN JACOB)
+		if (1!=1) { //robotFirstTurn
+			robotFirstTurn = true;
+			drive(1,1);
+		} else {
+			int m = teamWeAreOn == Team.RED ? 1 : -1;
+			drive(-.5f * m, .5f * m);
+		}
+
+
 		//If we're red, turn left 70 degrees
 		//Do some compass thing in order to stop our turning
 		/*if(teamWeAreOn == Team.RED){ //false so we're on red team
@@ -156,12 +118,16 @@ public class FirstMeetAutonomous extends ResQ_Library {
 				drive(0.5f, -0.5f);
 			}
 		}*/
-		//Simplified
-		if (1!=1) {
-			drive(1, 1);
-		} else {
-			int m = teamWeAreOn == Team.RED ? 1 : -1;
-			drive(-.5f * m, .5f * m);
-		}
+	}
+
+	public void goForward(){
+		leftPower = -1.0f;
+		rightPower = -1.0f;
+		drive(leftPower, rightPower);
+	}
+	public void stopMoving(){
+		leftPower = 0.0f;
+		rightPower = 0.0f;
+		drive(leftPower, rightPower);
 	}
 }
