@@ -61,8 +61,9 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		}
 		else if (!robotFirstTurn){
 			//Turn();
-			if(teamWeAreOn == Team.RED) telemetry.addData("On team:", "RED");
-			if(teamWeAreOn == Team.BLUE) telemetry.addData("On team:", "BLUE");
+			//if(teamWeAreOn == Team.RED) telemetry.addData("On team:", "RED");
+			//if(teamWeAreOn == Team.BLUE) telemetry.addData("On team:", "BLUE");
+			if (teamWeAreOn != Team.UNKNOWN) telemetry.addDate("On team:", teamWeAreOn.toString());
 		}
 	}
 
