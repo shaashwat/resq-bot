@@ -106,8 +106,10 @@ public class ResQ_TeleOp extends ResQ_Library {
         //Position based hanging
         if(srvoHang1JoyCheck > 0.05) { //big servo
             srvoHang_1.setPosition(0.8f);
+            telemetry.addData("activated", "wtf");
         } else if(srvoHang1JoyCheck < -0.05) {
             srvoHang_1.setPosition(1.0f);
+            telemetry.addData("activated", "wth");
         }
 
         if(srvoHang2JoyCheck > 0.05) { //small servo
@@ -125,14 +127,14 @@ public class ResQ_TeleOp extends ResQ_Library {
             srvoHang2Position += HangServoDelta;
         } else if (srvoHang2JoyCheck < -0.05) {
             srvoHang2Position -= HangServoDelta;
-        }*/
+        }
 
         srvoHang1Position = Range.clip(srvoHang1Position, HANG1_MIN_RANGE, HANG1_MAX_RANGE);
         srvoHang2Position = Range.clip(srvoHang2Position, HANG2_MIN_RANGE, HANG2_MAX_RANGE);
         srvoHang_1.setPosition(srvoHang1Position);
         srvoHang_2.setPosition(srvoHang2Position);
         telemetry.addData("Shoulder Servo", ""+srvoHang1Position);
-        telemetry.addData("Elbow Servo", ""+srvoHang2Position);
+        telemetry.addData("Elbow Servo", ""+srvoHang2Position);*/
 
 
 
