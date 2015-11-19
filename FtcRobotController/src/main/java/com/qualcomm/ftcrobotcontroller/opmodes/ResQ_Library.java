@@ -108,12 +108,6 @@ public abstract class ResQ_Library extends OpMode {
         //set the direction of the motors
         motorRightTread.setDirection(DcMotor.Direction.REVERSE);
         motorRightSecondTread.setDirection(DcMotor.Direction.REVERSE);
-
-        //set the direction of the servos (99% sure this isn't neccesary but yolo)
-        /*srvoDong_Left.setDirection(Servo.Direction.FORWARD);
-        srvoDong_Right.setDirection(Servo.Direction.FORWARD);*/
-        srvoHang_1.setDirection(Servo.Direction.FORWARD);
-        srvoHang_1.setDirection(Servo.Direction.FORWARD);
     }
 
     //****************TELEOP METHODS****************//
@@ -144,10 +138,6 @@ public abstract class ResQ_Library extends OpMode {
 
     public void setDriveGear(int gear) {
         driveGear = normalizeForGear(gear);
-    }
-
-    public void hangMotor(float direction) {
-        motorHangingMech.setPower(direction);
     }
 
     public void HangingAutomation() {

@@ -26,9 +26,8 @@ public class ResQ_TeleOp extends ResQ_Library {
         //Do the map thing
         initializeMapping();
 
-        srvoHang1Position = srvoHang_1.getPosition();
-        srvoHang2Position = srvoHang_2.getPosition();
-        //srvoHang_1.setPosition(1.0);
+        //srvoHang1Position = srvoHang_1.getPosition();
+        //srvoHang2Position = srvoHang_2.getPosition();
     }
 
 
@@ -86,22 +85,19 @@ public class ResQ_TeleOp extends ResQ_Library {
         //****************OTHER****************//
 
         //Hanging Winch
-        if (gamepad2.right_trigger >= 0.5f) {
-            //release tension by letting go of string
-            telemetry.addData("Right Trigger Moving", "release tension");
-            motorHangingMech.setPower(-1.0f);
-        } else if (gamepad2.left_trigger >= 0.5f) {
-            //pull string and add tension
-            telemetry.addData("Left Trigger Moving", "add tension");
-            motorHangingMech.setPower(1.0f);
-        } else {
-            motorHangingMech.setPower(0);
-        }
-
-
         if (gamepad2.y) {
             //Hanging automation procedure
             //HangingAutomation();
+        }
+
+        if (gamepad2.right_trigger >= 0.5f) {
+            //release tension by letting go of string
+            motorHangingMech.setPower(-1.0f);
+        } else if (gamepad2.left_trigger >= 0.5f) {
+            //pull string and add tension
+            motorHangingMech.setPower(1.0f);
+        } else {
+            motorHangingMech.setPower(0);
         }
 
         //Hanging Servos
@@ -120,42 +116,23 @@ public class ResQ_TeleOp extends ResQ_Library {
             srvoHang_2.setPosition(0.7f);
         }
 
-        //Will's Hanging
-        /*if(srvoHang1JoyCheck > 0.05) {
-            srvoHang_1.setPosition(Math.min(1.0f, srvoHang_1.getPosition() + 0.01f));
-            telemetry.addData("Shoulder Servo", "Extend");
-        } else if(srvoHang1JoyCheck < -0.05) {
-
-            srvoHang_1.setPosition(Math.min(0.0f, srvoHang_1.getPosition() - 0.01f));
-            telemetry.addData("Shoulder Servo", "Retract");
-        }
-        if(srvoHang2JoyCheck > 0.05) {
-            srvoHang_2.setPosition(Math.min(1.0f, srvoHang_2.getPosition() + 0.01f));
-            telemetry.addData("Elbow Servo", "Extend");
-        } else if(srvoHang2JoyCheck < -0.05) {
-            srvoHang_2.setPosition(Math.min(0.0f, srvoHang_2.getPosition() - 0.01f));
-            telemetry.addData("Elbow Servo", "Retract");
-        }*/
-
-
         /*if(srvoHang1JoyCheck > 0.05) {
             srvoHang1Position += HangServoDelta;
-        } else if (srvoHang1JoyCheck > -0.10) {
+        } else if (srvoHang1JoyCheck < -0.05) {
             srvoHang1Position -= HangServoDelta;
         }
         if(srvoHang2JoyCheck > 0.05) {
             srvoHang2Position += HangServoDelta;
-        } else if (srvoHang2JoyCheck > -0.10) {
+        } else if (srvoHang2JoyCheck < -0.05) {
             srvoHang2Position -= HangServoDelta;
-        }
-
+        }*/
 
         srvoHang1Position = Range.clip(srvoHang1Position, HANG1_MIN_RANGE, HANG1_MAX_RANGE);
         srvoHang2Position = Range.clip(srvoHang2Position, HANG2_MIN_RANGE, HANG2_MAX_RANGE);
         srvoHang_1.setPosition(srvoHang1Position);
         srvoHang_2.setPosition(srvoHang2Position);
         telemetry.addData("Shoulder Servo", ""+srvoHang1Position);
-        telemetry.addData("Elbow Servo", ""+srvoHang2Position);*/
+        telemetry.addData("Elbow Servo", ""+srvoHang2Position);
 
 
 
@@ -172,7 +149,6 @@ public class ResQ_TeleOp extends ResQ_Library {
         }
         String tel_Bool_LeftDong = (leftDongDown) ? " is down, now moving up" : "is up, now moving down";
         String tel_Bool_RightDong = (rightDongDown) ? " is down, now moving up" : "is up, now moving down";
-        telemetry.addData("*****", "Important Booleans");
         telemetry.addData("", "Driving is " + tel_Bool_Reverse + " and " + tel_Bool_Speed);
         telemetry.addData("shoulder", ""+srvoHang_1.getPosition());
         telemetry.addData("elbow", ""+srvoHang_2.getPosition());
