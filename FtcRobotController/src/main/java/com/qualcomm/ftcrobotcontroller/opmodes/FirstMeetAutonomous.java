@@ -26,8 +26,6 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 @SuppressWarnings("all")
 public class FirstMeetAutonomous extends ResQ_Library {
 
-	ColorSensor sensorRGB;
-
 	float leftPower;
 	float rightPower;
 	double currentTimeCatch;

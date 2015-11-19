@@ -93,7 +93,8 @@ public abstract class ResQ_Library extends OpMode {
         motorRightSecondTread = hardwareMap.dcMotor.get("m4");
 
         //Sensors
-        //sensorRGB_1 = hardwareMap.colorSensor.get("color");
+        sensorRGB_1 = hardwareMap.colorSensor.get("color1");
+        sensorRGB_2 = hardwareMap.colorSensor.get("color2");
 
         //Other Mapping
         motorHangingMech = hardwareMap.dcMotor.get("m5");
@@ -236,10 +237,11 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     public Team getColor() {
-        int r = sensorRGB_1.red() - offsetRed, b = sensorRGB_1.blue() - offsetBlue;
-        if (b > r && b > COLOR_THRESHOLD) {
+        int r1 = sensorRGB_1.red() - offsetRed, b1 = sensorRGB_1.blue() - offsetBlue;
+        int r2 = sensorRGB_2.red() - offsetRed, b2 = sensorRGB_2.blue() - offsetBlue;
+        if ((b1 > r1 && b1 > COLOR_THRESHOLD) || (b2 > r2 && b2 > COLOR_THRESHOLD)) {
             return Team.BLUE;
-        } else if (r > b && r > COLOR_THRESHOLD) {
+        } else if ((r1 > b1 && r1 > COLOR_THRESHOLD) || (r2 > b2 && r2 > COLOR_THRESHOLD)) {
             return Team.RED;
         } else {
             return Team.UNKNOWN;
