@@ -28,7 +28,7 @@ public class ResQ_TeleOp extends ResQ_Library {
 
         srvoHang1Position = srvoHang_1.getPosition();
         srvoHang2Position = srvoHang_2.getPosition();
-        srvoHang_1.setPosition(1.0);
+        //srvoHang_1.setPosition(1.0);
     }
 
 
@@ -107,19 +107,20 @@ public class ResQ_TeleOp extends ResQ_Library {
         //Hanging Servos
         float srvoHang1JoyCheck = ProcessToMotorFromJoy(-gamepad2.left_stick_y);
         float srvoHang2JoyCheck = ProcessToMotorFromJoy(-gamepad2.right_stick_y);
-        if(srvoHang1JoyCheck > 0.05) {
-            srvoHang_1.setPosition(1.0f);
+        //Position based hanging
+        if(srvoHang1JoyCheck > 0.05) { //big servo
+            srvoHang_1.setPosition(0.8f);
         } else if(srvoHang1JoyCheck < -0.05) {
-            srvoHang_1.setPosition(0.0f);
+            srvoHang_1.setPosition(1.0f);
         }
 
-        if(srvoHang2JoyCheck > 0.05) {
-            srvoHang_2.setPosition(1.0f);
-        } else if(srvoHang2JoyCheck < -0.05) {
+        if(srvoHang2JoyCheck > 0.05) { //small servo
             srvoHang_2.setPosition(0.0f);
+        } else if(srvoHang2JoyCheck < -0.05) {
+            srvoHang_2.setPosition(0.7f);
         }
 
-        //experimental hanging
+        //Will's Hanging
         /*if(srvoHang1JoyCheck > 0.05) {
             srvoHang_1.setPosition(Math.min(1.0f, srvoHang_1.getPosition() + 0.01f));
             telemetry.addData("Shoulder Servo", "Extend");
@@ -134,20 +135,22 @@ public class ResQ_TeleOp extends ResQ_Library {
         } else if(srvoHang2JoyCheck < -0.05) {
             srvoHang_2.setPosition(Math.min(0.0f, srvoHang_2.getPosition() - 0.01f));
             telemetry.addData("Elbow Servo", "Retract");
-        }
-        if(srvoHang1JoyCheck > 0.10) {
-            srvoHang1Position += HangServoDelta;
-        } else if (srvoHang1JoyCheck > -0.10) {
-            srvoHang1Position += HangServoDelta;
-        }
-        if(srvoHang2JoyCheck > 0.10) {
-            srvoHang2Position += HangServoDelta;
-        } else if (srvoHang2JoyCheck > -0.10) {
-            srvoHang2Position += HangServoDelta;
         }*/
 
 
-        /*srvoHang1Position = Range.clip(srvoHang1Position, HANG1_MIN_RANGE, HANG1_MAX_RANGE);
+        /*if(srvoHang1JoyCheck > 0.05) {
+            srvoHang1Position += HangServoDelta;
+        } else if (srvoHang1JoyCheck > -0.10) {
+            srvoHang1Position -= HangServoDelta;
+        }
+        if(srvoHang2JoyCheck > 0.05) {
+            srvoHang2Position += HangServoDelta;
+        } else if (srvoHang2JoyCheck > -0.10) {
+            srvoHang2Position -= HangServoDelta;
+        }
+
+
+        srvoHang1Position = Range.clip(srvoHang1Position, HANG1_MIN_RANGE, HANG1_MAX_RANGE);
         srvoHang2Position = Range.clip(srvoHang2Position, HANG2_MIN_RANGE, HANG2_MAX_RANGE);
         srvoHang_1.setPosition(srvoHang1Position);
         srvoHang_2.setPosition(srvoHang2Position);
@@ -171,8 +174,10 @@ public class ResQ_TeleOp extends ResQ_Library {
         String tel_Bool_RightDong = (rightDongDown) ? " is down, now moving up" : "is up, now moving down";
         telemetry.addData("*****", "Important Booleans");
         telemetry.addData("", "Driving is " + tel_Bool_Reverse + " and " + tel_Bool_Speed);
-        telemetry.addData("Left Dongler", "" + tel_Bool_LeftDong);
-        telemetry.addData("Right Dongler", "" + tel_Bool_RightDong);
+        telemetry.addData("shoulder", ""+srvoHang_1.getPosition());
+        telemetry.addData("elbow", ""+srvoHang_2.getPosition());
+        /*telemetry.addData("Left Dongler", "" + tel_Bool_LeftDong);
+        telemetry.addData("Right Dongler", "" + tel_Bool_RightDong);*/
 
     }
 }
