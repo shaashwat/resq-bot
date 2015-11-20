@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.robocol.Telemetry;
 
 /**
  * Autonomous program - for first meet use only
@@ -28,6 +29,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	float leftPower;
 	float rightPower;
+	final double DISTANCE_FROM_WALL = 10;
 	double currentTimeCatch;
 
 	boolean foundLine = false;
@@ -50,6 +52,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void init() {
 		//Do the map thing
 		initializeMapping();
+		sensorUltra_1 = hardwareMap.analogInput.get("u1");
 		driveGear = 3;
 		calibrateColors();
 	}
@@ -58,12 +61,15 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void loop() {
 		if(!foundLine) {
 			moveTillLine();
-		}
-		else if (!robotFirstTurn){
+		} else if (!robotFirstTurn){
 			//Turn();
-			//if(teamWeAreOn == Team.RED) telemetry.addData("On team:", "RED");
-			//if(teamWeAreOn == Team.BLUE) telemetry.addData("On team:", "BLUE");
-			if (teamWeAreOn != Team.UNKNOWN) telemetry.addDate("On team:", teamWeAreOn.toString());
+			if (teamWeAreOn != Team.UNKNOWN) telemetry.addData("On team:", teamWeAreOn.toString());
+		} else {
+			double d = getDistance();
+			telemetry.addData("Distance", d);
+			if (d < DISTANCE_FROM_WALL) {
+
+			}
 		}
 	}
 
@@ -71,9 +77,6 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void stop() {
 
 	}
-
-
-
 
 	public void moveTillLine() {
 		teamWeAreOn = getColor();
