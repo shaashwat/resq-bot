@@ -154,6 +154,10 @@ public abstract class ResQ_Library extends OpMode {
         motorLeftSecondTread.setPower(left);
     }
 
+    public void stopDrive() {
+        drive(0.0f, 0.0f);
+    }
+
     public void setDriveGear(int gear) {
         driveGear = normalizeForGear(gear);
     }

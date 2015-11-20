@@ -79,14 +79,15 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			goForward();
 		}
 		else {
-			stopMoving();
+			stop();
 			foundLine = true;
+			TurnToBeacon();
 		}
 	}
 
 	public void turnToBeacon(double time) { //(turn to beacon)
 		//Simplified (DAMN JACOB)
-		if (time >= 10 && time <=15) { //robotFirstTurn
+		if (time >= 10 && time <=14) { //make this compass later
 			robotFirstTurn = true;
 			drive(1,1);
 		} else {

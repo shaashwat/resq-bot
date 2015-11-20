@@ -20,11 +20,6 @@ public class ResQ_Autonomous extends ResQ_Library {
         initializeMapping();
     }
 
-    //a hard-coded autonomous program that should be called only once!
-    public void autonomousHard() {
-        drive(1.0f, 1.0f);
-    }
-
     @Override
     public void loop() {
 
