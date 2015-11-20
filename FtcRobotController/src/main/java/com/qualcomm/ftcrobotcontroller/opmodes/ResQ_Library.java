@@ -146,18 +146,13 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     //****************SENSOR METHODS****************//
-    public double getDistance() {
-        return sensorUltra_1.getValue();
-    }
-
     public void moveToClosestObject() {
         double ultraRight, ultraLeft;
-
         double rightSpeed, leftSpeed;
 
         while (true) {
-            ultraRight = 0; //set these values to sensor readout
-            ultraLeft = 0;
+            ultraRight = sensorUltra_1.getValue(); //set these values to sensor readout
+            ultraLeft = sensorUltra_2.getValue();
 
             rightSpeed = SPEED_CONST * (ultraRight - RIGHT_TARGET_DISTANCE) + -RIGHT_STEERING_CONST * (ultraLeft - ultraRight); //speedl = kpd * (dl - tl) + kps * (dl - dr)
             leftSpeed = SPEED_CONST * (ultraLeft - LEFT_TARGET_DISTANCE) + -LEFT_STEERING_CONST * (ultraRight - ultraLeft);
@@ -190,9 +185,9 @@ public abstract class ResQ_Library extends OpMode {
     double scaleInput(double dVal) {
         /*
          * This method scales the joystick input so for low joystick values, the
-	     * scaled value is less than linear.  This is to make it easier to drive
-	     * the robot more precisely at slower speeds.
-	     */
+      * scaled value is less than linear.  This is to make it easier to drive
+      * the robot more precisely at slower speeds.
+      */
         double[] scaleArray = {0.0, 0.05, 0.09, 0.10, 0.12, 0.15, 0.18, 0.24,
                 0.30, 0.36, 0.43, 0.50, 0.60, 0.72, 0.85, 1.00, 1.00};
 
