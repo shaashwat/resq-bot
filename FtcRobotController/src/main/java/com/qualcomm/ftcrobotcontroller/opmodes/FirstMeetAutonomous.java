@@ -88,12 +88,14 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		else {
 			stop();
 			foundLine = true;
+			TurnToBeacon();
 		}
 	}
 
 	public void TurnToBeacon() { //(turn to beacon)
 		//Simplified (DAMN JACOB)
 		if (1!=1) { //robotFirstTurn
+			telemetry.addData("Turned", "Done turning - moving forward");
 			robotFirstTurn = true;
 			drive(1,1);
 		} else {
