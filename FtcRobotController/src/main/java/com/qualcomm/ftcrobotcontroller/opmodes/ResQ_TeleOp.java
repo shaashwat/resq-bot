@@ -106,10 +106,8 @@ public class ResQ_TeleOp extends ResQ_Library {
         //Position based hanging
         if(srvoHang1JoyCheck > 0.05) { //big servo
             srvoHang_1.setPosition(0.8f);
-            telemetry.addData("activated", "wtf");
         } else if(srvoHang1JoyCheck < -0.05) {
             srvoHang_1.setPosition(1.0f);
-            telemetry.addData("activated", "wth");
         }
 
         if(srvoHang2JoyCheck > 0.05) { //small servo
@@ -118,6 +116,7 @@ public class ResQ_TeleOp extends ResQ_Library {
             srvoHang_2.setPosition(0.7f);
         }
 
+        //increment based hanging
         /*if(srvoHang1JoyCheck > 0.05) {
             srvoHang1Position += HangServoDelta;
         } else if (srvoHang1JoyCheck < -0.05) {
