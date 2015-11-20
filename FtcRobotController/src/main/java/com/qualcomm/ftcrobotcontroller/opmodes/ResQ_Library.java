@@ -2,6 +2,7 @@ package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.CompassSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -27,6 +28,8 @@ public abstract class ResQ_Library extends OpMode {
     AnalogInput sensorUltra_1, sensorUltra_2;
     ColorSensor sensorRGB_1, sensorRGB_2;
     GyroSensor sensorGyro;
+
+    CompassSensor compassSensor;
 
     int offsetRed, offsetGreen, offsetBlue;
 
@@ -107,7 +110,7 @@ public abstract class ResQ_Library extends OpMode {
         srvoDong_Right = hardwareMap.servo.get("s4"); //The right servo
         //srvoPushButton = hardwareMap.servo.get("s5");
         srvoScoreClimbers = hardwareMap.servo.get("s6");*/
-
+        compassSensor = hardwareMap.compassSensor.get("c1");
 
         //set the direction of the motors
         motorRightTread.setDirection(DcMotor.Direction.REVERSE);
@@ -121,6 +124,11 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     //****************TELEOP METHODS****************//
+
+    //Reading from compass sensor
+    public double getCompassDirection() {
+        return compassSensor.getDirection();
+    }
 
     public void drive(float left, float right) {
         // Drives

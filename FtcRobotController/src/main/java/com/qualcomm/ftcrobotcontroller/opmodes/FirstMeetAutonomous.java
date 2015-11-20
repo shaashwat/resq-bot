@@ -5,15 +5,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.robocol.Telemetry;
 
 /**
  * Autonomous program - for first meet use only
  * This autonomous program is for the first robotics competition on November 14/21 ONLY
  *
- * It assumes that other robots barely have an autonomous program at all, and its not dynamic to alliance
- * For best use, place robot in starting position closest to center line
- * Program of movement:
- * 		- Move forward until hits line (ultrasonic to stop movement if alliance robot is moving in front)
+ * It assumes that other robots barely have an autonomvement if alliance robot is moving in front)
  * 		- We detect what color the line is to determine what team we're on, sepreate codes for each.
  * 		- turn X amount of degrees to face beacon in general direction
  * 		- some IMU sensor to keep straight path
@@ -28,6 +26,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	float leftPower;
 	float rightPower;
+	final double DISTANCE_FROM_WALL = 10;
 	double currentTimeCatch;
 
 	boolean foundLine = false;
@@ -50,19 +49,27 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void init() {
 		//Do the map thing
 		initializeMapping();
+		sensorUltra_1 = hardwareMap.analogInput.get("u1");
 		driveGear = 3;
 		calibrateColors();
 	}
 
-	@Override
+	@Overrideous program at all, and its not dynamic to alliance
+ * For best use, place robot in starting position closest to center line
+ * Program of movement:
+ * 		- Move forward until hits line (ultrasonic to stop mo
 	public void loop() {
 		if(!foundLine) {
 			moveTillLine();
-		}
-		else if (!robotFirstTurn){
+		} else if (!robotFirstTurn){
 			//Turn();
-			if(teamWeAreOn == Team.RED) telemetry.addData("On team:", "RED");
-			if(teamWeAreOn == Team.BLUE) telemetry.addData("On team:", "BLUE");
+			if (teamWeAreOn != Team.UNKNOWN) telemetry.addData("On team:", teamWeAreOn.toString());
+		} else {
+			double d = getDistance();
+			telemetry.addData("Distance", d);
+			if (d < DISTANCE_FROM_WALL) {
+				stopMoving();
+			}
 		}
 	}
 
