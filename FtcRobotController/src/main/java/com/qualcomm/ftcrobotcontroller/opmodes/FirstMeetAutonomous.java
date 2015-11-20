@@ -71,9 +71,6 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	}
 
-
-
-
 	public void moveTillLine() {
 		teamWeAreOn = getColor();
 		if(teamWeAreOn == Team.UNKNOWN) {
@@ -117,6 +114,8 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			}
 		}*/
 	}
+
+
 
 	public void goForward(){
 		leftPower = -1.0f;
