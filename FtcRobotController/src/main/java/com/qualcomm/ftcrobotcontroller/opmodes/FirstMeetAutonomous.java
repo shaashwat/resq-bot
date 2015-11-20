@@ -53,11 +53,6 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		driveGear = 3;
 		calibrateColors();
 	}
-
-	@Overrideous program at all, and its not dynamic to alliance
- * For best use, place robot in starting position closest to center line
- * Program of movement:
- * 		- Move forward until hits line (ultrasonic to stop mo
 	public void loop() {
 		if(!foundLine) {
 			moveTillLine();
@@ -123,6 +118,8 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			}
 		}*/
 	}
+
+
 
 	public void goForward(){
 		leftPower = -1.0f;

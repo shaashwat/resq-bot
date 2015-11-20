@@ -24,7 +24,7 @@ public class ColorTest extends ResQ_Library {
     @Override
     public void loop() {
         if(this.time >= 4){ //normal operation
-            Team scaledColor = getTeam();
+            Team scaledColor = getColor();
             if(scaledColor != Team.UNKNOWN && !teamed) {
                 teamed = true;
                 currentTeam = scaledColor;

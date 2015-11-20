@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 
 /**
  * The Library responsible for every definition and method. All opmodes will inherit methods from here.
@@ -26,6 +27,7 @@ public abstract class ResQ_Library extends OpMode {
     //Sensors
     AnalogInput sensorUltra_1, sensorUltra_2;
     ColorSensor sensorRGB_1, sensorRGB_2;
+    GyroSensor sensorGyro;
 
     CompassSensor compassSensor;
 
@@ -96,9 +98,10 @@ public abstract class ResQ_Library extends OpMode {
         motorRightSecondTread = hardwareMap.dcMotor.get("m4");
 
         //Sensors
-        sensorRGB_1 = hardwareMap.colorSensor.get("c1");
-        sensorRGB_2 = hardwareMap.colorSensor.get("c2");
-
+        sensorRGB_1 = hardwareMap.colorSensor.get("color1");
+        sensorRGB_2 = hardwareMap.colorSensor.get("color2");
+        //sensorGyro = hardwareMap.gyroSensor.get("gyro");
+        //sensorGyro.calibrate();
         //Other Mapping
         motorHangingMech = hardwareMap.dcMotor.get("m5");
         srvoHang_1 = hardwareMap.servo.get("s1");
@@ -254,6 +257,10 @@ public abstract class ResQ_Library extends OpMode {
         } else {
             return Team.UNKNOWN;
         }
+    }
+
+    public int getHeading(){
+        return sensorGyro.getHeading();
     }
 
     int normalizeForGear(int gear) {
