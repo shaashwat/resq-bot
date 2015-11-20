@@ -63,7 +63,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			//Turn();
 			//if(teamWeAreOn == Team.RED) telemetry.addData("On team:", "RED");
 			//if(teamWeAreOn == Team.BLUE) telemetry.addData("On team:", "BLUE");
-			if (teamWeAreOn != Team.UNKNOWN) telemetry.addDate("On team:", teamWeAreOn.toString());
+			if (teamWeAreOn != Team.UNKNOWN) telemetry.addData("On team:", teamWeAreOn.toString());
 		}
 	}
 
@@ -72,16 +72,13 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	}
 
-
-
-
 	public void moveTillLine() {
 		teamWeAreOn = getColor();
 		if(teamWeAreOn == Team.UNKNOWN) {
 			goForward();
 		}
 		else {
-			stopMoving();
+			stop();
 			foundLine = true;
 		}
 	}
