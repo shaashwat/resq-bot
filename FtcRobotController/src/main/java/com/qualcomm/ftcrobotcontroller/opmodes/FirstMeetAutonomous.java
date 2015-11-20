@@ -57,7 +57,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		if(!foundLine) {
 			moveTillLine();
 		} else if (!robotFirstTurn){
-			//Turn();
+			turnToBeacon(this.time);
 			if (teamWeAreOn != Team.UNKNOWN) telemetry.addData("On team:", teamWeAreOn.toString());
 		} else {
 			double d = getDistance();
@@ -84,9 +84,9 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		}
 	}
 
-	public void TurnToBeacon() { //(turn to beacon)
+	public void turnToBeacon(double time) { //(turn to beacon)
 		//Simplified (DAMN JACOB)
-		if (1!=1) { //robotFirstTurn
+		if (time >= 10 && time <=15) { //robotFirstTurn
 			robotFirstTurn = true;
 			drive(1,1);
 		} else {
