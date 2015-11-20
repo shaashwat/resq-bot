@@ -11,10 +11,7 @@ import com.qualcomm.robotcore.robocol.Telemetry;
  * Autonomous program - for first meet use only
  * This autonomous program is for the first robotics competition on November 14/21 ONLY
  *
- * It assumes that other robots barely have an autonomous program at all, and its not dynamic to alliance
- * For best use, place robot in starting position closest to center line
- * Program of movement:
- * 		- Move forward until hits line (ultrasonic to stop movement if alliance robot is moving in front)
+ * It assumes that other robots barely have an autonomvement if alliance robot is moving in front)
  * 		- We detect what color the line is to determine what team we're on, sepreate codes for each.
  * 		- turn X amount of degrees to face beacon in general direction
  * 		- some IMU sensor to keep straight path
@@ -57,7 +54,10 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		calibrateColors();
 	}
 
-	@Override
+	@Overrideous program at all, and its not dynamic to alliance
+ * For best use, place robot in starting position closest to center line
+ * Program of movement:
+ * 		- Move forward until hits line (ultrasonic to stop mo
 	public void loop() {
 		if(!foundLine) {
 			moveTillLine();
@@ -68,7 +68,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			double d = getDistance();
 			telemetry.addData("Distance", d);
 			if (d < DISTANCE_FROM_WALL) {
-
+				stopMoving();
 			}
 		}
 	}
