@@ -57,8 +57,15 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		if(!foundLine) {
 			moveTillLine();
 		} else if (!robotFirstTurn){
-			//Turn();
-			if (teamWeAreOn != Team.UNKNOWN) telemetry.addData("On team:", teamWeAreOn.toString());
+			telemetry.addData("On team:", teamWeAreOn.toString());
+			//hard coded turn untill sensors are ready
+			if(teamWeAreOn == Team.RED) {
+				drive(-1.0f, 1.0f);
+			} else if(teamWeAreOn == Team.BLUE) {
+				drive(1.0f, -1.0f);
+			}
+			sleep(3000);
+			goForward();
 		} else {
 			double d = getDistance();
 			telemetry.addData("Distance", d);
