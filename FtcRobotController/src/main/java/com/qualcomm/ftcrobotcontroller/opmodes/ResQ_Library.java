@@ -110,7 +110,7 @@ public abstract class ResQ_Library extends OpMode {
         srvoDong_Right = hardwareMap.servo.get("s4"); //The right servo
         //srvoPushButton = hardwareMap.servo.get("s5");
         srvoScoreClimbers = hardwareMap.servo.get("s6");*/
-        compassSensor = hardwareMap.compassSensor.get("c1");
+        //compassSensor = hardwareMap.compassSensor.get("c1");
 
         //set the direction of the motors
         motorRightTread.setDirection(DcMotor.Direction.REVERSE);
