@@ -73,9 +73,6 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	}
 
-
-
-
 	public void moveTillLine() {
 		teamWeAreOn = getColor();
 		if(teamWeAreOn == Team.UNKNOWN) {

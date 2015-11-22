@@ -15,6 +15,8 @@ public class ResQ_TeleOp extends ResQ_Library {
     double srvoHang1Position;
     double srvoHang2Position;
 
+    boolean autoMoveArm;
+
     @Override
     public void init() {
         /*
@@ -105,17 +107,26 @@ public class ResQ_TeleOp extends ResQ_Library {
         float srvoHang2JoyCheck = ProcessToMotorFromJoy(-gamepad2.right_stick_y);
         //Position based hanging
         if(srvoHang1JoyCheck > 0.05) { //big servo
-            srvoHang_1.setPosition(0.8f);
+            srvoHang_1.setPosition(0.8f); //move out
             telemetry.addData("activated", "wtf");
         } else if(srvoHang1JoyCheck < -0.05) {
-            srvoHang_1.setPosition(1.0f);
+            srvoHang_1.setPosition(1.0f); //move in
             telemetry.addData("activated", "wth");
         }
 
         if(srvoHang2JoyCheck > 0.05) { //small servo
-            srvoHang_2.setPosition(0.0f);
+            srvoHang_2.setPosition(0.0f); //move in
         } else if(srvoHang2JoyCheck < -0.05) {
-            srvoHang_2.setPosition(0.7f);
+            srvoHang_2.setPosition(0.7f); //move out
+        }
+
+        //automatic arm hanging
+        if(gamepad2.dpad_down) {
+            autoMoveArm = true;
+        }
+
+        if(autoMoveArm) {
+            autoMoveArm = hangingAutomation();
         }
 
         /*if(srvoHang1JoyCheck > 0.05) {

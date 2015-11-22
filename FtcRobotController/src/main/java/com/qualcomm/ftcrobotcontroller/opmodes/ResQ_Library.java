@@ -50,10 +50,10 @@ public abstract class ResQ_Library extends OpMode {
     final static double SPEED_CONST = 0.005, LEFT_STEERING_CONST = 0.85, RIGHT_STEERING_CONST = 0.8;
 
     //Servo Min's and Max's (to prevent the servo from extending too far in any direction
-    final static double HANG1_MIN_RANGE  = 0.00;
+    final static double HANG1_MIN_RANGE  = 0.8;
     final static double HANG1_MAX_RANGE  = 1.00;
     final static double HANG2_MIN_RANGE  = 0.00;
-    final static double HANG2_MAX_RANGE  = 1.00;
+    final static double HANG2_MAX_RANGE  = 0.7;
     final static double DONG1_MIN_RANGE  = 0.20;
     final static double DONG1_MAX_RANGE  = 0.90;
     final static double DONG2_MIN_RANGE  = 0.20;
@@ -101,7 +101,7 @@ public abstract class ResQ_Library extends OpMode {
         srvoHang_2 = hardwareMap.servo.get("s2");
         /*srvoDong_Left = hardwareMap.servo.get("s3"); //The left servo
         srvoDong_Right = hardwareMap.servo.get("s4"); //The right servo
-        //srvoPushButton = hardwareMap.servo.get("s5");
+        srvoPushButton = hardwareMap.servo.get("s5");
         srvoScoreClimbers = hardwareMap.servo.get("s6");*/
 
 
@@ -140,9 +140,24 @@ public abstract class ResQ_Library extends OpMode {
         driveGear = normalizeForGear(gear);
     }
 
-    public void HangingAutomation() {
-        //Once the first meet is over, create an algorithm that
-        //allows us to hang with the press of one button.
+    /*
+     * Function to automatically move the hanging arm.
+     * Should be called in a loop.
+     * @return returns true when the arm is in the process of moving.
+     */
+    public boolean hangingAutomation() {
+        double hang1Position = Math.max(srvoHang_1.getPosition() - HangServoDelta, HANG1_MIN_RANGE);
+
+        srvoHang_1.setPosition(hang1Position);
+        //when big servo is midway through it's travel from min to max...
+        if(srvoHang_1.getPosition() < (HANG1_MAX_RANGE+HANG1_MIN_RANGE)/2) {
+            //tell the big servo to go to it's max range (as fast as possible)
+            srvoHang_1.setPosition(HANG1_MAX_RANGE);
+            //start the small servo to create a lunging effect
+            srvoHang_2.setPosition(HANG2_MAX_RANGE);
+            return  false;
+        }
+        return true;
     }
 
     //****************SENSOR METHODS****************//
