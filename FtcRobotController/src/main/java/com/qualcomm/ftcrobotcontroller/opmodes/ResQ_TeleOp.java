@@ -108,10 +108,8 @@ public class ResQ_TeleOp extends ResQ_Library {
         //Position based hanging
         if(srvoHang1JoyCheck > 0.05) { //big servo
             srvoHang_1.setPosition(0.8f); //move out
-            telemetry.addData("activated", "wtf");
         } else if(srvoHang1JoyCheck < -0.05) {
             srvoHang_1.setPosition(1.0f); //move in
-            telemetry.addData("activated", "wth");
         }
 
         if(srvoHang2JoyCheck > 0.05) { //small servo
@@ -160,13 +158,7 @@ public class ResQ_TeleOp extends ResQ_Library {
         } else if (driveGear == 1) { //lowest 25% setting
             tel_Bool_Speed = "at 25% speed";
         }
-        String tel_Bool_LeftDong = (leftDongDown) ? " is down, now moving up" : "is up, now moving down";
-        String tel_Bool_RightDong = (rightDongDown) ? " is down, now moving up" : "is up, now moving down";
         telemetry.addData("", "Driving is " + tel_Bool_Reverse + " and " + tel_Bool_Speed);
-        telemetry.addData("shoulder", ""+srvoHang_1.getPosition());
-        telemetry.addData("elbow", ""+srvoHang_2.getPosition());
-        /*telemetry.addData("Left Dongler", "" + tel_Bool_LeftDong);
-        telemetry.addData("Right Dongler", "" + tel_Bool_RightDong);*/
 
     }
 }
