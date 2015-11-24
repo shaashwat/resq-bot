@@ -83,7 +83,6 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		else {
 			stop();
 			foundLine = true;
-			turnToBeacon();
 		}
 	}
 
