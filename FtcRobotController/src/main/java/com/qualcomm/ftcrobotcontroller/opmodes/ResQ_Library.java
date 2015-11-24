@@ -98,8 +98,8 @@ public abstract class ResQ_Library extends OpMode {
         motorRightSecondTread = hardwareMap.dcMotor.get("m4");
 
         //Sensors
-        sensorRGB_1 = hardwareMap.colorSensor.get("color1");
-        sensorRGB_2 = hardwareMap.colorSensor.get("color2");
+        //sensorRGB_1 = hardwareMap.colorSensor.get("color1");
+        //sensorRGB_2 = hardwareMap.colorSensor.get("color2");
         //sensorGyro = hardwareMap.gyroSensor.get("gyro");
         //sensorGyro.calibrate();
         //Other Mapping
