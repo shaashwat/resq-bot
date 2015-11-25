@@ -1,6 +1,8 @@
 package com.qualcomm.ftcrobotcontroller.opmodes.test;
 
+import com.qualcomm.ftcrobotcontroller.opmodes.test.AdafruitIMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.I2cDevice;
 import java.util.concurrent.locks.Lock;
 
@@ -8,32 +10,30 @@ import java.util.concurrent.locks.Lock;
  * Created by Admin on 11/6/2015.
  */
 public class GyroTest extends OpMode {
-    I2cDevice gyro;
+    AdafruitIMU gyro;
     String gyroName = "gyro";
 
     final static double RIGHT_ROTATION_CONST = 0.0027;
     final static double LEFT_ROTATION_CONST = 0.0027;
     final static double ROTATION_OFFSET = 0.1;
 
-    byte[] cache;
-    Lock lock;
+    double[] roll;
+    double[] pitch;
+    double[] yaw;
 
     @Override
     public void init() {
-        gyro = hardwareMap.i2cDevice.get(gyroName);
-
-        lock = gyro.getI2cReadCacheLock();
-        cache = gyro.getCopyOfReadBuffer();
-
-        if(!gyro.isI2cPortInReadMode()) {
-            //I really have no idea what im doing. These memory addresses probably will cause errors.
-            gyro.enableI2cReadMode(cache[1], cache[2], cache[3]);
+        try {
+            gyro = new AdafruitIMU(hardwareMap, gyroName, (byte)0x2, (byte)AdafruitIMU.OPERATION_MODE_GYRONLY);
+        } catch(RobotCoreException rce) {
+            telemetry.addData("RobotCoreException", rce.getMessage());
         }
     }
 
     @Override
     public void loop() {
-        telemetry.addData("Rotation: ", gyro.getI2cReadCache()[0]);
+        gyro.getIMUGyroAngles(roll, pitch, yaw);
+        telemetry.addData("Rotation: ", roll);
     }
 
     /*public void driveStraight(double millis) {
