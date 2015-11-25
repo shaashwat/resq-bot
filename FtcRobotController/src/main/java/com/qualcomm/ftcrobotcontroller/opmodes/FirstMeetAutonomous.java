@@ -31,7 +31,8 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 	boolean foundLine = false;
 	boolean robotFirstTurn = false; //when we get to the line, turn in the general direction of the beacon
-
+	int angleGoal;
+	private boolean turning = false;
 
 	/**
 	 * Blue Team Information:
@@ -54,11 +55,12 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		calibrateColors();
 	}
 	public void loop() {
+		if (foundLine && teamWeAreOn != Team.UNKNOWN) telemetry.addData("On team:", teamWeAreOn.toString());
 		if(!foundLine) {
 			moveTillLine();
 		} else if (!robotFirstTurn){
 			turnToBeacon(this.time);
-			if (teamWeAreOn != Team.UNKNOWN) telemetry.addData("On team:", teamWeAreOn.toString());
+
 		} else {
 			double d = getDistance();
 			telemetry.addData("Distance", d);
@@ -74,25 +76,29 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	}
 
 	public void moveTillLine() {
-		teamWeAreOn = getColor();
+		teamWeAreOn = Team.RED;//getColor();
 		if(teamWeAreOn == Team.UNKNOWN) {
 			goForward();
 		}
 		else {
 			stop();
 			foundLine = true;
-			turnToBeacon(1000);
 		}
 	}
 
-	public void turnToBeacon(double time) { //(turn to beacon)
+	public void turnToBeacon() { //(turn to beacon)
 		//Simplified (DAMN JACOB)
 		if (time >= 10 && time <=14) { //make this compass later
 			robotFirstTurn = true;
 			drive(1,1);
 		} else {
+			if (!turning) turning = true;
+			else {
+				angleGoal = sensorGyro.rawX() + 70;
+			}
 			int m = teamWeAreOn == Team.RED ? 1 : -1;
 			drive(-.5f * m, .5f * m);
+
 		}
 
 
