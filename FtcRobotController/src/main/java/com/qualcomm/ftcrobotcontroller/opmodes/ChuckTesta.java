@@ -33,7 +33,11 @@ public class ChuckTesta extends OpMode {
                 telemetry.addData("Task", "Turning left.");
                 drive(.5f, 0f);
                 break;
-            case 8:
+            case 6:
+                telemetry.addData("Task", "Turning Right.");
+                drive(0f, .5f);
+                break;
+            case 10:
                 telemetry.addData("Task", "done.");
                 drive(0f, 0f);
                 break;
