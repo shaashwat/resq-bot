@@ -86,6 +86,8 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************INITIALIZE METHOD****************//
     public void initializeMapping() {
+        //Debug statements to prevent color1 error
+        telemetry.addData("Version", "Sensorless. COLOR ERROR SHOULD NOT SHOW UP!");
         //Driving Mapping
         motorLeftTread = hardwareMap.dcMotor.get("m1");
         motorRightTread = hardwareMap.dcMotor.get("m2");
@@ -108,6 +110,8 @@ public abstract class ResQ_Library extends OpMode {
         //set the direction of the motors
         motorRightTread.setDirection(DcMotor.Direction.REVERSE);
         motorRightSecondTread.setDirection(DcMotor.Direction.REVERSE);
+
+        telemetry.addData("Version", "non autonomous. COLOR ERROR SHOULD NOT SHOW UP!");
     }
 
     //****************TELEOP METHODS****************//
