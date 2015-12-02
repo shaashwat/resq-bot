@@ -59,7 +59,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		if(!foundLine) {
 			moveTillLine();
 		} else if (!robotFirstTurn){
-			turnToBeacon(this.time);
+			//turnToBeacon(this.time);
 
 		} else {
 			double d = getDistance();

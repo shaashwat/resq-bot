@@ -23,8 +23,10 @@ public class GyroTest extends OpMode {
 
     @Override
     public void init() {
+        telemetry.addData("init", "We initialized");
         try {
-            gyro = new AdafruitIMU(hardwareMap, gyroName, (byte)0x2, (byte)AdafruitIMU.OPERATION_MODE_GYRONLY);
+            gyro = new AdafruitIMU(hardwareMap, gyroName, (byte)AdafruitIMU.BNO055_ADDRESS_A, (byte)AdafruitIMU.OPERATION_MODE_MAGONLY);
+            gyro.startIMU();
         } catch(RobotCoreException rce) {
             telemetry.addData("RobotCoreException", rce.getMessage());
         }
@@ -32,8 +34,8 @@ public class GyroTest extends OpMode {
 
     @Override
     public void loop() {
-        gyro.getIMUGyroAngles(roll, pitch, yaw);
-        telemetry.addData("Rotation: ", roll);
+        //gyro.getIMUGyroAngles(roll, pitch, yaw);
+        telemetry.addData("Rotation", 0);
     }
 
     /*public void driveStraight(double millis) {
