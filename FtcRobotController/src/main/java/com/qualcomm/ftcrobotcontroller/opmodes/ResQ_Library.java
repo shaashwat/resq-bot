@@ -91,12 +91,13 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************INITIALIZE METHOD****************//
     public void initializeMapping() {
+        //Debug statements to prevent color1 error
+        telemetry.addData("Version", "Autonomous branch. Ensure all sensors are connected!");
         //Driving Mapping
         motorLeftTread = hardwareMap.dcMotor.get("m1");
         motorRightTread = hardwareMap.dcMotor.get("m2");
         motorLeftSecondTread = hardwareMap.dcMotor.get("m3");
         motorRightSecondTread = hardwareMap.dcMotor.get("m4");
-
         //Sensors
         //sensorRGB_1 = hardwareMap.colorSensor.get("color1");
         //sensorRGB_2 = hardwareMap.colorSensor.get("color2");
