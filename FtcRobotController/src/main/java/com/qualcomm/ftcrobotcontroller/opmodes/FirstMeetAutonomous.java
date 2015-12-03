@@ -55,7 +55,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		calibrateColors();
 	}
 	public void loop() {
-		if (foundLine && teamWeAreOn != Team.UNKNOWN) telemetry.addData("On team:", teamWeAreOn.toString());
+		//if (foundLine && teamWeAreOn != Team.UNKNOWN) telemetry.addData("On team:", teamWeAreOn.toString());
 		if(!foundLine) {
 			moveTillLine();
 		} else if (!robotFirstTurn){
