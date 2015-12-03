@@ -76,7 +76,7 @@ public class ExperimentalAutonomous extends ResQ_Library {
 
     @Override
     public void loop() {
-        telemetry.addData("Time", "elapsed time: " + Double.toString(this.time));
+        //telemetry.addData("Time", "elapsed time: " + Double.toString(this.time));
     }
 
     @Override

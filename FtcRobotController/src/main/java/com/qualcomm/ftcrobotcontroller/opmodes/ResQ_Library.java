@@ -31,7 +31,7 @@ public abstract class ResQ_Library extends OpMode {
 
     CompassSensor compassSensor;
 
-    int offsetRed, offsetGreen, offsetBlue;
+    int offsetRed_1, offsetGreen_1, offsetBlue_1, offsetRed_2, offsetBlue_2, offsetGreen_2;
 
     /*
         motorHangingMech: responsible for lifting entire robot
@@ -49,7 +49,7 @@ public abstract class ResQ_Library extends OpMode {
     final static double RIGHT_TARGET_DISTANCE = 27.0, LEFT_TARGET_DISTANCE = 27.0, STOP_CONST = 6.0;
 
     //Color Sensor Calibrations
-    final static int COLOR_THRESHOLD = 220;
+    final static int COLOR_THRESHOLD = 100;
 
     //Constants that determine how strong the robot's speed and turning should be
     final static double SPEED_CONST = 0.005, LEFT_STEERING_CONST = 0.85, RIGHT_STEERING_CONST = 0.8;
@@ -99,8 +99,8 @@ public abstract class ResQ_Library extends OpMode {
         motorLeftSecondTread = hardwareMap.dcMotor.get("m3");
         motorRightSecondTread = hardwareMap.dcMotor.get("m4");
         //Sensors
-        //sensorRGB_1 = hardwareMap.colorSensor.get("color1");
-        //sensorRGB_2 = hardwareMap.colorSensor.get("color2");
+        sensorRGB_1 = hardwareMap.colorSensor.get("color1");
+        sensorRGB_2 = hardwareMap.colorSensor.get("color2");
         //sensorGyro = hardwareMap.gyroSensor.get("gyro");
         //sensorGyro.calibrate();
         //Other Mapping
@@ -246,14 +246,22 @@ public abstract class ResQ_Library extends OpMode {
     }
 
     public void calibrateColors() {
-        offsetRed = sensorRGB_1.red() + 200;
-        offsetGreen = sensorRGB_1.green();
-        offsetBlue = sensorRGB_1.blue();
+        offsetRed_1 = sensorRGB_1.red();
+        offsetGreen_1 = sensorRGB_1.green();
+        offsetBlue_1 = sensorRGB_1.blue();
+        offsetRed_2 = sensorRGB_2.red();
+        offsetGreen_2 = sensorRGB_2.green();
+        offsetBlue_2 = sensorRGB_2.blue();
     }
 
     public Team getColor() {
-        int r1 = sensorRGB_1.red() - offsetRed, b1 = sensorRGB_1.blue() - offsetBlue;
-        int r2 = sensorRGB_2.red() - offsetRed, b2 = sensorRGB_2.blue() - offsetBlue;
+        int r1 = Math.abs(sensorRGB_1.red() - offsetRed_1), b1 = Math.abs(sensorRGB_1.blue() - offsetBlue_1);
+        int r2 = Math.abs(sensorRGB_2.red() - offsetRed_2), b2 = Math.abs(sensorRGB_2.blue() - offsetBlue_2);
+        telemetry.addData("Red 1", r1);
+        telemetry.addData("Red 2", r2);
+        telemetry.addData("Raw Red", sensorRGB_1.red());
+        telemetry.addData("Blue 1", b1);
+        telemetry.addData("Blue 2", b2);
         if ((b1 > r1 && b1 > COLOR_THRESHOLD) || (b2 > r2 && b2 > COLOR_THRESHOLD)) {
             return Team.BLUE;
         } else if ((r1 > b1 && r1 > COLOR_THRESHOLD) || (r2 > b2 && r2 > COLOR_THRESHOLD)) {
