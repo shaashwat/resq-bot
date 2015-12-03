@@ -86,7 +86,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		}
 	}
 
-	public void turnToBeacon() { //(turn to beacon)
+	public void turnToBeacon(double time) { //(turn to beacon)
 		//Simplified (DAMN JACOB)
 		if (time >= 10 && time <=14) { //make this compass later
 			robotFirstTurn = true;
