@@ -76,12 +76,12 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	}
 
 	public void moveTillLine() {
-		getColor();
+		teamWeAreOn = getColor();
 		if(teamWeAreOn == Team.UNKNOWN) {
 			goForward();
 		}
 		else {
-			stop();
+			stopMoving();
 			foundLine = true;
 		}
 	}

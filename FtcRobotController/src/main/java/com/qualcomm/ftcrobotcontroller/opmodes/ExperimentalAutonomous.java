@@ -45,7 +45,6 @@ public class ExperimentalAutonomous extends ResQ_Library {
 
     @Override
     public void init() {
-        sensorRGB = hardwareMap.colorSensor.get("color");
 
         //Driving Mapping
         /*motorLeftFront = hardwareMap.dcMotor.get("motor_1");

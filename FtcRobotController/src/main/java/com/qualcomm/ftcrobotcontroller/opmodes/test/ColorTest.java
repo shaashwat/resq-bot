@@ -18,7 +18,7 @@ public class ColorTest extends ResQ_Library {
 
     @Override
     public void init() {
-        sensorRGB = hardwareMap.colorSensor.get("color");
+        //sensorRGB = hardwareMap.colorSensor.get("color");
     }
 
     @Override

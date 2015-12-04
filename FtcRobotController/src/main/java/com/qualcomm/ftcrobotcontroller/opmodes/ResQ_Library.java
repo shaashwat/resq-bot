@@ -49,7 +49,7 @@ public abstract class ResQ_Library extends OpMode {
     final static double RIGHT_TARGET_DISTANCE = 27.0, LEFT_TARGET_DISTANCE = 27.0, STOP_CONST = 6.0;
 
     //Color Sensor Calibrations
-    final static int COLOR_THRESHOLD = 100;
+    final static int COLOR_THRESHOLD = 70;
 
     //Constants that determine how strong the robot's speed and turning should be
     final static double SPEED_CONST = 0.005, LEFT_STEERING_CONST = 0.85, RIGHT_STEERING_CONST = 0.8;
@@ -259,7 +259,6 @@ public abstract class ResQ_Library extends OpMode {
         int r2 = Math.abs(sensorRGB_2.red() - offsetRed_2), b2 = Math.abs(sensorRGB_2.blue() - offsetBlue_2);
         telemetry.addData("Red 1", r1);
         telemetry.addData("Red 2", r2);
-        telemetry.addData("Raw Red", sensorRGB_1.red());
         telemetry.addData("Blue 1", b1);
         telemetry.addData("Blue 2", b2);
         if ((b1 > r1 && b1 > COLOR_THRESHOLD) || (b2 > r2 && b2 > COLOR_THRESHOLD)) {
