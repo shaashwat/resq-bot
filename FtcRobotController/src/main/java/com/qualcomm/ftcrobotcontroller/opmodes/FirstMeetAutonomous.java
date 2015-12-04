@@ -59,7 +59,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		if(!foundLine) {
 			moveTillLine();
 		} else if (!robotFirstTurn){
-			turnToBeacon(this.time);
+			//turnToBeacon(this.time);
 
 		} else {
 			double d = getDistance();
@@ -76,7 +76,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	}
 
 	public void moveTillLine() {
-		teamWeAreOn = Team.RED;//getColor();
+		getColor();
 		if(teamWeAreOn == Team.UNKNOWN) {
 			goForward();
 		}
@@ -127,8 +127,8 @@ public class FirstMeetAutonomous extends ResQ_Library {
 
 
 	public void goForward(){
-		leftPower = -1.0f;
-		rightPower = -1.0f;
+		leftPower = -0.1f;
+		rightPower = -0.1f;
 		drive(leftPower, rightPower);
 	}
 	public void stopMoving(){
