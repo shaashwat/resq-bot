@@ -257,10 +257,10 @@ public abstract class ResQ_Library extends OpMode {
     public Team getColor() {
         int r1 = Math.abs(sensorRGB_1.red() - offsetRed_1), b1 = Math.abs(sensorRGB_1.blue() - offsetBlue_1);
         int r2 = Math.abs(sensorRGB_2.red() - offsetRed_2), b2 = Math.abs(sensorRGB_2.blue() - offsetBlue_2);
-        telemetry.addData("Red 1", r1);
+        /*telemetry.addData("Red 1", r1);
         telemetry.addData("Red 2", r2);
         telemetry.addData("Blue 1", b1);
-        telemetry.addData("Blue 2", b2);
+        telemetry.addData("Blue 2", b2);*/
         if ((b1 > r1 && b1 > COLOR_THRESHOLD) || (b2 > r2 && b2 > COLOR_THRESHOLD)) {
             return Team.BLUE;
         } else if ((r1 > b1 && r1 > COLOR_THRESHOLD) || (r2 > b2 && r2 > COLOR_THRESHOLD)) {
