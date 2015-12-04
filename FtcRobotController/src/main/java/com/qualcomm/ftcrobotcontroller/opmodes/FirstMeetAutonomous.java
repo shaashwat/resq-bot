@@ -50,7 +50,6 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void init() {
 		//Do the map thing
 		initializeMapping();
-		sensorUltra_1 = hardwareMap.analogInput.get("u1");
 		driveGear = 3;
 		calibrateColors();
 	}
@@ -58,6 +57,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 		if (foundLine && teamWeAreOn != Team.UNKNOWN) telemetry.addData("On team:", teamWeAreOn.toString());
 		if(!foundLine) {
 			moveTillLine();
+            //approachBeacon();
 		} else if (!robotFirstTurn){
 			//turnToBeacon(this.time);
 
@@ -78,13 +78,25 @@ public class FirstMeetAutonomous extends ResQ_Library {
 	public void moveTillLine() {
 		teamWeAreOn = getColor();
 		if(teamWeAreOn == Team.UNKNOWN) {
-			goForward();
+			approach(-1);
 		}
 		else {
 			stopMoving();
 			foundLine = true;
 		}
 	}
+
+    public void approachBeacon(){
+        double ultraValue = getDistance();
+        telemetry.addData("ultra", ultraValue);
+        if(ultraValue > 12){
+            approach(1);
+        }
+        else {
+            stopMoving();
+            foundLine = true;
+        }
+    }
 
 	public void turnToBeacon(double time) { //(turn to beacon)
 		//Simplified (DAMN JACOB)
@@ -98,37 +110,14 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			}
 			int m = teamWeAreOn == Team.RED ? 1 : -1;
 			drive(-.5f * m, .5f * m);
-
 		}
-
-
-		//If we're red, turn left 70 degrees
-		//Do some compass thing in order to stop our turning
-		/*if(teamWeAreOn == Team.RED){ //false so we're on red team
-			if (1!=1){ //If compass detects that we're finished turning
-				//Drive straight
-				drive(1.0f, 1.0f);
-			} else { //we're not finished turning fam
-				drive(-0.5f, 0.5f);
-			}
-		}
-
-		else if(teamWeAreOn == Team.BLUE){ //true, so we're on blue team
-			//If we're blue, turn right 70 degrees
-			if (1!=1){ //If compass detects that we're finished turning
-				//Drive straight
-				drive(1.0f, 1.0f);
-			} else { //we're not finished turning fam
-				drive(0.5f, -0.5f);
-			}
-		}*/
 	}
 
 
 
-	public void goForward(){
-		leftPower = -0.1f;
-		rightPower = -0.1f;
+	public void approach(int direction){
+		leftPower = 0.1f * direction;
+		rightPower = 0.1f * direction;
 		drive(leftPower, rightPower);
 	}
 	public void stopMoving(){
