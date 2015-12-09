@@ -17,25 +17,29 @@ public class GyroTest extends OpMode {
     final static double LEFT_ROTATION_CONST = 0.0027;
     final static double ROTATION_OFFSET = 0.1;
 
-    double[] roll;
-    double[] pitch;
-    double[] yaw;
+    volatile double[] rollAngle = new double[2], pitchAngle = new double[2], yawAngle = new double[2];
 
     @Override
     public void init() {
         telemetry.addData("init", "We initialized");
         try {
-            gyro = new AdafruitIMU(hardwareMap, gyroName, (byte)AdafruitIMU.BNO055_ADDRESS_A, (byte)AdafruitIMU.OPERATION_MODE_IMU);
-            gyro.startIMU();
+            gyro = new AdafruitIMU(hardwareMap, gyroName, (byte)(AdafruitIMU.BNO055_ADDRESS_A * 2), (byte)AdafruitIMU.OPERATION_MODE_IMU);
         } catch(RobotCoreException rce) {
             telemetry.addData("RobotCoreException", rce.getMessage());
         }
     }
 
     @Override
+    public void start() {
+        gyro.startIMU();
+    }
+
+    @Override
     public void loop() {
-        //gyro.getIMUGyroAngles(roll, pitch, yaw);
-        telemetry.addData("Rotation", 0);
+        gyro.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
+        telemetry.addData("Rotation Roll", rollAngle[0] + ", " + rollAngle[1]);
+        telemetry.addData("Rotation Pitch", pitchAngle[0] + ", " + pitchAngle[1]);
+        telemetry.addData("Rotation Yaw", yawAngle[0] + ", " + yawAngle[1]);
     }
 
     /*public void driveStraight(double millis) {
