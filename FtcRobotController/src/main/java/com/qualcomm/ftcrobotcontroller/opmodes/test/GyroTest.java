@@ -25,7 +25,7 @@ public class GyroTest extends OpMode {
     public void init() {
         telemetry.addData("init", "We initialized");
         try {
-            gyro = new AdafruitIMU(hardwareMap, gyroName, (byte)AdafruitIMU.BNO055_ADDRESS_A, (byte)AdafruitIMU.OPERATION_MODE_MAGONLY);
+            gyro = new AdafruitIMU(hardwareMap, gyroName, (byte)AdafruitIMU.BNO055_ADDRESS_A, (byte)AdafruitIMU.OPERATION_MODE_IMU);
             gyro.startIMU();
         } catch(RobotCoreException rce) {
             telemetry.addData("RobotCoreException", rce.getMessage());
