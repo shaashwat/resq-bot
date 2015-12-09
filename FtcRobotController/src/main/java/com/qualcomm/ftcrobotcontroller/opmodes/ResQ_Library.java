@@ -91,6 +91,7 @@ public abstract class ResQ_Library extends OpMode {
 
     //****************INITIALIZE METHOD****************//
     public void initializeMapping() {
+        hardwareMap.logDevices();
         //Debug statements to prevent color1 error
         telemetry.addData("Version", "Autonomous branch. Ensure all sensors are connected!");
         //Driving Mapping
