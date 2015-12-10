@@ -10,7 +10,7 @@ import java.util.concurrent.locks.Lock;
  * Created by Admin on 11/6/2015.
  */
 public class GyroTest extends OpMode {
-    AdafruitIMU gyro;
+    AdafruitIMU imu;
     String gyroName = "gyro";
 
     final static double RIGHT_ROTATION_CONST = 0.0027;
@@ -23,7 +23,7 @@ public class GyroTest extends OpMode {
     public void init() {
         telemetry.addData("init", "We initialized");
         try {
-            gyro = new AdafruitIMU(hardwareMap, gyroName, (byte)(AdafruitIMU.BNO055_ADDRESS_A * 2), (byte)AdafruitIMU.OPERATION_MODE_IMU);
+            imu = new AdafruitIMU(hardwareMap, gyroName, (byte)(AdafruitIMU.BNO055_ADDRESS_A * 2), (byte)AdafruitIMU.OPERATION_MODE_IMU);
         } catch(RobotCoreException rce) {
             telemetry.addData("RobotCoreException", rce.getMessage());
         }
@@ -31,12 +31,13 @@ public class GyroTest extends OpMode {
 
     @Override
     public void start() {
-        gyro.startIMU();
+        imu.startIMU();
+
     }
 
     @Override
     public void loop() {
-        gyro.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
+        imu.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
         telemetry.addData("Rotation Roll", rollAngle[0] + ", " + rollAngle[1]);
         telemetry.addData("Rotation Pitch", pitchAngle[0] + ", " + pitchAngle[1]);
         telemetry.addData("Rotation Yaw", yawAngle[0] + ", " + yawAngle[1]);

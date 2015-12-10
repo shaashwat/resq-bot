@@ -68,5 +68,6 @@ public class FtcOpModeRegister implements OpModeRegister {
     manager.register("TeleOp", ResQ_TeleOp.class);
     manager.register("Autonomous", FirstMeetAutonomous.class);
     manager.register("Gyro Testing", GyroTest.class);
+    manager.register("Girl Bot", GirlTeleop.class);
   }
 }

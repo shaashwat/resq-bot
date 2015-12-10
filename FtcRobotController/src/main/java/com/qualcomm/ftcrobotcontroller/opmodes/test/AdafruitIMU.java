@@ -697,6 +697,11 @@ public class AdafruitIMU implements HardwareDevice, I2cController.I2cPortReadyCa
         }
     }
 
+    /*public byte[] getIMUBytes() {
+
+        //return i2cIMU.
+    }*/
+
     /*
      * Use of the following callback assumes that I2C reading has been enabled for a particular I2C
      * register address (as the starting address) and a particular byte count. Registration of this

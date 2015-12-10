@@ -103,7 +103,7 @@ public class ResQ_TeleOp extends ResQ_Library {
             //Hanging automation procedure
             //HangingAutomation();
         }
-
+        /*
         //Hanging Servos
         float srvoHang1JoyCheck = ProcessToMotorFromJoy(-gamepad2.left_stick_y);
         float srvoHang2JoyCheck = ProcessToMotorFromJoy(-gamepad2.right_stick_y);
@@ -119,7 +119,7 @@ public class ResQ_TeleOp extends ResQ_Library {
         } else if(srvoHang2JoyCheck < -0.05) {
             srvoHang_2.setPosition(0.7f);
         }
-
+        */
         //Will's Hanging
         /*if(srvoHang1JoyCheck > 0.05) {
             srvoHang_1.setPosition(Math.min(1.0f, srvoHang_1.getPosition() + 0.01f));

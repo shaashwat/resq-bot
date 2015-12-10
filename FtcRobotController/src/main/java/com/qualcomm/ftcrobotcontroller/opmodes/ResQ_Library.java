@@ -100,15 +100,15 @@ public abstract class ResQ_Library extends OpMode {
         motorLeftSecondTread = hardwareMap.dcMotor.get("m3");
         motorRightSecondTread = hardwareMap.dcMotor.get("m4");
         //Sensors
-        sensorRGB_1 = hardwareMap.colorSensor.get("color1");
+        /*sensorRGB_1 = hardwareMap.colorSensor.get("color1");
         sensorRGB_2 = hardwareMap.colorSensor.get("color2");
         sensorUltra_1 = hardwareMap.analogInput.get("u1");
         //sensorGyro = hardwareMap.gyroSensor.get("gyro");
         //sensorGyro.calibrate();
         //Other Mapping
         motorHangingMech = hardwareMap.dcMotor.get("m5");
-        srvoHang_1 = hardwareMap.servo.get("s1");
-        srvoHang_2 = hardwareMap.servo.get("s2");
+       // srvoHang_1 = hardwareMap.servo.get("s1");
+       // srvoHang_2 = hardwareMap.servo.get("s2");
         /*srvoDong_Left = hardwareMap.servo.get("s3"); //The left servo
         srvoDong_Right = hardwareMap.servo.get("s4"); //The right servo
         //srvoPushButton = hardwareMap.servo.get("s5");
@@ -121,8 +121,8 @@ public abstract class ResQ_Library extends OpMode {
         //set the direction of the servos (99% sure this isn't neccesary but yolo)
         /*srvoDong_Left.setDirection(Servo.Direction.FORWARD);
         srvoDong_Right.setDirection(Servo.Direction.FORWARD);*/
-        srvoHang_1.setDirection(Servo.Direction.FORWARD);
-        srvoHang_1.setDirection(Servo.Direction.FORWARD);
+        //srvoHang_1.setDirection(Servo.Direction.FORWARD);
+        //srvoHang_1.setDirection(Servo.Direction.FORWARD);
     }
 
     //****************TELEOP METHODS****************//
