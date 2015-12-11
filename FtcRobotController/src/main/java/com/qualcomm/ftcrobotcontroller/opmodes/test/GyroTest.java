@@ -43,13 +43,14 @@ public class GyroTest extends OpMode {
         telemetry.addData("Rotation Yaw", yawAngle[0] + ", " + yawAngle[1]);
     }
 
-    /*public void driveStraight(double millis) {
+    public void driveStraight(double millis) {
         /*
          * This algorithm assumes gyro.getRotation() returns
          * values between 0—359 or -180—179. The actual
          * return value is not documented, therefore it has
          * to be tested.
-         *
+         **/
+        /*
         gyro.calibrate();
         while(gyro.isCalibrating()) {
             telemetry.addData("Calibrating: ", "gyro is calibrating...");
@@ -64,8 +65,8 @@ public class GyroTest extends OpMode {
         double lSpeed = 1.0f;
 
         while(currentTime - startTime < millis) {
-            rSpeed = (180 + gyro.getRotation()) * RIGHT_ROTATION_CONST + ROTATION_OFFSET;
-            lSpeed = (180 - gyro.getRotation()) * LEFT_ROTATION_CONST + ROTATION_OFFSET;
+            rSpeed = (180 + imu.getRotation()) * RIGHT_ROTATION_CONST + ROTATION_OFFSET;
+            lSpeed = (180 - imu.getRotation()) * LEFT_ROTATION_CONST + ROTATION_OFFSET;
 
             //round any values <0 or >1 to 0 or 1.
             rSpeed = Math.max(0, Math.min(1.0, rSpeed));
@@ -84,6 +85,6 @@ public class GyroTest extends OpMode {
     public void drive(float left, float right){
 
     }*/
-
+    }
 }
 

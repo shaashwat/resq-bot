@@ -59,7 +59,7 @@ public class FirstMeetAutonomous extends ResQ_Library {
 			moveTillLine();
             //approachBeacon();
 		} else if (!robotFirstTurn){
-			//turnToBeacon(this.time);
+			turnToBeacon();
 
 		} else {
 			double d = getDistance();
@@ -98,16 +98,18 @@ public class FirstMeetAutonomous extends ResQ_Library {
         }
     }
 
-	public void turnToBeacon(double time) { //(turn to beacon)
+	public void turnToBeacon() { //(turn to beacon)
 		//Simplified (DAMN JACOB)
-		if (time >= 10 && time <=14) { //make this compass later
+        double yaw = getYaw();
+        telemetry.addData("yaw", yaw);
+		if (yaw > 100) { //make this compass later
 			robotFirstTurn = true;
 			drive(1,1);
 		} else {
-			if (!turning) turning = true;
+			/*if (!turning) turning = true;
 			else {
 				angleGoal = sensorGyro.rawX() + 70;
-			}
+			}*/
 			int m = teamWeAreOn == Team.RED ? 1 : -1;
 			drive(-.5f * m, .5f * m);
 		}

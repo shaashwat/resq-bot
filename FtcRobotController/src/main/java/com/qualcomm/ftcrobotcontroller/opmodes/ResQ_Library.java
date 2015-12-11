@@ -1,6 +1,8 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.qualcomm.ftcrobotcontroller.opmodes.test.AdafruitIMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.exception.RobotCoreException;
 import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.CompassSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -28,6 +30,8 @@ public abstract class ResQ_Library extends OpMode {
     AnalogInput sensorUltra_1, sensorUltra_2;
     ColorSensor sensorRGB_1, sensorRGB_2;
     GyroSensor sensorGyro;
+    AdafruitIMU imu;
+    String gyroName = "gyro";
 
     CompassSensor compassSensor;
 
@@ -50,6 +54,13 @@ public abstract class ResQ_Library extends OpMode {
 
     //Color Sensor Calibrations
     final static int COLOR_THRESHOLD = 70;
+
+    //gyro offsets
+    final static double RIGHT_ROTATION_CONST = 0.0027;
+    final static double LEFT_ROTATION_CONST = 0.0027;
+    final static double ROTATION_OFFSET = 0.1;
+
+    volatile double[] rollAngle = new double[2], pitchAngle = new double[2], yawAngle = new double[2];
 
     //Constants that determine how strong the robot's speed and turning should be
     final static double SPEED_CONST = 0.005, LEFT_STEERING_CONST = 0.85, RIGHT_STEERING_CONST = 0.8;
@@ -100,11 +111,16 @@ public abstract class ResQ_Library extends OpMode {
         motorLeftSecondTread = hardwareMap.dcMotor.get("m3");
         motorRightSecondTread = hardwareMap.dcMotor.get("m4");
         //Sensors
-        /*sensorRGB_1 = hardwareMap.colorSensor.get("color1");
+        sensorRGB_1 = hardwareMap.colorSensor.get("color1");
         sensorRGB_2 = hardwareMap.colorSensor.get("color2");
         sensorUltra_1 = hardwareMap.analogInput.get("u1");
-        //sensorGyro = hardwareMap.gyroSensor.get("gyro");
-        //sensorGyro.calibrate();
+        try {
+            imu = new AdafruitIMU(hardwareMap, gyroName, (byte)(AdafruitIMU.BNO055_ADDRESS_A * 2), (byte)AdafruitIMU.OPERATION_MODE_IMU);
+        } catch(RobotCoreException rce) {
+            telemetry.addData("RobotCoreException", rce.getMessage());
+        }
+
+        imu.startIMU();
         //Other Mapping
         motorHangingMech = hardwareMap.dcMotor.get("m5");
        // srvoHang_1 = hardwareMap.servo.get("s1");
@@ -176,6 +192,11 @@ public abstract class ResQ_Library extends OpMode {
     //****************SENSOR METHODS****************//
     public double getDistance() {
         return sensorUltra_1.getValue();
+    }
+
+    public double getYaw() {
+        imu.getIMUGyroAngles(rollAngle, pitchAngle, yawAngle);
+        return 180 + yawAngle[0];
     }
 
     public void moveToClosestObject() {
